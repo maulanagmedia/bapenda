@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.example.bappeda">
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_bapenda"
+        android:label="@string/app_name"
+        android:screenOrientation="portrait"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme.NoActionBar"
+        android:usesCleartextTraffic="true"
+        tools:replace="android:theme">
+        <activity android:name=".MenuMerchants.RiwayatMerchantTutupActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity android:name=".MenuMerchants.MerchantTutupActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".MenuMerchants.MerchantSekitarActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".MenuMerchants.PilihanMerchantsActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".MenuMonitoring.PreviewMerchantActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".MenuMonitoring.RiwayatMonitoringMerchantActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".MenuAdmin.HubungiPetugas.PetugasUntukHubungi"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".MenuAdmin.Monitoring.PetugasMonitoringActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".MenuAdmin.Monitoring.MerchantUntukMonitoring"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".MenuAdmin.Survey.PetugasSurveyActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".MenuAdmin.Survey.MerchantUntukSurveyActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".MenuAdmin.PenugasanPetugasActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".MenuMonitoring.DetailMerchantActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".MenuMonitoring.MonitoringMerchantActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".MenuPendaftaran.PutusanPendaftaranActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".MenuPendaftaran.PreviewActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".MenuHome.NotificationActivity"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="ACTION_NOTIF" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".MenuSurvey.EditMerchantActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".MenuPendaftaran.PendaftaranWajibPajakActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".MenuPendaftaran.FormIsianActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".MenuHome.AccountActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ListDaftarMerchant"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ListJadwalActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".JadwalActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".MenuPendaftaran.PendaftaranActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".MenuPendaftaran.RiwayatPendaftaranActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Login.SplashScreen"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".MenuSurvey.SurveyActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ListViewSurvey"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".MenuSurvey.RiwayatSurveyActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".MenuHome.HomeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Login.MainActivity"
+            android:screenOrientation="portrait">
+
+            <!--
+            <intent-filter>
+        <activity
+            android:name=".MenuPendaftaran.SurveyActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ListViewSurvey"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".MenuPendaftaran.RiwayatSurveyActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".MenuHome.HomeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Login.MainActivity"
+            android:screenOrientation="portrait">
+
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+
+                <data
+                    android:host="www.bapenda.com"
+                    android:scheme="http"
+                    android:pathPattern="/.*"/>
+            </intent-filter>
+            -->
+        </activity>
+
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@mipmap/ic_bapenda" />
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@color/colorPrimary" />
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_channel_id"
+            android:value="@string/default_notification_channel_id" />
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+        <meta-data
+            android:name="com.google.android.maps.v2.API_KEY"
+            android:value="AIzaSyBynRv9TaUHMk4wSa9e9uzZYImnDvLlTTo" />
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+
+        <service
+            android:name=".Services.DemoLocationService"
+            android:enabled="true"
+            android:exported="false"
+            android:label="Service Demo" />
+        <service
+            android:name=".Services.MyFirebaseMessagingService"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+        <uses-library
+            android:name="org.apache.http.legacy"
+            android:required="false" />
+    </application>
+
+    <permission
+        android:name="com.example.bappeda.permission.MAPS.RECEIVE"
+        android:protectionLevel="signature" />
+
+    <uses-feature
+        android:glEsVersion="0x00020000"
+        android:required="true" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="com.example.bappeda.permission.MAPS.RECEIVE" />
+    <uses-permission android:name="com.google.android.providers.gsf.permissions.READ_GSERVICES" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+</manifest>

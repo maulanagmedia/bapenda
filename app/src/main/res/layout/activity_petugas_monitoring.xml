@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white"
+    tools:context=".MenuAdmin.Monitoring.PetugasMonitoringActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        app:popupTheme="@style/AppTheme.NoActionBar.TitleTextStyle"
+        app:titleTextColor="@color/white"
+        android:background="@color/blueLight">
+    </androidx.appcompat.widget.Toolbar>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_jabatan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@color/blueLight"
+        tools:listitem="@layout/list_item_jabatan_white">
+    </androidx.recyclerview.widget.RecyclerView>
+
+    <!--<ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="horizontal">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@color/blueLight"
+            android:padding="20dp">
+
+            <Button
+                android:id="@+id/btn_all"
+                android:layout_width="103dp"
+                android:layout_height="35dp"
+                android:text="All"
+                android:textAllCaps="false"
+                android:textSize="14dp"
+                android:textColor="@color/DarkerBlue"
+                android:background="@drawable/style_rounded_white_rectangle"/>
+
+            <Button
+                android:id="@+id/btn_petugas"
+                android:layout_width="103dp"
+                android:layout_height="35dp"
+                android:text="Petugas"
+                android:textAllCaps="false"
+                android:layout_marginStart="20dp"
+                android:textSize="14dp"
+                android:textColor="@color/DarkerBlue"
+                android:background="@drawable/style_rounded_white_rectangle"/>
+
+            <Button
+                android:id="@+id/btn_spv"
+                android:layout_width="103dp"
+                android:layout_height="35dp"
+                android:text="Supervisor"
+                android:textAllCaps="false"
+                android:layout_marginStart="20dp"
+                android:textSize="14dp"
+                android:textColor="@color/DarkerBlue"
+                android:background="@drawable/style_rounded_white_rectangle"/>
+
+            <Button
+                android:id="@+id/btn_kasubbag"
+                android:layout_width="103dp"
+                android:layout_height="35dp"
+                android:text="Kasubbag"
+                android:textAllCaps="false"
+                android:layout_marginStart="20dp"
+                android:textSize="14dp"
+                android:textColor="@color/DarkerBlue"
+                android:background="@drawable/style_rounded_white_rectangle"/>
+        </LinearLayout>
+
+    </ScrollView>-->
+
+    <EditText
+        android:id="@+id/edt_search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/LightGrey"
+        android:drawableStart="@drawable/search_grey"
+        android:gravity="center_horizontal"
+        android:imeOptions="actionSearch"
+        android:inputType="textPersonName"
+        android:singleLine="true"
+        android:hint="Cari Nama Pekerja"
+        android:padding="10dp"
+        android:textSize="18sp" />
+
+    <ListView
+        android:id="@+id/list_petugasMonitoring"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:scrollbars="vertical">
+    </ListView>
+
+</LinearLayout>

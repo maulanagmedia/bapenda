@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white"
+    tools:context="com.example.bappeda.MenuMerchants.MerchantTutupActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/blueLight"
+        app:titleTextColor="@color/white"
+        android:minHeight="?attr/actionBarSize"
+        app:popupTheme="@style/AppTheme.NoActionBar.TitleTextStyle"/>
+
+    <EditText
+        android:id="@+id/edt_search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/LightGrey"
+        android:drawableStart="@drawable/search_grey"
+        android:gravity="center_horizontal"
+        android:imeOptions="actionSearch"
+        android:inputType="textPersonName"
+        android:singleLine="true"
+        android:hint="Cari Nama Merchant"
+        android:padding="10dp"
+        android:textSize="18sp" />
+
+    <ListView
+        android:id="@+id/list_merchantTutup"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:scrollbars="vertical">
+    </ListView>
+
+</LinearLayout>

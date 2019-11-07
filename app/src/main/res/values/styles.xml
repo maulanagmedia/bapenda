@@ -1,0 +1,69 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/blueLight</item>
+        <item name="colorPrimaryDark">@color/blueLight</item>
+        <item name="colorAccent">@color/blueDark</item>
+<!--        <item name="colorAccent">@color/colorAccent</item>-->
+        <item name="android:windowActionBarOverlay">true</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:actionBarStyle">@style/MyActionBar</item>
+        <item name="colorControlNormal">@color/white</item>
+        <item name="colorPrimary">@color/blueLight</item>
+        <item name="colorPrimaryDark">@color/blueLight</item>
+        <item name="colorAccent">@color/blueDark</item>
+<!--        <item name="colorAccent">@color/colorAccent</item>-->
+        <item name="android:fontFamily">@font/cantarell</item>
+        <item name="android:windowActionBarOverlay">true</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar.NoTitle" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:actionBarStyle">@style/MyActionBar</item>
+        <item name="colorControlNormal">@color/white</item>
+        <item name="colorPrimary">@color/blueLight</item>
+        <item name="colorPrimaryDark">@color/blueLight</item>
+        <item name="colorAccent">@color/blueDark</item>
+<!--        <item name="colorAccent">@color/colorAccent</item>-->
+        <item name="android:textOff">true</item>
+    </style>
+
+    <style name="MyActionBar" parent="@android:style/Widget.Holo.Light.ActionBar">
+        <item name="android:background">#3958FF</item>
+<!--        <item name="android:titleTextStyle">@style/AppTheme.NoActionBar.TitleTextStyle</item>-->
+    </style>
+
+    <style name="AppTheme.NoActionBar.TitleTextStyle" parent="@android:style/TextAppearance.StatusBar.Title">
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar.TitleTextStyleBlack" parent="@android:style/TextAppearance.StatusBar.Title">
+        <item name="android:textColor">#000000</item>
+    </style>
+
+    <style name="DialogAnimation">
+        <item name="android:windowEnterAnimation">@anim/anim_slide_up</item>
+        <item name="android:windowExitAnimation">@anim/anim_slide_down</item>
+    </style>
+    
+    <style name="RadioGroupStyle">
+        <item name="android:colorAccent">@color/blueLight</item>
+        <item name="android:textColorSecondary">@color/grey</item>
+        <item name="android:colorControlNormal">@color/grey</item>
+        <item name="android:colorControlActivated">@color/blueLight</item>
+    </style>
+
+    <style name="ButtonDark">
+        <item name="android:background">@drawable/style_rounded_blue_dark_rectangle</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+</resources>

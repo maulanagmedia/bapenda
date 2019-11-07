@@ -1,0 +1,325 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#FFFFFF"
+    tools:context=".MenuSurvey.SurveyActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/ttoolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/blueLight"
+        app:titleTextColor="@color/white"
+        android:minHeight="?attr/actionBarSize"
+        app:popupTheme="@style/AppTheme.NoActionBar.TitleTextStyle">
+    </androidx.appcompat.widget.Toolbar>
+
+    <ScrollView
+        android:id="@+id/scrollview1"
+        android:layout_below="@id/ttoolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:id="@+id/relative1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/nama_merchant"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="30dp"
+                android:text="@string/nama"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                app:fontFamily="sans-serif-condensed-medium" />
+
+            <EditText
+                android:id="@+id/edtmerchant"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/nama_merchant"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="30dp"
+                android:background="@drawable/custom_edt2"
+                android:gravity="start|center_vertical"
+                android:inputType="textPersonName"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                app:fontFamily="sans-serif-condensed-medium" />
+
+            <TextView
+                android:id="@+id/nama_pemilik"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/edtmerchant"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="30dp"
+                android:text="@string/pemilik"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                app:fontFamily="sans-serif-condensed-medium" />
+
+            <EditText
+                android:id="@+id/edtpemilik"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/nama_pemilik"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="30dp"
+                android:background="@drawable/custom_edt2"
+                android:gravity="start|center_vertical"
+                android:inputType="textPersonName"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                app:fontFamily="sans-serif-condensed-medium" />
+
+            <TextView
+                android:id="@+id/alamat"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/edtpemilik"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="30dp"
+                android:text="@string/alamat"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                app:fontFamily="sans-serif-condensed-medium" />
+
+            <EditText
+                android:id="@+id/edtalamat"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/alamat"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="30dp"
+                android:background="@drawable/custom_edt2"
+                android:gravity="start|center_vertical"
+                android:inputType="textPostalAddress"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                app:fontFamily="sans-serif-condensed-medium" />
+
+            <TextView
+                android:id="@+id/no_telp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/edtalamat"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="30dp"
+                android:text="@string/nomor_telepon"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                app:fontFamily="sans-serif-condensed-medium"/>
+
+            <EditText
+                android:id="@+id/edtnotelp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/no_telp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="30dp"
+                android:background="@drawable/custom_edt2"
+                android:gravity="start|center_vertical"
+                android:inputType="phone"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                app:fontFamily="sans-serif-condensed-medium" />
+
+            <TextView
+                android:id="@+id/kategori"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/edtnotelp"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="30dp"
+                android:text="@string/kategori"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                app:fontFamily="sans-serif-condensed-medium"/>
+
+            <Spinner
+                android:id="@+id/category_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_below="@id/kategori"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="30dp"
+                android:layout_marginBottom="10dp"
+                android:spinnerMode="dropdown"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                app:fontFamily="sans-serif-condensed-medium">
+            </Spinner>
+
+            <View
+                android:id="@+id/layout_divider"
+                android:layout_width="match_parent"
+                android:layout_height="1.5dp"
+                android:background="#E1E1E1"
+                android:layout_below="@+id/category_spinner"
+                android:layout_marginTop="10dp"/>
+
+            <RelativeLayout
+                android:id="@+id/relstive2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_below="@+id/layout_divider">
+
+                <TextView
+                    android:id="@+id/lbl_map"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="30dp"
+                    android:text="Map"
+                    android:textColor="#000000"
+                    android:textSize="18sp"
+                    android:layout_marginBottom="20dp"
+                    app:fontFamily="sans-serif-condensed-medium"/>
+
+                <Button
+                    android:id="@+id/btnreset"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/resetlokasi"
+                    android:textAllCaps="false"
+                    android:textSize="10sp"
+                    android:gravity="center"
+                    android:layout_alignBottom="@id/mapFragment"
+                    android:layout_alignEnd="@id/mapFragment"
+                    android:layout_margin="10dp"
+                    app:fontFamily="serif" />
+
+                <fragment
+                    android:id="@+id/mapFragment"
+                    android:layout_below="@id/lbl_map"
+                    android:name="com.google.android.gms.maps.MapFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    class="com.example.bappeda.Utils.ScrollableMapView"/>
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/linear2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/relstive2"
+                android:background="#E1E1E1"
+                android:padding="15dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textLatitude"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    android:ellipsize="end"
+                    android:layout_marginEnd="5dp"
+                    app:fontFamily="sans-serif-condensed-medium" />
+
+                <TextView
+                    android:id="@+id/textLongitude"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:layout_marginStart="5dp"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    android:ellipsize="end"
+                    app:fontFamily="sans-serif-condensed-medium" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/lbl_foto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="30dp"
+                android:text="Upload Foto"
+                android:layout_below="@id/linear2"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                app:fontFamily="sans-serif-condensed-medium"/>
+
+            <TextView
+                android:id="@+id/txt_foto"
+                android:layout_below="@+id/lbl_foto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginBottom="20dp"
+                android:text="@string/icon_camera"
+                android:textSize="12sp"
+                app:fontFamily="sans-serif-condensed-medium" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_below="@id/txt_foto"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:orientation="horizontal">
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+            <Button
+                android:id="@+id/buttontambah"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/recyclerView"
+                android:layout_gravity="center"
+                android:layout_marginLeft="70dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="70dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/custom_button2"
+                android:fontFamily="sans-serif-black"
+                android:gravity="center"
+                android:text="@string/simpan"
+                android:textAllCaps="false"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp" />
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+</RelativeLayout>

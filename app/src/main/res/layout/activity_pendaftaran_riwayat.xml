@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    tools:context=".MenuSurvey.RiwayatSurveyActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/blueLight"
+            app:titleTextColor="@color/white"
+            android:minHeight="?attr/actionBarSize"
+            app:popupTheme="@style/AppTheme.NoActionBar.TitleTextStyle">
+
+        </androidx.appcompat.widget.Toolbar>
+
+        <LinearLayout
+            android:id="@+id/linear_tanggal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@color/blueLight">
+
+            <TextView
+                android:id="@+id/txt_tanggalawal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/custom_edt4"
+                android:clickable="true"
+                android:drawableStart="@drawable/ic_calendar"
+                android:focusable="true"
+                android:gravity="center"
+                android:hint="Tanggal Awal"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:textSize="15sp"
+                android:textColor="#000000"/>
+
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="15dp"
+                android:layout_gravity="center_horizontal|center_vertical|center"
+                android:layout_marginBottom="20dp"
+                android:src="@drawable/ic_remove" />
+
+            <TextView
+                android:id="@+id/txt_tanggalakhir"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/custom_edt4"
+                android:clickable="true"
+                android:drawableStart="@drawable/ic_calendar"
+                android:focusable="true"
+                android:gravity="center"
+                android:hint="Tanggal Akhir"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:textSize="15sp"
+                android:textColor="#000000"/>
+
+            <ImageButton
+                android:id="@+id/btnproses"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="13dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/custom_button3"
+                android:gravity="center"
+                android:src="@drawable/ic_proses"
+                android:textAllCaps="false"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp"
+                app:fontFamily="sans-serif-condensed-medium" />
+
+        </LinearLayout>
+
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:orientation="vertical">-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/txt_tanggalawal"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginLeft="50dp"-->
+<!--                android:layout_marginTop="20dp"-->
+<!--                android:layout_marginRight="50dp"-->
+<!--                android:background="@drawable/custom_edt3"-->
+<!--                android:clickable="true"-->
+<!--                android:drawableStart="@drawable/ic_calendar"-->
+<!--                android:focusable="true"-->
+<!--                android:gravity="center"-->
+<!--                android:hint="Tanggal Awal"-->
+<!--                android:paddingStart="10dp"-->
+<!--                android:paddingEnd="10dp"-->
+<!--                android:textSize="17sp"-->
+<!--                android:textColor="#000000"/>-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/txt_tanggalakhir"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginLeft="50dp"-->
+<!--                android:layout_marginTop="20dp"-->
+<!--                android:layout_marginRight="50dp"-->
+<!--                android:background="@drawable/custom_edt3"-->
+<!--                android:clickable="true"-->
+<!--                android:drawableStart="@drawable/ic_calendar"-->
+<!--                android:focusable="true"-->
+<!--                android:gravity="center"-->
+<!--                android:hint="Tanggal Akhir"-->
+<!--                android:paddingStart="10dp"-->
+<!--                android:paddingEnd="10dp"-->
+<!--                android:textSize="17sp"-->
+<!--                android:textColor="#000000"/>-->
+
+<!--            <Button-->
+<!--                android:id="@+id/btnproses"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_gravity="center"-->
+<!--                android:layout_marginLeft="50dp"-->
+<!--                android:layout_marginTop="20dp"-->
+<!--                android:layout_marginRight="50dp"-->
+<!--                android:layout_marginBottom="10dp"-->
+<!--                android:background="@drawable/custom_button2"-->
+<!--                android:gravity="center"-->
+<!--                android:text="Proses"-->
+<!--                android:textAllCaps="false"-->
+<!--                android:textColor="#FFFFFF"-->
+<!--                android:textSize="20sp"-->
+<!--                app:fontFamily="sans-serif-condensed-medium" />-->
+
+<!--        </LinearLayout>-->
+
+        <ListView
+            android:id="@+id/list_survey"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+            android:scrollbars="vertical">
+        </ListView>
+
+    </LinearLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btn_plus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginEnd="20dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="20dp"
+        android:backgroundTint="#FFFFFF"
+        android:visibility="gone"
+        android:src="@drawable/ic_add"
+        app:fabSize="normal"  />
+
+</RelativeLayout>

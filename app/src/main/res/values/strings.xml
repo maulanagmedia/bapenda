@@ -1,0 +1,87 @@
+<resources>
+    <string name="app_name">Bapenda Semarang</string>
+    <string name="api_unauthorized" />
+    <string name="api_error" />
+    <string name="app_channel_id">""</string>
+
+    <string name="daftar">Terdaftar</string>
+    <string name="belum">Menolak</string>
+
+    <!-- Menu Pendataran -->
+    <!-- Menu Monitoring -->
+    <!-- Menu Survey -->
+    <!-- Menu Admin -->
+    <string name="pendaftaran_sudah">Terdaftar</string>
+    <string name="nama">Nama Wajib Pajak</string>
+    <string name="alamat">Alamat Wajib Pajak</string>
+    <string name="status">Status :</string>
+    <string name="ket">Keterangan</string>
+    <string name="alasan">Alasan</string>
+    <string name="text_tanggal">Tanggal Survey</string>
+    <string name="tanggal_daftar">Tanggal Pendaftaran : </string>
+    <string name="isi_tanggal">Value Tanggal</string>
+
+    <!--FCM-->
+    <string name="fcm_token">FCM Token: %s</string>
+
+    <string name="tidak_daftar">Tidak Daftar</string>
+    <string name="keterangan">Ketik alasan disini ......</string>
+    <string name="keputusan">Keputusan</string>
+    <string name="simpan">Simpan</string>
+    <string name="daftarr">Daftar</string>
+    <string name="text_popup">Apakah wajib pajak tersebut berkenan untuk di daftarkan?</string>
+    <string name="setuju">  Wajib pajak setuju untuk didaftarkan</string>
+    <string name="tidak_setuju">  Wajib menolak untuk didaftarkan</string>
+    <string name="ket_caps">KETERANGAN</string>
+    <string name="hint_keterangan">Tulis keterangan tugas survey</string>
+    <string name="hint_keteranganMonitoring">Tulis keterangan tugas monitoring</string>
+    <string name="hint_keteranganHubungi">Tulis keterangan tugas</string>
+    <string name="ya">Ya,</string>
+    <string name="tidak">Tidak, </string>
+    <string name="hapus">Hapus</string>
+    <string name="icon_camera">Tekan icon kamera untuk menambahkan foto</string>
+    <string name="contohTanggal">13 September 2019</string>
+    <string name="textJadwal">Jadwal Untuk Hari Ini</string>
+    <string name="full_daftar">Ya, wajib pajak setuju untuk didaftarkan</string>
+    <string name="full_tidakdaftar">Tidak, wajib pajak menolak untuk didaftarkan</string>
+
+    <string name="pemilik">Nama Pemilik</string>
+    <string name="nomor_telepon">Nomor Telepon</string>
+    <string name="kategori">Kategori</string>
+    <string name="latitude">Latitude</string>
+    <string name="longitude">Longitude</string>
+    <string name="save">Save</string>
+    <string name="logout">Logout</string>
+    <string name="edit_data">Edit Data</string>
+    <string name="bapenda">BAPENDA</string>
+    <string name="resetlokasi">Reset Lokasi Saat Ini</string>
+    <string name="batal">Batal</string>
+    <string name="fulldata">*Data harus diisi seluruhnya</string>
+    <string name="agreement">I agree the terms and conditions.</string>
+    <string name="notif">Notif</string>
+    <string name="setting">Setting</string>
+    <string name="error_message">Gagal memuat data</string>
+
+    <string name="default_notification_channel_id">notification_channel_id_01</string>
+    <string name="tanda_koma">,</string>
+    <string name="judul_monitor">Tugas Monitoring</string>
+    <string name="monitoring">Monitoring</string>
+    <string name="judul_survey">Tugas Survey</string>
+    <string name="survey">Survey</string>
+    <string name="hubungi">Hubungi Petugas</string>
+    <string name="text_tutup">Apakah wajib pajak tersebut telah berhenti beroperasi?</string>
+    <string name="hint_Tutup">Tulis keterangan mengapa wajib pajak tersebut berhenti beroperasi</string>
+
+    <!--Confirm Dialog-->
+    <string name="confirm_simpan">Apakah Anda yakin untuk menyimpan data ini?</string>
+    <string name="confirm_yes">Simpan Data</string>
+    <string name="confirm_update">Apakah Anda yakin ingin mengubah data ini?</string>
+    <string name="confirm_edit">Ubah Data</string>
+    <string name="confirm_kirim">Apakah Anda yakin ingin mengirim tugas ini?</string>
+    <string name="confirm_send">Kirim Data</string>
+    <string name="confirm_tutup">Apakah Anda yakin ingin menutup wajib pajak ini?</string>
+    <string name="confirm_close">Tutup Wajib Pajak</string>
+    <string name="confirm_no">Cancel</string>
+    <string name="riwayat_merchant_tutup">Anda belum melakukan penutupan wajib pajak hari ini</string>
+
+</resources>

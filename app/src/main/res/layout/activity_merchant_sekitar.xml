@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.sothree.slidinguppanel.SlidingUpPanelLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:sothree="http://schemas.android.com/apk/com.example.bappeda"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/sliding_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:gravity="bottom"
+    sothree:panelHeight="68dp"
+    sothree:shadowHeight="4dp"
+    app:umanoAnchorPoint="0.5"
+    tools:context="com.example.bappeda.MenuMerchants.MerchantSekitarActivity">
+
+    <LinearLayout
+        android:id="@+id/bottom_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:background="#FFF"
+        android:orientation="vertical">
+        <!--BOTTOM;MAP-->
+        <RelativeLayout
+            android:id="@+id/relstive2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Button
+                android:id="@+id/btnreset"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/resetlokasi"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                android:padding="10dp"
+                android:background="@drawable/style_rounded_blue_dark_rectangle"
+                android:gravity="center"
+                android:layout_alignBottom="@id/mapFragment"
+                android:layout_alignEnd="@id/mapFragment"
+                android:layout_margin="10dp"
+                app:fontFamily="serif" />
+
+            <fragment
+                android:id="@+id/mapFragment"
+                android:name="com.google.android.gms.maps.MapFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/top_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical">
+        <!--TOP;LIST MERCHANT-->
+
+        <View
+            android:id="@+id/layout_divider1"
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:background="#E1E1E1"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Merchant Terdekat"
+            android:layout_marginTop="20dp"
+            android:textAllCaps="true"
+            android:layout_gravity="center_horizontal"
+            android:textSize="18sp"
+            android:textColor="#333"/>
+
+        <View
+            android:id="@+id/layout_divider2"
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:background="#E1E1E1"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_merchantkategori"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="20dp"
+            tools:listitem="@layout/item_kategori_merchant"/>
+
+        <ListView
+            android:id="@+id/list_merchantSekitar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+            android:layout_marginBottom="10dp"
+            android:scrollbars="vertical">
+        </ListView>
+
+    </LinearLayout>
+
+</com.sothree.slidinguppanel.SlidingUpPanelLayout>
