@@ -12,10 +12,13 @@ import com.example.bappeda.MenuAdmin.HubungiPetugas.PetugasUntukHubungi;
 import com.example.bappeda.MenuAdmin.Monitoring.PetugasMonitoringActivity;
 import com.example.bappeda.MenuAdmin.Survey.PetugasSurveyActivity;
 import com.example.bappeda.R;
+import com.example.bappeda.Utils.Preferences;
+
+import java.util.Set;
 
 public class PenugasanPetugasActivity extends AppCompatActivity {
 
-    CardView survey, monitoring, hubungipetugas;
+    private CardView survey, monitoring, hubungipetugas;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,5 +65,21 @@ public class PenugasanPetugasActivity extends AppCompatActivity {
                 startActivity(m);
             }
         });
+
+        Set<String> listSubMenu = Preferences.getSubMenu(PenugasanPetugasActivity.this);
+
+        for(String menu: listSubMenu){
+
+            if(menu.equals("tugas_untuk_survey")){
+
+                survey.setVisibility(View.VISIBLE);
+            }else if (menu.equals("tugas_untuk_monitoring")){
+
+                monitoring.setVisibility(View.VISIBLE);
+            }else if (menu.equals("hubungi_petugas")){
+
+                hubungipetugas.setVisibility(View.VISIBLE);
+            }
+        }
     }
 }

@@ -12,19 +12,10 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?android:actionBarSize"
-        android:background="@color/blueLight"
-        app:titleTextColor="@color/white"
+        android:background="@color/white"
+        app:titleTextColor="@color/black"
         android:minHeight="?attr/actionBarSize"
         app:popupTheme="@style/AppTheme.NoActionBar.TitleTextStyle"/>
-
-    <!--<androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_kategori"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:background="@color/blueLight"
-        tools:listitem="@layout/list_kategori_merchant_white">
-    </androidx.recyclerview.widget.RecyclerView>-->
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_notification"

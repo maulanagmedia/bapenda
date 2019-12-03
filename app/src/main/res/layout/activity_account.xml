@@ -11,7 +11,7 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/blueLight"
+        android:background="@color/colorPrimary"
         app:titleTextColor="@color/white"
         android:layout_alignParentTop="true"
         android:minHeight="?attr/actionBarSize"
@@ -100,17 +100,15 @@
                                 android:id="@+id/namaLengkap"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                app:fontFamily="sans-serif-medium"
-                                android:text="Nama"
-                                android:textStyle="bold"
                                 android:gravity="start"
+                                android:text="Nama"
                                 android:textColor="#000000"
                                 android:textSize="20sp" />
 
                             <ImageButton
                                 android:id="@+id/btnEditNama"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                android:layout_width="@dimen/icon_size"
+                                android:layout_height="@dimen/icon_size"
                                 android:src="@drawable/greyedit"
                                 android:background="@null"
                                 android:visibility="visible"
@@ -122,11 +120,10 @@
                             android:id="@+id/edtNama"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            app:fontFamily="sans-serif-medium"
                             android:gravity="start"
                             android:layout_marginTop="5dp"
                             android:textColor="#000000"
-                            android:textSize="20sp"/>
+                            android:textSize="@dimen/text_mid"/>
 
                     </LinearLayout>
 
@@ -137,7 +134,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:layout_marginTop="15dp">
+                    android:layout_marginTop="@dimen/padding_default">
 
                     <ImageView
                         android:id="@+id/gbr_kontak"
@@ -162,17 +159,15 @@
                                 android:id="@+id/textKontak"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                app:fontFamily="sans-serif-medium"
                                 android:text="Kontak"
-                                android:textStyle="bold"
                                 android:gravity="start"
                                 android:textColor="#000000"
                                 android:textSize="20sp" />
 
                             <ImageButton
                                 android:id="@+id/btnEdtKontak"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                android:layout_width="@dimen/icon_size"
+                                android:layout_height="@dimen/icon_size"
                                 android:src="@drawable/greyedit"
                                 android:background="@null"
                                 android:visibility="visible"
@@ -184,11 +179,10 @@
                             android:id="@+id/edtKontak"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            app:fontFamily="sans-serif-medium"
                             android:gravity="start"
                             android:layout_marginTop="5dp"
                             android:textColor="#000000"
-                            android:textSize="20sp"/>
+                            android:textSize="@dimen/text_mid"/>
 
                     </LinearLayout>
 
@@ -199,7 +193,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:layout_marginTop="15dp">
+                    android:layout_marginTop="@dimen/padding_default">
 
                     <ImageView
                         android:id="@+id/gbr_pass"
@@ -224,17 +218,15 @@
                                 android:id="@+id/textPassword"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                app:fontFamily="sans-serif-medium"
                                 android:text="Password"
-                                android:textStyle="bold"
                                 android:gravity="start"
                                 android:textColor="#000000"
                                 android:textSize="20sp" />
 
                             <ImageButton
                                 android:id="@+id/btnEdtPass"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                android:layout_width="@dimen/icon_size"
+                                android:layout_height="@dimen/icon_size"
                                 android:src="@drawable/greyedit"
                                 android:background="@null"
                                 android:visibility="visible"
@@ -245,12 +237,11 @@
                             android:id="@+id/edtPass"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            app:fontFamily="sans-serif-medium"
                             android:gravity="start"
                             android:inputType="textPassword"
                             android:layout_marginTop="5dp"
                             android:textColor="#000000"
-                            android:textSize="20sp"/>
+                            android:textSize="@dimen/text_mid"/>
 
                     </LinearLayout>
 
@@ -318,9 +309,7 @@
                         android:layout_marginStart="5dp"
                         android:text="@string/logout"
                         android:textColor="#000000"
-                        android:textSize="20sp"
-                        android:textStyle="bold"
-                        app:fontFamily="sans-serif-medium"/>
+                        android:textSize="20sp"/>
 
                 </LinearLayout>
 

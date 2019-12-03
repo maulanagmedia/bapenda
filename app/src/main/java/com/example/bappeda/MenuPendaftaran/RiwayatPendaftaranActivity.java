@@ -20,7 +20,6 @@ import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.bappeda.Adapter.PageAdapter;
-import com.example.bappeda.MenuPendaftaran.Fragment.BelumTerdaftarFragment;
 import com.example.bappeda.MenuPendaftaran.Fragment.DaftarFragment;
 import com.example.bappeda.R;
 import com.google.android.material.tabs.TabItem;
@@ -33,14 +32,14 @@ import java.util.Locale;
 
 public class RiwayatPendaftaranActivity extends AppCompatActivity {
 
-    TabLayout tabLayout;
-    TabItem tabdaftar, tabbelum;
-    ViewPager viewPager;
-    PageAdapter pageAdapter;
+    private TabLayout tabLayout;
+    private TabItem tabdaftar, tabbelum;
+    private ViewPager viewPager;
+    private PageAdapter pageAdapter;
 
-    TextView tanggal_awal, tanggal_akhir;
-    ImageButton buttonproses;
-    Calendar myCalendar;
+    private TextView tanggal_awal, tanggal_akhir;
+    private ImageButton buttonproses;
+    private Calendar myCalendar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,11 +76,21 @@ public class RiwayatPendaftaranActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Fragment fragment = pageAdapter.getActiveFragment();
                 if (fragment!=null){
-                    if (fragment instanceof DaftarFragment){
-                        ((DaftarFragment)fragment).loadData(tanggal_awal.getText().toString(), tanggal_akhir.getText().toString());
-                    } else if (fragment instanceof BelumTerdaftarFragment){
-                        ((BelumTerdaftarFragment) fragment).loadData(tanggal_awal.getText().toString(), tanggal_akhir.getText().toString());
+
+                    int poisition = tabLayout.getSelectedTabPosition();
+
+                    if (poisition == 0){
+
+                        ((DaftarFragment) fragment).statusMerhcant = ((DaftarFragment) fragment).statusTerdaftar;
+                    } else {
+
+                        ((DaftarFragment) fragment).statusMerhcant = ((DaftarFragment) fragment).statusTidakTerdaftar;
                     }
+
+                    ((DaftarFragment) fragment).tglAwal = tanggal_awal.getText().toString();
+                    ((DaftarFragment) fragment).tglAkhir = tanggal_akhir.getText().toString();
+                    ((DaftarFragment) fragment).start = 0;
+                    ((DaftarFragment) fragment).loadData();
                 }
             }
         });
@@ -93,6 +102,22 @@ public class RiwayatPendaftaranActivity extends AppCompatActivity {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 viewPager.setCurrentItem(tab.getPosition());
+
+                Fragment fragment = pageAdapter.getActiveFragment();
+                int poisition = tabLayout.getSelectedTabPosition();
+
+                if (poisition == 0){
+
+                    ((DaftarFragment) fragment).statusMerhcant = ((DaftarFragment) fragment).statusTerdaftar;
+                } else {
+
+                    ((DaftarFragment) fragment).statusMerhcant = ((DaftarFragment) fragment).statusTidakTerdaftar;
+                }
+
+                ((DaftarFragment) fragment).tglAwal = tanggal_awal.getText().toString();
+                ((DaftarFragment) fragment).tglAkhir = tanggal_akhir.getText().toString();
+                ((DaftarFragment) fragment).start = 0;
+                ((DaftarFragment) fragment).loadData();
             }
 
             @Override
@@ -121,19 +146,22 @@ public class RiwayatPendaftaranActivity extends AppCompatActivity {
             public boolean onQueryTextSubmit(String s) {
                 Fragment fragment = pageAdapter.getActiveFragment();
                 if (fragment!=null){
-                    if (fragment instanceof DaftarFragment){
-                        ((DaftarFragment) fragment).searchByName(s);
-                        if (TextUtils.isEmpty(s)){
-                            ((DaftarFragment)fragment).loadData(tanggal_awal.getText().toString(), tanggal_akhir.getText().toString());
-                        }
-                        Log.d("Riwayat_log", String.valueOf(s));
-                    } else if (fragment instanceof BelumTerdaftarFragment){
-                        ((BelumTerdaftarFragment) fragment).searchByName(s);
-                        if (TextUtils.isEmpty(s)){
-                            ((BelumTerdaftarFragment) fragment).loadData(tanggal_awal.getText().toString(), tanggal_akhir.getText().toString());
-                        }
-                        Log.d("Riwayat_log", String.valueOf(s));
+
+                    int position = tabLayout.getSelectedTabPosition();
+
+                    if (position == 0){
+
+                        ((DaftarFragment) fragment).statusMerhcant = ((DaftarFragment) fragment).statusTerdaftar;
+                    } else {
+
+                        ((DaftarFragment) fragment).statusMerhcant = ((DaftarFragment) fragment).statusTidakTerdaftar;
                     }
+
+                    ((DaftarFragment) fragment).tglAwal = tanggal_awal.getText().toString();
+                    ((DaftarFragment) fragment).tglAkhir = tanggal_akhir.getText().toString();
+                    ((DaftarFragment) fragment).start = 0;
+                    ((DaftarFragment) fragment).keyword = s;
+                    ((DaftarFragment) fragment).loadData();
                 }
                 return true;
             }
@@ -141,21 +169,25 @@ public class RiwayatPendaftaranActivity extends AppCompatActivity {
             @Override
             public boolean onQueryTextChange(String s) {
                 if (!searchView.isIconified() && TextUtils.isEmpty(s)) {
+
                     Fragment fragment = pageAdapter.getActiveFragment();
                     if (fragment!=null){
-                        if (fragment instanceof DaftarFragment){
-                            ((DaftarFragment) fragment).searchByName(s);
-                            if (TextUtils.isEmpty(s)){
-                                ((DaftarFragment)fragment).loadData(tanggal_awal.getText().toString(), tanggal_akhir.getText().toString());
-                            }
-                            Log.d("Riwayat_log", String.valueOf(s));
-                        } else if (fragment instanceof BelumTerdaftarFragment){
-                            ((BelumTerdaftarFragment) fragment).searchByName(s);
-                            if (TextUtils.isEmpty(s)){
-                                ((BelumTerdaftarFragment) fragment).loadData(tanggal_awal.getText().toString(), tanggal_akhir.getText().toString());
-                            }
-                            Log.d("Riwayat_log", String.valueOf(s));
+
+                        int position = tabLayout.getSelectedTabPosition();
+
+                        if (position == 0){
+
+                            ((DaftarFragment) fragment).statusMerhcant = ((DaftarFragment) fragment).statusTerdaftar;
+                        } else {
+
+                            ((DaftarFragment) fragment).statusMerhcant = ((DaftarFragment) fragment).statusTidakTerdaftar;
                         }
+
+                        ((DaftarFragment) fragment).tglAwal = tanggal_awal.getText().toString();
+                        ((DaftarFragment) fragment).tglAkhir = tanggal_akhir.getText().toString();
+                        ((DaftarFragment) fragment).start = 0;
+                        ((DaftarFragment) fragment).keyword = s;
+                        ((DaftarFragment) fragment).loadData();
                     }
                 }
                 return false;
@@ -217,7 +249,7 @@ public class RiwayatPendaftaranActivity extends AppCompatActivity {
     }
 
     private void tanggalAwalFormat(){
-        String myFormat = "yyyy-MM-01";
+        String myFormat = "yyyy-MM-dd";
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
         String dateName = sdf.format(new Date());
         tanggal_awal.setText(dateName);

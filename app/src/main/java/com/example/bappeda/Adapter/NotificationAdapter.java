@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -11,6 +12,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.bappeda.Model.NotificationModel;
 import com.example.bappeda.R;
+import com.example.bappeda.Utils.FormatItem;
+import com.example.bappeda.Utils.ImageLoader;
+import com.example.bappeda.Utils.ItemValidation;
 
 import java.util.List;
 
@@ -18,6 +22,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     private Context context;
     private List<NotificationModel> listNotification;
+    private ItemValidation iv = new ItemValidation();
 
     public NotificationAdapter(Context context, List<NotificationModel> listNotification){
         this.context = context;
@@ -34,20 +39,13 @@ public class NotificationAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
-        if (viewType == NotificationModel.TYPE_GENERAL){
-            return new NotificationViewHolder(inflater.inflate(R.layout.item_notification, parent, false));
-        } else {
-            return new HubungiPetugasHolder(inflater.inflate(R.layout.item_notif_hubungi, parent, false));
-        }
+        return new NotificationViewHolder(inflater.inflate(R.layout.adapter_notification, parent, false));
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        if (holder instanceof NotificationViewHolder){
-            ((NotificationViewHolder) holder).bind(listNotification.get(position));
-        } else if (holder instanceof HubungiPetugasHolder){
-            ((HubungiPetugasHolder) holder).bind(listNotification.get(position));
-        }
+
+        ((NotificationViewHolder) holder).bind(listNotification.get(position));
     }
 
     @Override
@@ -57,54 +55,28 @@ public class NotificationAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     class NotificationViewHolder extends RecyclerView.ViewHolder{
 
-        View layout_parent;
-        TextView txt_judul, txt_tanggal, txt_nama, txt_alamat, txt_deskripsi; //untuk survey dan monitoring
-
+        TextView tvItem1, tvItem2, tvItem3, tvItem4, tvItem5;
+        ImageView ivIcon;
 
         NotificationViewHolder(@NonNull View itemView) {
             super(itemView);
-            layout_parent = itemView.findViewById(R.id.layout_parent);
-            txt_judul = itemView.findViewById(R.id.txt_judul);
-            txt_tanggal = itemView.findViewById(R.id.txt_tanggal);
-            txt_nama = itemView.findViewById(R.id.txt_nama);
-            txt_alamat = itemView.findViewById(R.id.txt_alamat);
-            txt_deskripsi = itemView.findViewById(R.id.txt_deskripsi);
+            tvItem1 = (TextView) itemView.findViewById(R.id.tv_item1);
+            tvItem2 = (TextView) itemView.findViewById(R.id.tv_item2);
+            tvItem3 = (TextView) itemView.findViewById(R.id.tv_item3);
+            tvItem4 = (TextView) itemView.findViewById(R.id.tv_item4);
+            tvItem5 = (TextView) itemView.findViewById(R.id.tv_item5);
+            ivIcon = (ImageView) itemView.findViewById(R.id.iv_icon);
         }
 
         void bind(final NotificationModel n){
-            txt_judul.setText(n.getJudul());
-            txt_nama.setText(n.getMerchant());
-            txt_alamat.setText(n.getAlamat());
-            txt_deskripsi.setText(n.getDeskripsi());
-            txt_tanggal.setText(n.getTanggal());
 
-            /*layout_parent.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent i = new Intent(context, PutusanPendaftaranActivity.class);
-                    Gson gson = new Gson();
-                    i.putExtra(URL.EXTRA_MERCHANT, gson.toJson(n.getMerchant()));
-                    context.startActivity(i);
-                }
-            });*/
-        }
-    }
+            tvItem1.setText(n.getJudul());
+            tvItem2.setText(n.getMerchant());
+            tvItem3.setText(n.getAlamat());
+            tvItem4.setText(n.getDeskripsi());
+            tvItem5.setText(iv.ChangeFormatDateString(n.getTanggal(), FormatItem.formatDate, FormatItem.formatDateDisplay));
 
-    class HubungiPetugasHolder extends RecyclerView.ViewHolder{
-
-        TextView judul, tanggal, deskripsi; //untuk hubungi petugas
-
-        public HubungiPetugasHolder(@NonNull View itemView) {
-            super(itemView);
-            judul = itemView.findViewById(R.id.txt_judulHub);
-            tanggal = itemView.findViewById(R.id.txt_tanggalHub);
-            deskripsi = itemView.findViewById(R.id.txt_deskripsiHub);
-        }
-
-        void bind(final NotificationModel n){
-            judul.setText(n.getJudul());
-            tanggal.setText(n.getTanggal());
-            deskripsi.setText(n.getDeskripsi());
+            ImageLoader.load(context, n.getImage(), ivIcon);
         }
     }
 

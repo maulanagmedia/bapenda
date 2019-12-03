@@ -63,7 +63,7 @@ import java.util.List;
 public class MerchantSekitarActivity extends AppCompatActivity implements
         OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
-    private final String TAG = "MerchantSekitarActivity";
+    private final String TAG = "Mer chantSekitarActivity";
 
     private SlidingUpPanelLayout mLayout;
 

@@ -14,9 +14,9 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/layout_survey"
         android:layout_centerVertical="true"
-        android:layout_width="@dimen/merchant_image_size"
-        android:layout_height="@dimen/merchant_image_size"
-        app:cardCornerRadius="5dp"
+        android:layout_width="@dimen/big_image_size"
+        android:layout_height="@dimen/big_image_size"
+        app:cardCornerRadius="@dimen/default_corner"
         android:layout_margin="2dp">
 
         <ImageView
@@ -58,7 +58,6 @@
             android:layout_height="wrap_content"
             android:textColor="#000000"
             android:textSize="16sp"
-            android:layout_marginTop="2dp"
             android:text="Status"/>
 
         <TextView
@@ -67,6 +66,15 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
             android:textColor="#45E745"
+            android:textSize="16sp"
+            app:fontFamily="sans-serif"/>
+
+        <TextView
+            android:id="@+id/txt_status_batal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:textColor="#CA0000"
             android:textSize="16sp"
             app:fontFamily="sans-serif"/>
 

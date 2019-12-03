@@ -7,6 +7,7 @@ public class NotificationModel {
     private String deskripsi;
     private String merchant;
     private String alamat;
+    private String image;
 
     //Type
     public static final int TYPE_GENERAL = 0;
@@ -75,5 +76,13 @@ public class NotificationModel {
     }
     public void setType(int type) {
         this.type = type;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }

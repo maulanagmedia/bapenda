@@ -1,14 +1,21 @@
 package com.example.bappeda.MenuHome;
 
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Point;
 import android.os.Build;
 import android.os.Bundle;
+import android.se.omapi.Session;
 import android.util.Log;
+import android.view.Display;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.GridLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,6 +35,7 @@ import com.example.bappeda.Services.DemoLocationService;
 import com.example.bappeda.Services.InitFirebaseSetting;
 import com.example.bappeda.Utils.ApiVolley;
 import com.example.bappeda.Utils.ImageLoader;
+import com.example.bappeda.Utils.ItemValidation;
 import com.example.bappeda.Utils.Preferences;
 import com.example.bappeda.Utils.URL;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -38,6 +46,8 @@ import com.google.firebase.iid.InstanceIdResult;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Set;
+
 public class HomeActivity extends AppCompatActivity {
 
     private TextView namacustomer;
@@ -47,8 +57,11 @@ public class HomeActivity extends AppCompatActivity {
     private String name;
     private String id_level;
 
-    ApiVolley apiVolley;
+    private ApiVolley apiVolley;
     private final String TAG = "HomeActivity";
+    private ItemValidation iv = new ItemValidation();
+    private Context context;
+    private LinearLayout menuContainer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +76,8 @@ public class HomeActivity extends AppCompatActivity {
             startService(new Intent(HomeActivity.this, DemoLocationService.class));
         }
 
+        context = this;
+
         Toolbar toolbar = findViewById(R.id.hometoolbar);
         setSupportActionBar(toolbar);
         if (getSupportActionBar()!=null){
@@ -71,16 +86,68 @@ public class HomeActivity extends AppCompatActivity {
         }
 
         namacustomer = findViewById(R.id.txt_nama_petugas);
+        profile = findViewById(R.id.img_profile);
         pendaftaran = findViewById(R.id.CardPendaftaran);
         survey = findViewById(R.id.CardSurvey);
         monitoring = findViewById(R.id.CardMonitoring);
         menu_admin = findViewById(R.id.CardAdmin);
         merchants = findViewById(R.id.CardMerchant);
-        profile = findViewById(R.id.img_profile);
+        menuContainer = (LinearLayout) findViewById(R.id.LinearPutih);
+
+        Display display = getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        try {
+            // this is why the minimal sdk must be JB
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                display.getRealSize(size);
+            }else {
+                display.getSize(size);
+            }
+        } catch (NoSuchMethodError err) {
+            display.getSize(size);
+        }
+
+        int menuWidth = 0;
+        menuWidth = (size.x / 2) - iv.dpToPx(HomeActivity.this, 20  );
+
+        LinearLayout.LayoutParams lpp = (LinearLayout.LayoutParams) menuContainer.getLayoutParams();
+        lpp.height = size.y;
+        menuContainer.setLayoutParams(lpp);
+
+        GridLayout.LayoutParams lp = (GridLayout.LayoutParams) pendaftaran.getLayoutParams();
+        lp.width = menuWidth;
+        lp.height = menuWidth;
+        int lenght = iv.dpToPx(context, 2);
+        lp.setMargins(lenght, lenght, lenght, lenght);
+        pendaftaran.setLayoutParams(lp);
+
+        GridLayout.LayoutParams lp1 = (GridLayout.LayoutParams) survey.getLayoutParams();
+        lp1.width = menuWidth;
+        lp1.height = menuWidth;
+        lp1.setMargins(lenght, lenght, lenght, lenght);
+        survey.setLayoutParams(lp1);
+
+        GridLayout.LayoutParams lp2 = (GridLayout.LayoutParams) merchants.getLayoutParams();
+        lp2.width = menuWidth;
+        lp2.height = menuWidth;
+        lp2.setMargins(lenght, lenght, lenght, lenght);
+        merchants.setLayoutParams(lp2);
+
+        GridLayout.LayoutParams lp3 = (GridLayout.LayoutParams) menu_admin.getLayoutParams();
+        lp3.width = menuWidth;
+        lp3.height = menuWidth;
+        lp3.setMargins(lenght, lenght, lenght, lenght);
+        menu_admin.setLayoutParams(lp3);
+
+        GridLayout.LayoutParams lp4 = (GridLayout.LayoutParams) monitoring.getLayoutParams();
+        lp4.width = menuWidth;
+        lp4.height = menuWidth;
+        lp4.setMargins(lenght, lenght, lenght, lenght);
+        monitoring.setLayoutParams(lp4);
 
         id_level = Preferences.getLevelPref(getBaseContext());
 
-        if (id_level.equals("2")){ //Petugas
+        /*if (id_level.equals("2")){ //Petugas
            forPetugas();
         } else if (id_level.equals("3")){ //Supervisor
             forSupervisor();
@@ -88,7 +155,15 @@ public class HomeActivity extends AppCompatActivity {
            forKasubbag();
         } else if (id_level.equals("5")){ //Admin
            forAdmin();
-        }
+        }*/
+
+        menu_admin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent b = new Intent(HomeActivity.this, PenugasanPetugasActivity.class);
+                startActivity(b);
+            }
+        });
 
         pendaftaran.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -114,14 +189,6 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
-        menu_admin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent b = new Intent(HomeActivity.this, PenugasanPetugasActivity.class);
-                startActivity(b);
-            }
-        });
-
         merchants.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -129,6 +196,29 @@ public class HomeActivity extends AppCompatActivity {
                 startActivity(a);
             }
         });
+
+        Set<String> listMenu = Preferences.getMenu(HomeActivity.this);
+        //Set<String> listSubMenu = Preferences.getSubMenu(HomeActivity.this);
+
+        for(String menu: listMenu){
+
+            if(menu.equals("admin")){
+
+                menu_admin.setVisibility(View.VISIBLE);
+            }else if (menu.equals("survey")){
+
+                survey.setVisibility(View.VISIBLE);
+            }else if (menu.equals("pendaftaran")){
+
+                pendaftaran.setVisibility(View.VISIBLE);
+            }else if (menu.equals("monitoring")){
+
+                monitoring.setVisibility(View.VISIBLE);
+            }else if (menu.equals("merchants")){
+
+                merchants.setVisibility(View.VISIBLE);
+            }
+        }
 
         FirebaseInstanceId.getInstance().getInstanceId().addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
             @Override

@@ -51,37 +51,37 @@ import java.util.ArrayList;
 public class AccountActivity extends AppCompatActivity {
 
     //UI di AccountActivity
-    TextView namaLengkap, nomorKontak, password;
-    TextView logout, edit;
-    ImageButton editnama, editkontak, editpassword;
+    private TextView namaLengkap, nomorKontak, password;
+    private TextView logout, edit;
+    private ImageButton editnama, editkontak, editpassword;
 
     //UI di masing - masing dialog
-    Dialog dialog;
-    EditText fieldnama, fieldkontak;
-    EditText oldpass, newpass, repeatnewpass;
-    Button batalnama, batalkontak, batalpass, batal;
-    Button simpannama, simpankontak, simpanpass, simpan;
-    String name, contact;
-    ImageButton eye_old, eye_new, eye_retype;
-    int isVisible  = 1;
+    private Dialog dialog;
+    private EditText fieldnama, fieldkontak;
+    private EditText oldpass, newpass, repeatnewpass;
+    private Button batalnama, batalkontak, batalpass, batal;
+    private Button simpannama, simpankontak, simpanpass, simpan;
+    private String name, contact;
+    private ImageButton eye_old, eye_new, eye_retype;
+    private int isVisible  = 1;
 
     //Untuk ganti foto
-    ImageView gantifoto;
-    static final int UPLOAD_CODE = 999;
-    String imageString;
-    Bitmap bitmap;
-    TopCropCircularImageView profile; //Gambar dengan bentuk lingkaran
+    private ImageView gantifoto;
+    private static final int UPLOAD_CODE = 999;
+    private String imageString;
+    private Bitmap bitmap;
+    private TopCropCircularImageView profile; //Gambar dengan bentuk lingkaran
 
-    ApiVolley apiVolley;
-    String status = ""; //response from web service
-    String message=""; //response from web service
+    private ApiVolley apiVolley;
+    private String status = ""; //response from web service
+    private String message=""; //response from web service
     private final String TAG = "AccountActivity";
 
     //Dialog konfirmasi
-    Dialog confirm_dialog;
-    CardView yes, no;
-    TextView judul;
-    TextView cancel, save; //di CardView
+    private Dialog confirm_dialog;
+    private CardView yes, no;
+    private TextView judul;
+    private TextView cancel, save; //di CardView
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

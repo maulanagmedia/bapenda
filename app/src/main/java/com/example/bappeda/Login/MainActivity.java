@@ -18,20 +18,27 @@ import com.example.bappeda.MenuHome.HomeActivity;
 import com.example.bappeda.R;
 import com.example.bappeda.Utils.ApiVolley;
 import com.example.bappeda.Utils.AppLoadingScreen;
+import com.example.bappeda.Utils.CustomModel;
 import com.example.bappeda.Utils.Preferences;
 import com.example.bappeda.Utils.URL;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 public class MainActivity extends AppCompatActivity {
 
-    Button btn_login;
-    ImageButton btn_eye;
-    EditText username, password;
+    private Button btn_login;
+    private ImageButton btn_eye;
+    private EditText username, password;
     public ApiVolley apiVolley;
-    Preferences preferences;
-    int isVisible = 1;
+    private Preferences preferences;
+    private int isVisible = 1;
     private static final String TAG = "MainActivity";
 
     @Override
@@ -94,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
                 try {
                     JSONObject object = new JSONObject(result);
                     int status = object.getJSONObject("metadata").getInt("status") ;
-                    String message="";
+                    String message = "";
                     if (status == 200){
                         //getting information
                         String id = object.getJSONObject("response").getString("id");
@@ -110,6 +117,26 @@ public class MainActivity extends AppCompatActivity {
                         message = object.getJSONObject("metadata").getString("message");
                         Log.d(TAG, "onSuccess" + message);
 
+                        Set<String> listMenu = new HashSet<>();
+                        Set<String> listSubMenu = new HashSet<>();
+                        JSONArray jMenu = object.getJSONObject("response").getJSONArray("menu");
+
+                        for(int i = 0; i < jMenu.length(); i++){
+
+                            JSONObject jo = jMenu.getJSONObject(i);
+                            listMenu.add(jo.getString("code"));
+                            JSONArray jSubMenu = jo.getJSONArray("sub");
+
+                            for(int j = 0; j < jSubMenu.length(); j++){
+
+                                JSONObject jA = jSubMenu.getJSONObject(j);
+                                listSubMenu.add(jA.getString("code"));
+                            }
+                        }
+
+                        Preferences.setMenu(MainActivity.this, listMenu);
+                        Preferences.setSubMenu(MainActivity.this, listSubMenu);
+
                         Toast.makeText(getApplicationContext(), "Login Success", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(MainActivity.this, HomeActivity.class));
                         finish();
@@ -118,7 +145,7 @@ public class MainActivity extends AppCompatActivity {
                         Log.d(TAG, "onSuccess.else: " + message);
 
                         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                        builder.setMessage("Wrong Username or Password").setNegativeButton("Retry", null).create().show();
+                        builder.setMessage("Wrong Username or Password").setNegativeButton("Ok", null).create().show();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

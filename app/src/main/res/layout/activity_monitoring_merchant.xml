@@ -12,7 +12,7 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/blueLight"
+        android:background="@color/colorPrimary"
         app:titleTextColor="@color/white"
         android:minHeight="?attr/actionBarSize"
         app:popupTheme="@style/AppTheme.NoActionBar.TitleTextStyle">

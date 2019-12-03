@@ -52,36 +52,36 @@ public class MerchantUntukSurveyActivity extends AppCompatActivity {
     private ListView listmerchant;
     private ArrayList<MerchantModel> merchantModels = new ArrayList<>();
 
-    ApiVolley apiVolley;
-    String status = "";
-    String message = "";
+    private ApiVolley apiVolley;
+    private String status = "";
+    private String message = "";
 
-    Integer idPetugas;
-    String idMerchant;
+    private Integer idPetugas;
+    private String idMerchant;
 
-    PetugasModel p;
+    private PetugasModel p;
 
     //UI di dialog
-    Dialog dialog;
-    TextView namapetugas, emailpetugas, namamerchant, alamatmerchant, isitanggal;
-    EditText keterangan, searchmerchant, judulSurvey;
-    Button kirimsurvey;
-    CardView tanggal;
-    Calendar myCalendar;
+    private Dialog dialog;
+    private TextView namapetugas, emailpetugas, namamerchant, alamatmerchant, isitanggal;
+    private EditText keterangan, searchmerchant, judulSurvey;
+    private Button kirimsurvey;
+    private CardView tanggal;
+    private Calendar myCalendar;
 
     //Kategori Merchant
-    RecyclerView rvKategori;
+    private RecyclerView rvKategori;
     private ArrayList<KategoriMerchantModel> list = new ArrayList<>();
-    KategoriMerchantAdapter kategoriMerchantAdapter;
+    private KategoriMerchantAdapter kategoriMerchantAdapter;
 
     private final String TAG = "MerchantSurvey";
 
     //Dialog konfirmasi
-    Dialog confirm_dialog;
-    ImageView checked;
-    CardView simpan, batal;
-    TextView judul;
-    TextView cancel, save; //di CardView
+    private Dialog confirm_dialog;
+    private ImageView checked;
+    private CardView simpan, batal;
+    private TextView judul;
+    private TextView cancel, save; //di CardView
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

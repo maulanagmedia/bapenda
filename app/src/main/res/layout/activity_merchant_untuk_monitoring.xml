@@ -15,7 +15,7 @@
         android:padding="10dp"
         app:popupTheme="@style/AppTheme.NoActionBar.TitleTextStyle"
         app:titleTextColor="@color/white"
-        android:background="@color/blueLight">
+        android:background="@color/colorPrimary">
     </androidx.appcompat.widget.Toolbar>
 
     <androidx.recyclerview.widget.RecyclerView
@@ -23,78 +23,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:background="@color/blueLight"
+        android:background="@color/colorPrimary"
         tools:listitem="@layout/list_kategori_merchant_white">
     </androidx.recyclerview.widget.RecyclerView>
-
-    <!--<ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:scrollbars="horizontal">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:background="@color/blueLight"
-            android:padding="20dp">
-
-            <Button
-                android:id="@+id/btn_all"
-                android:layout_width="103dp"
-                android:layout_height="35dp"
-                android:text="All"
-                android:textAllCaps="false"
-                android:textSize="14dp"
-                android:textColor="@color/DarkerBlue"
-                android:background="@drawable/style_rounded_white_rectangle"/>
-
-            <Button
-                android:id="@+id/btn_hotel"
-                android:layout_width="103dp"
-                android:layout_height="35dp"
-                android:text="Hotel"
-                android:textAllCaps="false"
-                android:layout_marginStart="20dp"
-                android:textSize="14dp"
-                android:textColor="@color/DarkerBlue"
-                android:background="@drawable/style_rounded_white_rectangle"/>
-
-            <Button
-                android:id="@+id/btn_resto"
-                android:layout_width="103dp"
-                android:layout_height="35dp"
-                android:text="Restoran"
-                android:textAllCaps="false"
-                android:layout_marginStart="20dp"
-                android:textSize="14dp"
-                android:textColor="@color/DarkerBlue"
-                android:background="@drawable/style_rounded_white_rectangle"/>
-
-            <Button
-                android:id="@+id/btn_hiburan"
-                android:layout_width="103dp"
-                android:layout_height="35dp"
-                android:text="Hiburan"
-                android:textAllCaps="false"
-                android:layout_marginStart="20dp"
-                android:textSize="14dp"
-                android:textColor="@color/DarkerBlue"
-                android:background="@drawable/style_rounded_white_rectangle"/>
-
-            <Button
-                android:id="@+id/btn_parkir"
-                android:layout_width="103dp"
-                android:layout_height="35dp"
-                android:text="Parkir"
-                android:textAllCaps="false"
-                android:layout_marginStart="20dp"
-                android:textSize="14dp"
-                android:textColor="@color/DarkerBlue"
-                android:background="@drawable/style_rounded_white_rectangle"/>
-        </LinearLayout>
-
-    </ScrollView>-->
 
     <EditText
         android:id="@+id/edt_search"

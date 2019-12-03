@@ -4,7 +4,7 @@
 
     <item
         android:id="@+id/btnnotif"
-        android:icon="@drawable/notiveicon"
+        android:icon="@drawable/notificon"
         android:orderInCategory="1"
         android:title="@string/notif"
         app:showAsAction="always" />

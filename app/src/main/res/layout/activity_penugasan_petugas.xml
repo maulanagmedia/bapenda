@@ -26,6 +26,7 @@
         android:layout_marginTop="20dp"
         android:layout_marginStart="30dp"
         android:layout_marginEnd="30dp"
+        android:visibility="gone"
         app:cardCornerRadius="20dp">
 
         <LinearLayout
@@ -57,6 +58,7 @@
         android:layout_marginTop="15dp"
         android:layout_marginStart="30dp"
         android:layout_marginEnd="30dp"
+        android:visibility="gone"
         app:cardCornerRadius="20dp">
 
         <LinearLayout
@@ -88,6 +90,7 @@
         android:layout_marginTop="15dp"
         android:layout_marginStart="30dp"
         android:layout_marginEnd="30dp"
+        android:visibility="gone"
         app:cardCornerRadius="20dp">
 
         <LinearLayout

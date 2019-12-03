@@ -2,11 +2,16 @@ package com.example.bappeda.MenuAdmin.Monitoring;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -31,6 +36,7 @@ import com.example.bappeda.R;
 import com.example.bappeda.Utils.ApiVolley;
 import com.example.bappeda.Utils.AppLoadingScreen;
 import com.example.bappeda.Utils.DialogFactory;
+import com.example.bappeda.Utils.ItemValidation;
 import com.example.bappeda.Utils.JSONBuilder;
 import com.example.bappeda.Utils.Preferences;
 import com.example.bappeda.Utils.URL;
@@ -44,6 +50,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 public class MerchantUntukMonitoring extends AppCompatActivity {
@@ -51,37 +58,43 @@ public class MerchantUntukMonitoring extends AppCompatActivity {
     //LoadData List Merchant
     private MerchantPenugasanAdapter adapter;
     private ListView listmerchant;
-    private ArrayList<MerchantModel> merchantModels = new ArrayList<>();
-    PetugasModel p;
+    private List<MerchantModel> merchantModels = new ArrayList<>();
+    public int start = 0, count = 10;
+    private View footerList;
+    private boolean isLoading = false;
+    private ItemValidation iv = new ItemValidation();
 
-    Integer idPetugas = 0;
-    String idMerchant = "";
-    String idUser = "";
+    private PetugasModel p;
+
+    private Integer idPetugas = 0;
+    private String idMerchant = "";
+    private String idUser = "";
 
     //Web service
-    ApiVolley apiVolley;
-    String kategori, search;
+    private ApiVolley apiVolley;
+    private String kategori, search;
 
     //UI di dalam dialog
-    Dialog dialog;
-    TextView namapetugas, emailpetugas, namamerchant, alamatmerchant, isitanggal;
-    EditText keterangan, searchmerchant, judulMonitoring;
-    Button kirimmonitoring;
-    CardView tanggal;
-    Calendar myCalendar;
+    private Dialog dialog;
+    private TextView namapetugas, emailpetugas, namamerchant, alamatmerchant, isitanggal;
+    private EditText keterangan, searchmerchant, judulMonitoring;
+    private Button kirimmonitoring;
+    private CardView tanggal;
+    private Calendar myCalendar;
 
     //Kategori merchant
-    RecyclerView rvKategori;
-    KategoriMerchantAdapter kategoriMerchantAdapter;
+    private RecyclerView rvKategori;
+    private KategoriMerchantAdapter kategoriMerchantAdapter;
     private ArrayList<KategoriMerchantModel> listKategori = new ArrayList<>();
 
     private final String TAG = "MerchantUntukMonitoring";
 
     //Dialog konfirmasi
-    Dialog confirm_dialog;
-    CardView simpan, batal;
-    TextView judul;
-    TextView cancel, save; //di CardView
+    private Dialog confirm_dialog;
+    private CardView simpan, batal;
+    private TextView judul;
+    private TextView cancel, save; //di CardView
+    public String keyword = "", idKategori = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,6 +106,9 @@ public class MerchantUntukMonitoring extends AppCompatActivity {
         rvKategori = findViewById(R.id.rv_kategori);
         listmerchant = findViewById(R.id.list_merchantMonitoring);
         Toolbar toolbar = findViewById(R.id.toolbar);
+
+        LayoutInflater li = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        footerList = li.inflate(R.layout.footer_list, null);
 
         //Get Id user from Shared Preferences
         idUser = Preferences.getId(MerchantUntukMonitoring.this);
@@ -110,35 +126,6 @@ public class MerchantUntukMonitoring extends AppCompatActivity {
             }
         });
 
-        //Search in edit text using Text Watcher
-        //search per huruf
-        searchmerchant.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int start, int count, int after) {
-                //charSequence = parameter is the text before any change is applied.
-                //start = the position of the beginning of the changed part in the text.
-                //count = the length of the changed part in the s sequence since the start position.
-                //after = the length of the new sequence which will replace the part of the charSequence from start to start+count.
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
-                //charSequence = parameter is the text after changes have been applied.
-                //start = is the position of the beginning of the changed part in the text.
-                //count = is the after parameter in the beforeTextChanged method.
-                //before = is the length of the changed part in the s sequence since the start position.
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                //You can change the text in the TextView from this method.
-                // Warning: When you change the text in the TextView, the TextWatcher will be triggered again,
-                // starting an infinite loop. You should then add like a boolean _ignore property which prevent
-                // the infinite loop.
-                loadMerchant(listKategori.get(kategoriMerchantAdapter.getPosition_aktif()).getId_kategori(), searchmerchant.getText().toString());
-            }
-        });
-
         //Show category merchant
         rvKategori.setHasFixedSize(true);
         listKategori.addAll(KategoriMerchantData.getListData());
@@ -148,6 +135,53 @@ public class MerchantUntukMonitoring extends AppCompatActivity {
             Gson gson = new Gson();
             p = gson.fromJson(getIntent().getStringExtra("id_petugas"), PetugasModel.class);
         }
+
+        keyword = "";
+        adapter = new MerchantPenugasanAdapter(getApplication(), R.layout.list_merchant_tugas_survey, merchantModels);
+        listmerchant.setAdapter(adapter);
+
+        listmerchant.addFooterView(footerList);
+        listmerchant.setAdapter(adapter);
+        listmerchant.removeFooterView(footerList);
+        listmerchant.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView absListView, int i) {
+
+                int threshold = 1;
+                int countMerchant = listmerchant.getCount();
+
+                if (i == SCROLL_STATE_IDLE) {
+                    if (listmerchant.getLastVisiblePosition() >= countMerchant - threshold && !isLoading) {
+
+                        isLoading = true;
+                        start += count;
+                        loadMerchant(listKategori.get(kategoriMerchantAdapter.getPosition_aktif()).getId_kategori());
+                        //Log.i(TAG, "onScroll: last ");
+                    }
+                }
+            }
+
+            @Override
+            public void onScroll(AbsListView absListView, int i, int i1, int i2) {
+
+            }
+        });
+
+        searchmerchant.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+
+                if(actionId == EditorInfo.IME_ACTION_SEARCH){
+
+                    keyword = searchmerchant.getText().toString();
+                    start = 0;
+                    loadMerchant(listKategori.get(kategoriMerchantAdapter.getPosition_aktif()).getId_kategori());
+                    iv.hideSoftKey(MerchantUntukMonitoring.this);
+                    return true;
+                }
+                return false;
+            }
+        });
 
         listmerchant.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -225,29 +259,34 @@ public class MerchantUntukMonitoring extends AppCompatActivity {
         confirm_dialog.show();
     }
 
-    public void loadMerchant(String kategori, String search){
+    public void loadMerchant(String kategori){
 
+        isLoading = true;
         JSONBuilder body = new JSONBuilder();
-        body.add("terdaftar", "Ya");
-        body.add("id_user", idUser);
-        body.add("start", "");
-        body.add("end", "");
-        body.add("kategori", kategori);
-        body.add("keyword", search);
+        body.add("id_user", "");
+        body.add("start", String.valueOf(start));
+        body.add("count", String.valueOf(count));
+        body.add("id_kategori", kategori);
+        body.add("keyword", keyword);
         Log.d(TAG, "body: " + body.create());
 
-        apiVolley = new ApiVolley(MerchantUntukMonitoring.this, body.create(), "POST", URL.URL_SEARCH_MERCHANT, new ApiVolley.VolleyCallback() {
+        apiVolley = new ApiVolley(MerchantUntukMonitoring.this, body.create(), "POST", URL.getMerchantMonitoring, new ApiVolley.VolleyCallback() {
             @Override
             public void onSuccess(String result) {
+
+                isLoading = false;
+                listmerchant.removeFooterView(footerList);
+                if(start == 0) merchantModels.clear();
                 Log.d(TAG, "Response: " + result);
+
                 try {
                     JSONObject object = new JSONObject(result);
                     int status = object.getJSONObject("metadata").getInt("status");
                     String message;
                     if(status== 200){
+
                         message = object.getJSONObject("metadata").getString("message");
                         JSONArray array = object.getJSONArray("response");
-                        merchantModels = new ArrayList<>();
                         for (int i=0; i<array.length(); i++){
                             JSONObject dataObject = array.getJSONObject(i);
                             MerchantModel merchantModel = new MerchantModel(
@@ -262,28 +301,34 @@ public class MerchantUntukMonitoring extends AppCompatActivity {
                             merchantModel.setImages(gambar);
                             merchantModels.add(merchantModel);
                         }
-                        adapter = new MerchantPenugasanAdapter(getApplication(), R.layout.list_merchant_tugas_survey, merchantModels);
-                        listmerchant.setAdapter(adapter);
                     }else{
+
                         message = object.getJSONObject("metadata").getString("message");
                         AppLoadingScreen.getInstance().stopLoading();
-                        merchantModels.clear();
-                        adapter.notifyDataSetChanged();
                         Toast.makeText(MerchantUntukMonitoring.this, message, Toast.LENGTH_SHORT).show();
                     }
+
                     Log.d(TAG, "onSuccess: " + message);
                 } catch (JSONException e) {
+
                     e.printStackTrace();
                     AppLoadingScreen.getInstance().stopLoading();
                     if (e.getMessage()!=null){
                         Log.d(TAG, "catch.response" + e.getMessage());
                     }
                 }
+
                 AppLoadingScreen.getInstance().stopLoading();
+                adapter.notifyDataSetChanged();
             }
 
             @Override
             public void onError(String result) {
+
+                isLoading = false;
+                listmerchant.removeFooterView(footerList);
+                merchantModels.clear();
+                adapter.notifyDataSetChanged();
                 Log.d(TAG, "onError" + result);
                 AppLoadingScreen.getInstance().stopLoading();
                 Toast.makeText(MerchantUntukMonitoring.this, R.string.error_message, Toast.LENGTH_SHORT).show();
@@ -293,6 +338,7 @@ public class MerchantUntukMonitoring extends AppCompatActivity {
 
     //set value for each field
     private void initDataPetugas(PetugasModel p){
+
         idPetugas = p.getIdpetugas();
         namapetugas.setText(p.getNamapetugas());
         emailpetugas.setText(p.getEmail());
@@ -300,6 +346,7 @@ public class MerchantUntukMonitoring extends AppCompatActivity {
 
     //Open Calender
     private void DateCalendar(){
+
         myCalendar = Calendar.getInstance();
 
         final DatePickerDialog.OnDateSetListener date_awal = new DatePickerDialog.OnDateSetListener() {
@@ -394,6 +441,7 @@ public class MerchantUntukMonitoring extends AppCompatActivity {
     }
 
     private void showListKategori(){
+
         rvKategori.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
         kategoriMerchantAdapter= new KategoriMerchantAdapter(this, listKategori);
         rvKategori.setAdapter(kategoriMerchantAdapter);
@@ -402,6 +450,6 @@ public class MerchantUntukMonitoring extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        loadMerchant(listKategori.get(kategoriMerchantAdapter.getPosition_aktif()).getId_kategori(), "");
+        loadMerchant(listKategori.get(kategoriMerchantAdapter.getPosition_aktif()).getId_kategori());
     }
 }

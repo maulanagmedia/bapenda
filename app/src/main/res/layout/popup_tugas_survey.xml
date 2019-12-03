@@ -166,24 +166,24 @@
                 android:layout_marginStart="35dp"
                 android:text="Tambahkan Judul"
                 android:textColor="#000000"
-                android:textSize="14sp"
+                android:textSize="12sp"
                 android:textStyle="bold" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="14sp"
+                android:textSize="9sp"
                 android:textStyle="normal"
-                android:layout_marginTop="2dp"
                 android:layout_marginStart="35dp"
                 android:layout_marginEnd="30dp"
                 android:text="Tulis judul kegiatan"
                 android:textColor="@color/grey"/>
+
             <View
                 android:id="@+id/layout_divider4"
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
-                android:layout_marginTop="10sp"
+                android:layout_marginTop="2sp"
                 android:background="#E1E1E1"
                 android:layout_marginStart="30dp"
                 android:layout_marginEnd="30dp"/>
@@ -192,13 +192,15 @@
                 android:id="@+id/edt_judulSurvey"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:minHeight="40dp"
                 android:layout_marginStart="35dp"
                 android:layout_marginEnd="35dp"
                 android:gravity="top|start"
-                android:textSize="14sp"
+                android:textSize="13sp"
                 android:maxLines="1"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
+                android:hint="Judul"
+                android:text=""
+                android:padding="8dp"
                 android:background="@android:color/transparent"
                 android:theme="@style/RadioGroupStyle"/>
 
@@ -216,17 +218,16 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:layout_marginStart="35dp"
-                android:text="@string/ket_caps"
+                android:text="@string/ket"
                 android:textColor="#000000"
-                android:textSize="14sp"
+                android:textSize="12sp"
                 android:textStyle="bold" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="14sp"
+                android:textSize="9sp"
                 android:textStyle="normal"
-                android:layout_marginTop="2dp"
                 android:layout_marginStart="35dp"
                 android:layout_marginEnd="30dp"
                 android:text="@string/hint_keterangan"
@@ -237,7 +238,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
                 android:background="#E1E1E1"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="2dp"
                 android:layout_marginStart="30dp"
                 android:layout_marginEnd="30dp"/>
 
@@ -249,9 +250,11 @@
                 android:layout_marginEnd="35dp"
                 android:gravity="top|start"
                 android:lines="5"
-                android:layout_marginTop="5dp"
+                android:hint="Keterangan"
+                android:padding="8dp"
+                android:layout_marginTop="2dp"
                 android:background="@android:color/transparent"
-                android:textSize="14sp"
+                android:textSize="13sp"
                 android:theme="@style/RadioGroupStyle"/>
 
             <View

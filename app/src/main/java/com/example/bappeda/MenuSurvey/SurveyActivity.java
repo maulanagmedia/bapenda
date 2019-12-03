@@ -187,7 +187,7 @@ public class SurveyActivity extends AppCompatActivity implements
         tambah = findViewById(R.id.buttontambah);
         reset = findViewById(R.id.btnreset);
         spinnercategory = findViewById(R.id.category_spinner);
-        Toolbar toolbar = findViewById(R.id.ttoolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         if (getSupportActionBar()!=null){
             getSupportActionBar().setTitle("Survey");
@@ -233,7 +233,7 @@ public class SurveyActivity extends AppCompatActivity implements
 
     private void showDialogConfirm(){
         confirm_dialog = DialogFactory.getInstance().
-                createDialog(SurveyActivity.this, R.layout.popup_confirm, 90);
+                createDialog(SurveyActivity.this, R.layout.popup_confirm, 100);
 
         simpan = confirm_dialog.findViewById(R.id.CardSimpan);
         batal = confirm_dialog.findViewById(R.id.CardCancel);

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/login_bg"
+    android:background="@drawable/bgcolour"
     android:orientation="vertical"
     android:padding="30dp"
     tools:context=".Login.MainActivity">
@@ -17,7 +17,7 @@
         android:layout_centerHorizontal="true"
         android:layout_gravity="center"
         android:scaleType="fitCenter"
-        android:src="@drawable/logobapenda"
+        android:src="@drawable/logo_bottom"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout3"
         app:layout_constraintTop_toTopOf="parent"
         tools:layout_editor_absoluteX="30dp" />
@@ -37,8 +37,7 @@
             android:layout_height="wrap_content"
             android:autofillHints="1"
             android:layout_marginBottom="10dp"
-            android:background="@drawable/custom_edt"
-            android:backgroundTint="#466ACB"
+            android:background="@drawable/bg_input_login"
             android:drawableStart="@drawable/user"
             android:gravity="center"
             android:hint="username"
@@ -47,20 +46,23 @@
             android:maxLines="1"
             android:paddingStart="10dp"
             android:paddingEnd="10dp"
-            android:textColor="#FFFFFF"
+            android:paddingTop="@dimen/padding_medium"
+            android:paddingBottom="@dimen/padding_medium"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white_transfer"
             android:textSize="18sp"
             app:fontFamily="sans-serif-condensed-medium" />
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/padding_medium">
 
             <EditText
                 android:id="@+id/edtpassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/custom_edt"
-                android:backgroundTint="#466ACB"
+                android:background="@drawable/bg_input_login"
                 android:drawableStart="@drawable/pass"
                 android:gravity="center|center_horizontal"
                 android:hint="password"
@@ -68,7 +70,10 @@
                 android:maxLines="1"
                 android:paddingStart="10dp"
                 android:paddingEnd="10dp"
-                android:textColor="#FFFFFF"
+                android:paddingTop="@dimen/padding_medium"
+                android:paddingBottom="@dimen/padding_medium"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white_transfer"
                 android:textSize="18sp"
                 app:fontFamily="sans-serif-condensed-medium" />
 
@@ -86,16 +91,15 @@
 
         <Button
             android:id="@+id/btnlogin"
-            android:layout_width="250dp"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="46dp"
             android:layout_gravity="center"
             android:background="@drawable/custom_btn_login"
-            android:fontFamily="sans-serif-condensed-medium"
             android:text="Login"
             android:textAllCaps="false"
-            android:textColor="#466ACB"
+            android:textColor="@color/black"
             android:textSize="20sp"
-            android:layout_marginTop="20dp" />
+            android:layout_marginTop="26dp" />
 
     </LinearLayout>
 

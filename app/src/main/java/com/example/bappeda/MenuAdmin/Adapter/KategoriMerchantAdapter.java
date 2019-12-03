@@ -65,7 +65,8 @@ public class KategoriMerchantAdapter extends RecyclerView.Adapter<KategoriMercha
                 }
 
                 if (activity instanceof MerchantUntukMonitoring){
-                    ((MerchantUntukMonitoring)activity).loadMerchant(kategoriMerchantModel.getId_kategori(), "");
+                    ((MerchantUntukMonitoring)activity).start = 0;
+                    ((MerchantUntukMonitoring)activity).loadMerchant(kategoriMerchantModel.getId_kategori());
                 }
 
                 int position_temp = position_aktif;

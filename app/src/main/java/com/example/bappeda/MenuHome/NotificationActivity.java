@@ -43,6 +43,7 @@ public class NotificationActivity extends AppCompatActivity {
             getSupportActionBar().setTitle("Notification");
             getSupportActionBar().setDisplayShowTitleEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_action_name);
         }
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,74 +60,13 @@ public class NotificationActivity extends AppCompatActivity {
         rv_notification.setAdapter(adapter);
     }
 
-   /* public void loadNotification(){
-        AppLoadingScreen.getInstance().showLoading(this);
-        JSONBuilder body = new JSONBuilder();
-        body.add("id_user", Preferences.getId(this));
-        body.add("status", "");
-        body.add("status_daftar", "");
-
-        new ApiVolley(this, body.create(), "POST",
-                URL.URL_DATA_PENUGASAN_SURVEY, new ApiVolley.VolleyCallback() {
-            @Override
-            public void onSuccess(String result) {
-                Log.d(TAG, "Response" + result);
-
-                try{
-                    JSONObject response = new JSONObject(result);
-                    int status = response.getJSONObject("metadata").getInt("status");
-                    String message = response.getJSONObject("metadata").getString("message");
-
-                    if(status == 200){
-                        JSONArray list_notif = response.getJSONArray("response");
-                        for(int i = 0; i < list_notif.length(); i++){
-                            JSONObject notif = list_notif.getJSONObject(i);
-                            MerchantModel merchantModel = new MerchantModel();
-                            merchantModel.setNamamerchant(notif.getString("nama"));
-                            merchantModel.setAlamat(notif.getString("alamat"));
-                            merchantModel.setLatitude(notif.getDouble("latitude"));
-                            merchantModel.setLongitude(notif.getDouble("longitude"));
-
-                            ArrayList<String> listImages = new ArrayList<>();
-                            JSONArray list_image = notif.getJSONArray("image");
-                            for(int k = 0; k < list_image.length(); k++){
-                                listImages.add(list_image.getJSONObject(k).getString("image"));
-                            }
-                            merchantModel.setImages(listImages);
-
-                            listNotification.add(new NotificationModel("Tugas Survey"
-                                    ,notif.getString("tgl_jadwal_survey"), merchantModel,
-                                    notif.getString("keterangan")));
-                        }
-                        adapter.notifyDataSetChanged();
-                    }
-                    else{
-                        Toast.makeText(NotificationActivity.this, message, Toast.LENGTH_SHORT).show();
-                    }
-                }
-                catch (JSONException e){
-                    if (e.getMessage()!=null){
-                        Log.e(TAG, "notif_log" + e.getMessage());
-                    }
-                }
-
-                AppLoadingScreen.getInstance().stopLoading();
-            }
-
-            @Override
-            public void onError(String result) {
-                Toast.makeText(NotificationActivity.this, R.string.error_message, Toast.LENGTH_SHORT).show();
-                Log.e("notif_log", result);
-                AppLoadingScreen.getInstance().stopLoading();
-            }
-        });
-    }*/
-
     private void loadNotif (){
         AppLoadingScreen.getInstance().showLoading(this);
         new ApiVolley(NotificationActivity.this, new JSONObject(), "GET", URL.URL_NOTIFIKASI, new ApiVolley.VolleyCallback() {
             @Override
             public void onSuccess(String result) {
+
+                AppLoadingScreen.getInstance().stopLoading();
                 Log.d(TAG, "Response" + result);
                 try {
                     JSONObject response = new JSONObject(result);
@@ -138,6 +78,7 @@ public class NotificationActivity extends AppCompatActivity {
                         listNotification.clear();
 
                         for (int i=0; i<list_notif.length(); i++){
+
                             JSONObject notif  = list_notif.getJSONObject(i);
                             NotificationModel notificationModel = new NotificationModel();
                             notificationModel.setMerchant(notif.getString("nama"));
@@ -151,14 +92,19 @@ public class NotificationActivity extends AppCompatActivity {
                                 notificationModel.setType(NotificationModel.TYPE_HUBUNGI);
                             }
 
+                            JSONArray jImage = notif.getJSONArray("image");
+                            if(jImage.length() > 0){
+
+                                JSONObject jo = jImage.getJSONObject(0);
+                                notificationModel.setImage(jo.getString("image"));
+                            }
+
                             listNotification.add(notificationModel);
 
                         }
 
                         adapter.notifyDataSetChanged();
-                        AppLoadingScreen.getInstance().stopLoading();
                     } else {
-                        AppLoadingScreen.getInstance().stopLoading();
                         Toast.makeText(NotificationActivity.this, message, Toast.LENGTH_SHORT).show();
                     }
                 } catch (JSONException e) {
@@ -171,9 +117,10 @@ public class NotificationActivity extends AppCompatActivity {
 
             @Override
             public void onError(String result) {
+
+                AppLoadingScreen.getInstance().stopLoading();
                 Toast.makeText(NotificationActivity.this, R.string.error_message, Toast.LENGTH_SHORT).show();
                 Log.e(TAG, "notif_log" + result);
-                AppLoadingScreen.getInstance().stopLoading();
             }
         });
     }

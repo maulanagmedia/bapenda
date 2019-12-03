@@ -16,7 +16,7 @@
         android:text="Riwayat"
         android:textAllCaps="false"
         android:textSize="15sp"
-        android:textColor="@color/blueLight"
+        android:textColor="@color/white"
         android:background="@drawable/style_rounded_white_rectangle"/>
 
 </RelativeLayout>

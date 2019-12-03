@@ -7,9 +7,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.DatePicker;
 import android.widget.ImageButton;
@@ -44,14 +46,19 @@ import java.util.Locale;
 public class RiwayatSurveyActivity extends AppCompatActivity {
 
     //Variabel UI
-    TextView tanggal_awal, tanggal_akhir;
-    ImageButton button_proses;
-    ListView listsurvey;
+    private TextView tanggal_awal, tanggal_akhir;
+    private ImageButton button_proses;
+    private ListView listsurvey;
 
     private Calendar Mycalendar;
     private SurveyAdapter adapter;
     private ArrayList<MerchantModel> merchantModels = new ArrayList<>();
-    ApiVolley apiVolley;
+    private int start = 0, count = 10;
+    private View footerList;
+    private boolean isLoading = false;
+    private String keyword = "";
+
+    private ApiVolley apiVolley;
 
     //Filter
     private String start_date = "";
@@ -66,6 +73,41 @@ public class RiwayatSurveyActivity extends AppCompatActivity {
         tanggal_akhir = findViewById(R.id.txt_tanggalakhir);
         listsurvey = findViewById(R.id.list_survey);
         button_proses = findViewById(R.id.btnproses);
+
+        keyword = "";
+        LayoutInflater li = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        footerList = li.inflate(R.layout.footer_list, null);
+
+        adapter = new SurveyAdapter(RiwayatSurveyActivity.this, R.layout.activity_list_view_survey, merchantModels);
+        listsurvey.setAdapter(adapter);
+
+        listsurvey.addFooterView(footerList);
+        listsurvey.setAdapter(adapter);
+        listsurvey.removeFooterView(footerList);
+        listsurvey.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView absListView, int i) {
+
+                int threshold = 1;
+                int countMerchant = listsurvey.getCount();
+
+                if (i == SCROLL_STATE_IDLE) {
+                    if (listsurvey.getLastVisiblePosition() >= countMerchant - threshold && !isLoading) {
+
+                        isLoading = true;
+                        start += count;
+                        loadData();
+                        //Log.i(TAG, "onScroll: last ");
+                    }
+                }
+            }
+
+            @Override
+            public void onScroll(AbsListView absListView, int i, int i1, int i2) {
+
+            }
+        });
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         if (getSupportActionBar()!=null){
@@ -114,7 +156,9 @@ public class RiwayatSurveyActivity extends AppCompatActivity {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
-                searchDatabyName(s);
+                start = 0;
+                keyword = s;
+                loadData();
                 return false;
             }
 
@@ -130,17 +174,20 @@ public class RiwayatSurveyActivity extends AppCompatActivity {
     }
 
     private void loadData() {
+
+        isLoading = true;
         AppLoadingScreen.getInstance().showLoading(this);
         final String idUser = Preferences.getId(getBaseContext());
 
         JSONObject body = new JSONObject();
+
         try {
             body.put("id_user", idUser);
-            body.put("terdaftar", "");
-            body.put("start", start_date);
-            body.put("end", end_date);
-            body.put("kategori", "");
-            body.put("keyword", "");
+            body.put("tgl_awal", start_date);
+            body.put("tgl_akhir", end_date);
+            body.put("start", String.valueOf(start));
+            body.put("count", String.valueOf(count));
+            body.put("keyword", keyword);
         } catch (JSONException e) {
             e.printStackTrace();
             if (e.getMessage()!=null){
@@ -148,18 +195,24 @@ public class RiwayatSurveyActivity extends AppCompatActivity {
             }
         }
 
-        apiVolley = new ApiVolley(RiwayatSurveyActivity.this, body, "POST", URL.URL_SEARCH_MERCHANT,
+        apiVolley = new ApiVolley(RiwayatSurveyActivity.this, body, "POST", URL.getRiwayatSurvey,
                 new ApiVolley.VolleyCallback() {
             @Override
             public void onSuccess(String result) {
+
+                isLoading = false;
+                listsurvey.removeFooterView(footerList);
+                if(start == 0) merchantModels.clear();
+
                 Log.d("Response", result);
                 try {
                     JSONObject object = new JSONObject(result);
                     int status = object.getJSONObject("metadata").getInt("status");
                     String message = object.getJSONObject("metadata").getString("message");
+
                     if (status==200){
+
                         JSONArray array = object.getJSONArray("response");
-                        merchantModels = new ArrayList<>();
                         for (int i = 0; i < array.length(); i++) {
                             JSONObject dataObject = array.getJSONObject(i);
                             MerchantModel merchantModel = new MerchantModel();
@@ -183,108 +236,36 @@ public class RiwayatSurveyActivity extends AppCompatActivity {
                             merchantModel.setImages(gambar);
                             merchantModels.add(merchantModel);
                         }
-                        adapter = new SurveyAdapter(RiwayatSurveyActivity.this, R.layout.activity_list_view_survey, merchantModels);
-                        listsurvey.setAdapter(adapter);
+
                     } else {
                         AppLoadingScreen.getInstance().stopLoading();
-                        merchantModels.clear();
-                        adapter.notifyDataSetChanged();
                         Toast.makeText(RiwayatSurveyActivity.this, message, Toast.LENGTH_SHORT).show();
                     }
                     Log.d("riwayatsurvey_log", message);
+
                 } catch (JSONException e) {
                     e.printStackTrace();
-                    if (e.getMessage()!=null){
+                    if (e.getMessage() != null){
                         Log.e("response", e.getMessage());
                     }
                 }
+
                 AppLoadingScreen.getInstance().stopLoading();
+                adapter.notifyDataSetChanged();
             }
 
             @Override
             public void onError(String result) {
+
+                isLoading = false;
+                listsurvey.removeFooterView(footerList);
                 Log.e("Error.Response", result);
+                merchantModels.clear();
+                adapter.notifyDataSetChanged();
                 Toast.makeText(RiwayatSurveyActivity.this, R.string.error_message, Toast.LENGTH_SHORT).show();
                 AppLoadingScreen.getInstance().stopLoading();
             }
         });
-    }
-
-    private void searchDatabyName(String keyword){
-        final String idUser = Preferences.getId(getBaseContext());
-
-        JSONObject body = new JSONObject();
-        try {
-            body.put("id_user", idUser);
-            body.put("terdaftar", "");
-            body.put("start", start_date);
-            body.put("end", end_date);
-            body.put("kategori", "");
-            body.put("keyword", keyword);
-        } catch (JSONException e) {
-            e.printStackTrace();
-            if (e.getMessage()!=null){
-                Log.e("error.body", e.getMessage());
-            }
-        }
-
-        apiVolley = new ApiVolley(RiwayatSurveyActivity.this, body, "POST", URL.URL_SEARCH_MERCHANT,
-                new ApiVolley.VolleyCallback() {
-                    @Override
-                    public void onSuccess(String result) {
-                        Log.d("Response", result);
-                        try {
-                            JSONObject object = new JSONObject(result);
-                            int status = object.getJSONObject("metadata").getInt("status");
-                            String message = object.getJSONObject("metadata").getString("message");
-                            if (status==200){
-                                JSONArray array = object.getJSONArray("response");
-                                merchantModels = new ArrayList<>();
-                                for (int i = 0; i < array.length(); i++) {
-                                    JSONObject dataObject = array.getJSONObject(i);
-                                    MerchantModel merchantModel = new MerchantModel();
-                                    merchantModel.setId(dataObject.getString("id"));
-                                    merchantModel.setNamamerchant(dataObject.getString("nama"));
-                                    merchantModel.setTanggal(dataObject.getString("tgl"));
-                                    merchantModel.setAlamat(dataObject.getString("alamat"));
-                                    merchantModel.setNamapemilik(dataObject.getString("pemilik"));
-                                    merchantModel.setNotelp(dataObject.getString("no_telp"));
-                                    merchantModel.setLongitude(dataObject.getDouble("longitude"));
-                                    merchantModel.setLatitude(dataObject.getDouble("latitude"));
-                                    CategoryModel kategori = new CategoryModel();
-                                    kategori.setIdKategori(dataObject.getString("kategori"));
-                                    merchantModel.setKategori(kategori);
-
-                                    ArrayList<String> gambar = new ArrayList<>();
-                                    final JSONArray arrray = dataObject.getJSONArray("image");
-                                    for (int p=0; p<arrray.length(); p++){
-                                        gambar.add(arrray.getJSONObject(p).getString("image"));
-                                    }
-                                    merchantModel.setImages(gambar);
-                                    merchantModels.add(merchantModel);
-                                }
-                                adapter = new SurveyAdapter(RiwayatSurveyActivity.this, R.layout.activity_list_view_survey, merchantModels);
-                                listsurvey.setAdapter(adapter);
-                            } else {
-                                merchantModels.clear();
-                                adapter.notifyDataSetChanged();
-                                Toast.makeText(RiwayatSurveyActivity.this, message, Toast.LENGTH_SHORT).show();
-                            }
-                            Log.d("riwayatsurvey_log", message);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                            if (e.getMessage()!=null){
-                                Log.e("response", e.getMessage());
-                            }
-                        }
-                    }
-
-                    @Override
-                    public void onError(String result) {
-                        Log.e("Error.Response", result);
-                        Toast.makeText(RiwayatSurveyActivity.this, R.string.error_message, Toast.LENGTH_SHORT).show();
-                    }
-                });
     }
 
     private void DateCalendar() {

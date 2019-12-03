@@ -17,7 +17,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/blueLight"
+            android:background="@color/colorPrimary"
             app:titleTextColor="@color/white"
             app:popupTheme="@style/AppTheme.NoActionBar.TitleTextStyle">
 
@@ -46,9 +46,8 @@
             android:gravity="start|center_vertical"
             android:paddingStart="10dp"
             android:paddingEnd="10dp"
-            android:textColor="#000000"
-            android:textSize="18sp"
-            app:fontFamily="sans-serif-condensed-medium" />
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_mid"/>
 
         <TextView
             android:id="@+id/nama_pemilik"
@@ -74,8 +73,7 @@
             android:paddingStart="10dp"
             android:paddingEnd="10dp"
             android:textColor="#000000"
-            android:textSize="18sp"
-            app:fontFamily="sans-serif-condensed-medium" />
+            />
 
         <TextView
             android:id="@+id/alamat"
@@ -101,15 +99,14 @@
             android:paddingStart="10dp"
             android:paddingEnd="10dp"
             android:textColor="#000000"
-            android:textSize="18sp"
-            app:fontFamily="sans-serif-condensed-medium" />
+            />
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="@color/grey"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp"/>
+            android:layout_marginTop="@dimen/padding_big"
+            android:layout_marginBottom="@dimen/padding_big"/>
 
         <TextView
             android:id="@+id/text"
@@ -117,18 +114,19 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:textColor="@color/black"
-            android:layout_marginTop="5dp"
             android:fontFamily="sans-serif-condensed-light"
             android:text="@string/text_popup"
-            android:textSize="15sp" />
+            android:layout_marginLeft="@dimen/padding_super"
+            android:layout_marginRight="@dimen/padding_super"
+            android:textSize="@dimen/text_mid" />
 
         <RadioGroup
             android:id="@+id/radioGroup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="30dp"
+            android:layout_marginStart="@dimen/padding_super"
+            android:layout_marginEnd="@dimen/padding_super"
+            android:layout_marginTop="@dimen/padding_default"
             android:theme="@style/RadioGroupStyle">
 
             <RadioButton
@@ -160,9 +158,10 @@
             android:visibility="gone"
             android:orientation="vertical"
             android:layout_marginTop="40dp"
-            android:layout_marginStart="60dp"
-            android:layout_marginEnd="60dp"
-            android:layout_marginBottom="20dp">
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            >
 
             <Button
                 android:id="@+id/formLengkap"
@@ -183,35 +182,42 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:visibility="gone"
-            android:layout_margin="40dp">
+            android:layout_marginLeft="@dimen/padding_super"
+            android:layout_marginRight="@dimen/padding_super"
+            android:layout_marginTop="@dimen/padding_big"
+            android:layout_marginBottom="@dimen/padding_super"
+            >
 
             <TextView
                 android:id="@+id/textket"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-condensed-medium"
                 android:text="@string/ket_caps"
                 android:textColor="#000000"
-                android:textSize="18sp"
+                android:textSize="@dimen/text_big"
                 android:textStyle="bold" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-condensed-medium"
                 android:text="Tulis keterangan kenapa merchant menolak"
-                android:textSize="14sp" />
+                android:textSize="@dimen/text_small" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/line"
+                android:background="@color/grey"
+                android:layout_marginTop="@dimen/padding_small"/>
 
             <EditText
                 android:id="@+id/edt_keterangan"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:fontFamily="sans-serif-condensed"
+                android:layout_marginTop="@dimen/padding_small"
                 android:gravity="top|start"
                 android:hint="Tulis keterangan disini"
                 android:lines="10"
-                android:textSize="18sp"
+                android:textSize="@dimen/text_big"
                 android:theme="@style/RadioGroupStyle"/>
 
             <Button
@@ -220,8 +226,6 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/custom_button2"
                 android:layout_marginTop="20dp"
-                android:layout_marginStart="60dp"
-                android:layout_marginEnd="60dp"
                 android:layout_marginBottom="20dp"
                 android:fontFamily="sans-serif-condensed"
                 android:text="@string/simpan"

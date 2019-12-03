@@ -9,10 +9,10 @@
     tools:context=".MenuSurvey.SurveyActivity">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/ttoolbar"
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/blueLight"
+        android:background="@color/colorPrimary"
         app:titleTextColor="@color/white"
         android:minHeight="?attr/actionBarSize"
         app:popupTheme="@style/AppTheme.NoActionBar.TitleTextStyle">
@@ -20,7 +20,7 @@
 
     <ScrollView
         android:id="@+id/scrollview1"
-        android:layout_below="@id/ttoolbar"
+        android:layout_below="@id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -54,9 +54,9 @@
                 android:inputType="textPersonName"
                 android:paddingStart="10dp"
                 android:paddingEnd="10dp"
-                android:textColor="#000000"
-                android:textSize="18sp"
-                app:fontFamily="sans-serif-condensed-medium" />
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_mid"
+                />
 
             <TextView
                 android:id="@+id/nama_pemilik"
@@ -84,9 +84,8 @@
                 android:inputType="textPersonName"
                 android:paddingStart="10dp"
                 android:paddingEnd="10dp"
-                android:textColor="#000000"
-                android:textSize="18sp"
-                app:fontFamily="sans-serif-condensed-medium" />
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_mid" />
 
             <TextView
                 android:id="@+id/alamat"
@@ -114,9 +113,8 @@
                 android:inputType="textPostalAddress"
                 android:paddingStart="10dp"
                 android:paddingEnd="10dp"
-                android:textColor="#000000"
-                android:textSize="18sp"
-                app:fontFamily="sans-serif-condensed-medium" />
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_mid"/>
 
             <TextView
                 android:id="@+id/no_telp"
@@ -144,9 +142,8 @@
                 android:inputType="phone"
                 android:paddingStart="10dp"
                 android:paddingEnd="10dp"
-                android:textColor="#000000"
-                android:textSize="18sp"
-                app:fontFamily="sans-serif-condensed-medium" />
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_mid"/>
 
             <TextView
                 android:id="@+id/kategori"
@@ -157,9 +154,8 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="30dp"
                 android:text="@string/kategori"
-                android:textColor="#000000"
-                android:textSize="18sp"
-                app:fontFamily="sans-serif-condensed-medium"/>
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_mid"/>
 
             <Spinner
                 android:id="@+id/category_spinner"
@@ -167,13 +163,13 @@
                 android:layout_height="50dp"
                 android:layout_below="@id/kategori"
                 android:layout_marginStart="30dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="@dimen/padding_default"
                 android:layout_marginEnd="30dp"
                 android:layout_marginBottom="10dp"
                 android:spinnerMode="dropdown"
-                android:textColor="#000000"
-                android:textSize="18sp"
-                app:fontFamily="sans-serif-condensed-medium">
+                android:backgroundTint="@color/grey"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_mid">
             </Spinner>
 
             <View
@@ -289,8 +285,8 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
+                android:layout_marginTop="@dimen/padding_dexa"
+                android:layout_marginBottom="@dimen/padding_dexa"
                 android:layout_marginStart="5dp"
                 android:layout_marginEnd="5dp"
                 android:layout_width="match_parent"
@@ -306,17 +302,16 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/recyclerView"
                 android:layout_gravity="center"
-                android:layout_marginLeft="70dp"
+                android:layout_marginLeft="@dimen/padding_dexa"
                 android:layout_marginTop="20dp"
-                android:layout_marginRight="70dp"
+                android:layout_marginRight="@dimen/padding_dexa"
                 android:layout_marginBottom="20dp"
                 android:background="@drawable/custom_button2"
-                android:fontFamily="sans-serif-black"
                 android:gravity="center"
                 android:text="@string/simpan"
                 android:textAllCaps="false"
-                android:textColor="#FFFFFF"
-                android:textSize="20sp" />
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_big" />
 
         </RelativeLayout>
 

@@ -4,13 +4,46 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/login_bg"
+    android:background="@drawable/bgcolour"
     tools:context=".Login.SplashScreen">
 
     <ImageView
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:src="@drawable/smg_resize"
-        android:layout_centerInParent="true"/>
+        android:layout_width="match_parent"
+        android:layout_height="160dp"
+        android:src="@drawable/logo"
+        android:id="@+id/iv_logo"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="@dimen/margin_page"
+        android:layout_marginRight="@dimen/margin_page"
+        android:layout_marginTop="@dimen/margin_page_small"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Selamat Datang di Bapenda Mobile App"
+        android:textColor="@color/white"
+        android:layout_below="@id/iv_logo"
+        android:gravity="center"
+        android:id="@+id/tv_title"
+        android:textSize="30sp"
+        android:layout_marginTop="@dimen/margin_page_small"
+        android:layout_marginLeft="@dimen/margin_page"
+        android:layout_marginRight="@dimen/margin_page"
+        android:layout_centerInParent="true" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="240dp"
+        android:src="@drawable/ilustrasi"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/tv_title"
+        android:layout_marginLeft="@dimen/margin_page"
+        android:layout_marginRight="@dimen/margin_page"
+        android:layout_marginTop="@dimen/margin_page"
+        android:layout_marginBottom="@dimen/margin_page_big"
+        />
 
 </RelativeLayout>

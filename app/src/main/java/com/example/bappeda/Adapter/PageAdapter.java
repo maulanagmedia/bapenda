@@ -28,7 +28,7 @@ public class PageAdapter extends FragmentPagerAdapter {
                 fragment = new DaftarFragment();
                 return fragment;
             case 1:
-                fragment = new BelumTerdaftarFragment();
+                fragment = new DaftarFragment();
                 return fragment;
             default:
                 return null;

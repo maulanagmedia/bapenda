@@ -30,7 +30,7 @@ public class PendaftaranAdapter extends ArrayAdapter<MerchantModel> {
     class Viewholder{
         View layout_parent;
         ImageView img_merchant;
-        TextView txt_merchant, txt_alamat, txt_status;
+        TextView txt_merchant, txt_alamat, txt_status, txt_status_batal;
     }
 
     @Override
@@ -49,17 +49,31 @@ public class PendaftaranAdapter extends ArrayAdapter<MerchantModel> {
             holder.txt_merchant = convertView.findViewById(R.id.txt_merchant);
             holder.txt_alamat = convertView.findViewById(R.id.txt_alamat);
             holder.txt_status = convertView.findViewById(R.id.txt_status);
+            holder.txt_status_batal = convertView.findViewById(R.id.txt_status_batal);
             holder.img_merchant = convertView.findViewById(R.id.img_merchant);
             convertView.setTag(holder);
         } else
             holder = (Viewholder) convertView.getTag();
 
         if(pendaftaranModel != null){
+
             ImageLoader.load(mContext, pendaftaranModel.getImage(), holder.img_merchant);
             Log.e("glide_log", "getImage: " + pendaftaranModel.getImage());
             holder.txt_merchant.setText(pendaftaranModel.getNamamerchant());
             holder.txt_alamat.setText(pendaftaranModel.getAlamat());
-            holder.txt_status.setText("Terdaftar");
+
+            if(pendaftaranModel.getKeterangan().toLowerCase().equals("terdaftar")){
+
+                holder.txt_status.setVisibility(View.VISIBLE);
+                holder.txt_status_batal.setVisibility(View.GONE);
+            }else{
+
+                holder.txt_status.setVisibility(View.GONE);
+                holder.txt_status_batal.setVisibility(View.VISIBLE);
+            }
+
+            holder.txt_status.setText(pendaftaranModel.getKeterangan());
+            holder.txt_status_batal.setText(pendaftaranModel.getKeterangan());
 
             holder.layout_parent.setOnClickListener(new View.OnClickListener() {
                 @Override

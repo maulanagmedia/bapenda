@@ -31,7 +31,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_marginStart="20dp"
+        android:layout_marginStart="@dimen/padding_dexa"
         android:layout_toEndOf="@id/layout_survey"
         android:layout_centerVertical="true">
 
@@ -40,9 +40,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/nama"
-            android:textColor="#000000"
+            android:textColor="@color/black"
             android:textSize="16sp"
-            android:textStyle="bold"
             app:fontFamily="sans-serif-black" />
 
         <TextView

@@ -2,6 +2,7 @@ package com.example.bappeda.MenuPendaftaran;
 
 import android.Manifest;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
@@ -9,10 +10,12 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Looper;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -59,25 +62,29 @@ import java.util.ArrayList;
 
 public class PendaftaranActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
+    private Toolbar toolbar;
     private final String TAG = "DetailMerchantActivity";
     private ItemValidation iv = new ItemValidation();
 
-    ArrayList<MerchantModel> daftarMerchantModels = new ArrayList<>();
+    private ArrayList<MerchantModel> daftarMerchantModels = new ArrayList<>();
     private SurveyAdapter adapter;
-    ListView list_daftar_merchant;
+    private int start = 0, count = 10;
+    private ListView listDaftarMerchant;
 
     public ApiVolley apiVolley;
 
-    RadioGroup rg_keputusan;
-    RadioButton daftar, tidakdaftar, radioButton;
-    EditText alasan;
+    private RadioGroup rg_keputusan;
+    private RadioButton daftar, tidakdaftar, radioButton;
+    private EditText alasan;
 
-    Dialog dialog;
+    private Dialog dialog;
+    private View footerList;
+    private boolean isLoading = false;
 
     //For Location
-    GoogleApiClient mGoogleApiClient;
-    LocationRequest mLocationRequest;
-    double lat, lng;
+    private GoogleApiClient mGoogleApiClient;
+    private LocationRequest mLocationRequest;
+    private double lat, lng;
     private LocationCallback locationCallback = new LocationCallback(){
         @Override
         public void onLocationResult(LocationResult location) {
@@ -101,13 +108,20 @@ public class PendaftaranActivity extends AppCompatActivity implements GoogleApiC
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pendaftaran);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        initUI();
+    }
+
+    private void initUI() {
+
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
         if (getSupportActionBar()!=null){
             getSupportActionBar().setTitle("List Merchant");
             getSupportActionBar().setDisplayShowTitleEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
+
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -115,32 +129,64 @@ public class PendaftaranActivity extends AppCompatActivity implements GoogleApiC
             }
         });
 
-        list_daftar_merchant = findViewById(R.id.list_daftarmerchant);
+        LayoutInflater li = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        footerList = li.inflate(R.layout.footer_list, null);
+        listDaftarMerchant = findViewById(R.id.list_daftarmerchant);
         loadData();
 
-        list_daftar_merchant.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        listDaftarMerchant.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                MerchantModel listItem = (MerchantModel) list_daftar_merchant.getItemAtPosition(i);
+                MerchantModel listItem = (MerchantModel) listDaftarMerchant.getItemAtPosition(i);
                 Intent intent = new Intent(PendaftaranActivity.this, PutusanPendaftaranActivity.class);
                 Gson gson = new Gson();
                 intent.putExtra(URL.EXTRA_MERCHANT, gson.toJson(listItem));
                 startActivity(intent);
             }
         });
+
+        adapter = new SurveyAdapter(PendaftaranActivity.this, R.layout.activity_list_view_survey, daftarMerchantModels);
+        listDaftarMerchant.setAdapter(adapter);
+
+        listDaftarMerchant.addFooterView(footerList);
+        listDaftarMerchant.setAdapter(adapter);
+        listDaftarMerchant.removeFooterView(footerList);
+        listDaftarMerchant.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView absListView, int i) {
+
+                int threshold = 1;
+                int countMerchant = listDaftarMerchant.getCount();
+
+                if (i == SCROLL_STATE_IDLE) {
+                    if (listDaftarMerchant.getLastVisiblePosition() >= countMerchant - threshold && !isLoading) {
+
+                        isLoading = true;
+                        start += count;
+                        loadData();
+                        //Log.i(TAG, "onScroll: last ");
+                    }
+                }
+            }
+
+            @Override
+            public void onScroll(AbsListView absListView, int i, int i1, int i2) {
+
+            }
+        });
     }
 
     private void loadData(){
+
+        isLoading = true;
         AppLoadingScreen.getInstance().showLoading(this);
         final String idUsername = Preferences.getId(getBaseContext());
         final JSONObject body = new JSONObject();
         try {
-            body.put("terdaftar", "belum");
+            body.put("status_merchant", "belum");
             body.put("id_user", idUsername);
-            body.put("start", "");
-            body.put("end", "");
-            body.put("kategori", "");
-            body.put("keyword", "");
+            body.put("start", String.valueOf(start));
+            body.put("count", String.valueOf(count));
         } catch (JSONException e) {
             e.printStackTrace();
             if (e.getMessage()!=null){
@@ -149,17 +195,24 @@ public class PendaftaranActivity extends AppCompatActivity implements GoogleApiC
         }
 
         apiVolley = new ApiVolley(PendaftaranActivity.this, body, "POST",
-                URL.URL_SEARCH_MERCHANT, new ApiVolley.VolleyCallback() {
+                URL.URL_VIEW_MERCHANT_PENDAFTARAN, new ApiVolley.VolleyCallback() {
             @Override
             public void onSuccess(String result) {
+
+                isLoading = false;
+                listDaftarMerchant.removeFooterView(footerList);
+                if(start == 0) daftarMerchantModels.clear();
                 Log.d(TAG, "survey_log" + result);
+
                 try {
+
                     JSONObject object = new JSONObject(result);
                     String message =  object.getJSONObject("metadata").getString("message");
                     int status = object.getJSONObject("metadata").getInt("status");
-                    if (status==200){
+
+                    if (status == 200){
+
                         JSONArray array = object.getJSONArray("response");
-                        daftarMerchantModels = new ArrayList<>();
                         for (int i=0; i<array.length(); i++){
                             JSONObject dataObject = array.getJSONObject(i);
                             MerchantModel merchantModel = new MerchantModel();
@@ -170,6 +223,7 @@ public class PendaftaranActivity extends AppCompatActivity implements GoogleApiC
                             merchantModel.setLatitude(iv.parseNullDouble(dataObject.getString("latitude")));
                             merchantModel.setLongitude(iv.parseNullDouble(dataObject.getString("longitude")));
                             merchantModel.setNotelp(dataObject.getString("no_telp"));
+                            merchantModel.setFlag(dataObject.getString("flag"));
                             CategoryModel kategori = new CategoryModel();
                             kategori.setIdKategori(dataObject.getString("kategori"));
                             merchantModel.setKategori(kategori);
@@ -182,29 +236,35 @@ public class PendaftaranActivity extends AppCompatActivity implements GoogleApiC
                             merchantModel.setImages(listGambar);
                             daftarMerchantModels.add(merchantModel);
                         }
-                        adapter = new SurveyAdapter(PendaftaranActivity.this, R.layout.list_daftar_merchant, daftarMerchantModels);
-                        list_daftar_merchant.setAdapter(adapter);
+
                     } else {
-                        AppLoadingScreen.getInstance().stopLoading();
-                        daftarMerchantModels.clear();
-                        adapter.notifyDataSetChanged();
+
+                        //daftarMerchantModels.clear();
                         Toast.makeText(PendaftaranActivity.this, message, Toast.LENGTH_SHORT).show();
                         Log.d(TAG, "onSuccess: " + message);
                     }
+
                     AppLoadingScreen.getInstance().stopLoading();
                     Log.d(TAG, "onSuccess: " + message);
                 } catch (JSONException e) {
+
                     e.printStackTrace();
                     if (e.getMessage()!=null){
                         Log.e(TAG, "survey_log" + e.getMessage());
                     }
-                    AppLoadingScreen.getInstance().stopLoading();
                 }
+
                 AppLoadingScreen.getInstance().stopLoading();
+                adapter.notifyDataSetChanged();
             }
             @Override
             public void onError(String result) {
+
+                isLoading = false;
+                listDaftarMerchant.removeFooterView(footerList);
                 AppLoadingScreen.getInstance().stopLoading();
+                daftarMerchantModels.clear();
+                adapter.notifyDataSetChanged();
                 Log.e(TAG, "survey_log" + result);
                 Toast.makeText(PendaftaranActivity.this, R.string.error_message, Toast.LENGTH_SHORT).show();
             }

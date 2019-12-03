@@ -92,7 +92,6 @@ public class ApiVolley {
 
             public void onErrorResponse(VolleyError error) {
                 callback.onError(error.toString());
-                callback.onError(error.toString());
                 return;
             }
         }) {

@@ -34,6 +34,10 @@ public class URL {
     public static final String URL_NOTIFIKASI = BASE_URL + "Notifikasi";
     public static final String URL_ADD_MERCHANT_TUTUP = BASE_URL + "MerchantTutup";
     public static final String URL_VIEW_MERCHANT_TUTUP = BASE_URL + "MerchantTutup/view_merchant_tutup";
+    public static final String URL_VIEW_MERCHANT_PENDAFTARAN = BASE_URL + "PendaftaranMerchant/";
+    public static final String getRiwayatSurvey = BASE_URL + "RiwayatSurvey/";
+    public static final String getMerchantMonitoring = BASE_URL + "MonitoringMerchant/";
+    public static final String getRiwayatPendaftaran = BASE_URL + "PendaftaranMerchant/riwayat_pendaftaran/";
 
     //Form
     public static final String URL_FORM = "http://gmedia.bz/bapenda/Form/form_kategori";

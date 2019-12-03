@@ -9,10 +9,13 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
 
 import com.example.bappeda.R;
+import com.example.bappeda.Utils.Preferences;
+
+import java.util.Set;
 
 public class PilihanMerchantsActivity extends AppCompatActivity {
 
-    CardView merchantSekitar, merchantTutup;
+    private CardView merchantSekitar, merchantTutup;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,5 +54,18 @@ public class PilihanMerchantsActivity extends AppCompatActivity {
                 startActivity(b);
             }
         });
+
+        Set<String> listSubMenu = Preferences.getSubMenu(PilihanMerchantsActivity.this);
+
+        for(String menu: listSubMenu){
+
+            if(menu.equals("merchant_sekitar")){
+
+                merchantSekitar.setVisibility(View.VISIBLE);
+            }else if (menu.equals("merchant_tutup")){
+
+                merchantTutup.setVisibility(View.VISIBLE);
+            }
+        }
     }
 }
