@@ -102,8 +102,10 @@
                                 android:layout_height="wrap_content"
                                 android:gravity="start"
                                 android:text="Nama"
-                                android:textColor="#000000"
-                                android:textSize="20sp" />
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/text_big"
+                                android:textStyle="bold"
+                                />
 
                             <ImageButton
                                 android:id="@+id/btnEditNama"
@@ -121,8 +123,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="start"
-                            android:layout_marginTop="5dp"
-                            android:textColor="#000000"
+                            android:textColor="@color/black"
                             android:textSize="@dimen/text_mid"/>
 
                     </LinearLayout>
@@ -161,8 +162,9 @@
                                 android:layout_height="wrap_content"
                                 android:text="Kontak"
                                 android:gravity="start"
-                                android:textColor="#000000"
-                                android:textSize="20sp" />
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/text_big"
+                                android:textStyle="bold" />
 
                             <ImageButton
                                 android:id="@+id/btnEdtKontak"
@@ -180,8 +182,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="start"
-                            android:layout_marginTop="5dp"
-                            android:textColor="#000000"
+                            android:textColor="@color/black"
                             android:textSize="@dimen/text_mid"/>
 
                     </LinearLayout>
@@ -220,8 +221,9 @@
                                 android:layout_height="wrap_content"
                                 android:text="Password"
                                 android:gravity="start"
-                                android:textColor="#000000"
-                                android:textSize="20sp" />
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/text_big"
+                                android:textStyle="bold" />
 
                             <ImageButton
                                 android:id="@+id/btnEdtPass"
@@ -239,8 +241,7 @@
                             android:layout_height="wrap_content"
                             android:gravity="start"
                             android:inputType="textPassword"
-                            android:layout_marginTop="5dp"
-                            android:textColor="#000000"
+                            android:textColor="@color/black"
                             android:textSize="@dimen/text_mid"/>
 
                     </LinearLayout>
@@ -308,8 +309,9 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="5dp"
                         android:text="@string/logout"
-                        android:textColor="#000000"
-                        android:textSize="20sp"/>
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/text_big"
+                        android:textStyle="bold"/>
 
                 </LinearLayout>
 

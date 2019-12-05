@@ -39,10 +39,9 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginStart="10dp"
                     android:layout_marginEnd="10dp"
-                    android:fontFamily="sans-serif-condensed-light"
                     android:text="Nama Cafe"
                     android:textColor="@color/DarkerBlue"
-                    android:textSize="25sp"
+                    android:textSize="@dimen/text_super"
                     android:textStyle="bold" />
 
                 <TextView
@@ -54,10 +53,9 @@
                     android:layout_marginEnd="10dp"
                     android:gravity="center_horizontal"
                     android:layout_gravity="center_horizontal|center_vertical"
-                    android:fontFamily="sans-serif-condensed-light"
                     android:text="Jl. Batu Dalam"
                     android:textColor="@color/black"
-                    android:textSize="15sp"
+                    android:textSize="@dimen/text_mid"
                     android:textStyle="normal" />
 
                 <TextView
@@ -69,9 +67,8 @@
                     android:layout_marginStart="30dp"
                     android:layout_marginEnd="30dp"
                     android:textColor="@color/black"
-                    android:fontFamily="sans-serif-condensed-light"
                     android:text="@string/text_tutup"
-                    android:textSize="16sp" />
+                    android:textSize="@dimen/text_mid" />
 
                 <EditText
                     android:id="@+id/edt_keteranganTutup"
@@ -79,12 +76,41 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="30dp"
                     android:layout_marginEnd="30dp"
-                    android:fontFamily="sans-serif-condensed-light"
                     android:gravity="top|start"
                     android:hint="@string/hint_Tutup"
                     android:lines="7"
-                    android:textSize="16sp"
+                    android:textSize="@dimen/text_mid"
                     android:theme="@style/RadioGroupStyle" />
+
+                <TextView
+                    android:id="@+id/lbl_foto"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/padding_big"
+                    android:layout_marginTop="@dimen/padding_big"
+                    android:layout_marginRight="@dimen/padding_big"
+                    android:text="Upload Foto"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/text_big"/>
+
+                <TextView
+                    android:id="@+id/txt_foto"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/padding_big"
+                    android:layout_marginRight="@dimen/padding_big"
+                    android:text="@string/icon_camera"
+                    android:textSize="@dimen/text_medium" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerView"
+                    android:layout_margin="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:orientation="horizontal">
+
+                </androidx.recyclerview.widget.RecyclerView>
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/CardTutupMerchant"
@@ -100,18 +126,17 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@color/blueSoft">
+                        android:background="@color/colorPrimary">
 
                         <TextView
                             android:id="@+id/TutupText"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:layout_margin="10dp"
+                            android:layout_margin="@dimen/padding_default"
                             android:textColor="@color/white"
-                            android:fontFamily="sans-serif-condensed-light"
                             android:text="Ya, merchant telah berhenti beroperasi"
-                            android:textSize="16sp" />
+                            android:textSize="@dimen/padding_big" />
 
                     </LinearLayout>
 

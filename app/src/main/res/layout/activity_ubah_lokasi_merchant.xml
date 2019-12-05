@@ -5,27 +5,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/white"
-    tools:context=".MenuAdmin.Survey.MerchantUntukSurveyActivity">
+    tools:context="com.example.bappeda.MenuMerchants.UbahLokasiMerchantActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp"
-        app:popupTheme="@style/AppTheme.NoActionBar.TitleTextStyle"
-        app:titleTextColor="@color/white"
-        android:background="@color/colorPrimary">
-    </androidx.appcompat.widget.Toolbar>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_kategori"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:background="@color/colorPrimary"
-        tools:listitem="@layout/list_kategori_merchant_white">
-    </androidx.recyclerview.widget.RecyclerView>
+        app:titleTextColor="@color/white"
+        android:minHeight="?attr/actionBarSize"
+        app:popupTheme="@style/AppTheme.NoActionBar.TitleTextStyle"/>
 
     <EditText
         android:id="@+id/edt_search"
@@ -34,20 +23,18 @@
         android:background="@color/LightGrey"
         android:drawableStart="@drawable/search_grey"
         android:gravity="center_horizontal"
+        android:imeOptions="actionSearch"
         android:inputType="textPersonName"
         android:singleLine="true"
         android:hint="Cari Nama Merchant"
         android:padding="10dp"
-        android:textSize="18sp" />
+        android:textSize="@dimen/text_big" />
 
     <ListView
-        android:id="@+id/list_merchant"
+        android:id="@+id/lv_merchant"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="10dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginTop="@dimen/padding_default"
         android:scrollbars="vertical">
     </ListView>
 

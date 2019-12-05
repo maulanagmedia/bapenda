@@ -19,7 +19,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/blueLight"
+            android:background="@color/colorPrimary"
             app:titleTextColor="@color/white"
             app:popupTheme="@style/AppTheme.NoActionBar.TitleTextStyle"/>
 
@@ -51,9 +51,8 @@
                 android:inputType="textPersonName"
                 android:paddingStart="10dp"
                 android:paddingEnd="10dp"
-                android:textColor="#000000"
-                android:textSize="18sp"
-                app:fontFamily="sans-serif-condensed-medium" />
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_mid" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -78,9 +77,8 @@
                 android:inputType="textPersonName"
                 android:paddingStart="10dp"
                 android:paddingEnd="10dp"
-                android:textColor="#000000"
-                android:textSize="18sp"
-                app:fontFamily="sans-serif-condensed-medium" />
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_mid"/>
 
             <TextView
                 android:layout_width="match_parent"
@@ -104,9 +102,8 @@
                 android:gravity="start|center_vertical"
                 android:paddingStart="10dp"
                 android:paddingEnd="10dp"
-                android:textColor="#000000"
-                android:textSize="18sp"
-                app:fontFamily="sans-serif-condensed-medium" />
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_mid" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -130,9 +127,8 @@
                 android:gravity="start|center_vertical"
                 android:paddingStart="10dp"
                 android:paddingEnd="10dp"
-                android:textColor="#000000"
-                android:textSize="18sp"
-                app:fontFamily="sans-serif-condensed-medium" />
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_mid" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -156,9 +152,8 @@
                 android:gravity="start|center_vertical"
                 android:paddingStart="10dp"
                 android:paddingEnd="10dp"
-                android:textColor="#000000"
-                android:textSize="18sp"
-                app:fontFamily="sans-serif-condensed-medium" />
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_mid"/>
 
             <TextView
                 android:layout_width="match_parent"
@@ -183,9 +178,8 @@
                 android:inputType="number"
                 android:paddingStart="10dp"
                 android:paddingEnd="10dp"
-                android:textColor="#000000"
-                android:textSize="18sp"
-                app:fontFamily="sans-serif-condensed-medium" />
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_mid"/>
 
             <TextView
                 android:layout_width="match_parent"
@@ -255,9 +249,8 @@
                 android:inputType="textPersonName"
                 android:paddingStart="10dp"
                 android:paddingEnd="10dp"
-                android:textColor="#000000"
-                android:textSize="18sp"
-                app:fontFamily="sans-serif-condensed-medium" />
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_mid"/>
 
             <TextView
                 android:layout_width="match_parent"
@@ -279,12 +272,12 @@
                 android:layout_marginRight="30dp"
                 android:background="@drawable/custom_edt2"
                 android:gravity="start|center_vertical"
-                android:inputType="textPersonName"
+                android:inputType="number"
+                android:imeOptions="actionNext"
                 android:paddingStart="10dp"
                 android:paddingEnd="10dp"
-                android:textColor="#000000"
-                android:textSize="18sp"
-                app:fontFamily="sans-serif-condensed-medium" />
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_mid"/>
 
             <TextView
                 android:layout_width="match_parent"
@@ -309,9 +302,8 @@
                 android:inputType="textPersonName"
                 android:paddingStart="10dp"
                 android:paddingEnd="10dp"
-                android:textColor="#000000"
-                android:textSize="18sp"
-                app:fontFamily="sans-serif-condensed-medium" />
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_mid"/>
 
             <TextView
                 android:layout_width="match_parent"
@@ -336,9 +328,8 @@
                 android:inputType="number"
                 android:paddingStart="10dp"
                 android:paddingEnd="10dp"
-                android:textColor="#000000"
-                android:textSize="18sp"
-                app:fontFamily="sans-serif-condensed-medium" />
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_mid"/>
 
             <TextView
                 android:layout_width="match_parent"
@@ -384,9 +375,8 @@
                 android:minLines="3"
                 android:paddingStart="10dp"
                 android:paddingEnd="10dp"
-                android:textColor="#000000"
-                android:textSize="18sp"
-                app:fontFamily="sans-serif-condensed-medium" />
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_mid"/>
 
             <View
                 android:layout_width="match_parent"

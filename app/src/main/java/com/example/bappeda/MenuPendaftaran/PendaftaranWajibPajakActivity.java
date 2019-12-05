@@ -260,6 +260,7 @@ public class PendaftaranWajibPajakActivity extends AppCompatActivity implements
             public void onClick(View view) {
                 MerchantModel m = new MerchantModel();
                 m.setId(merchant.getId());
+                m.setIdPenugasan(merchant.getIdPenugasan());
                 m.setNamamerchant(txt_nama_usaha.getText().toString());
                 m.setAlamat(txt_alamat_usaha.getText().toString());
                 m.setNotelp(txt_telp_usaha.getText().toString());
@@ -511,6 +512,7 @@ public class PendaftaranWajibPajakActivity extends AppCompatActivity implements
     }
 
     private void updateData(Bitmap signature){
+
         AppLoadingScreen.getInstance().showLoading(this);
         String base64 = convertToBase64(signature);
         String idUser = Preferences.getId(PendaftaranWajibPajakActivity.this);
@@ -522,6 +524,8 @@ public class PendaftaranWajibPajakActivity extends AppCompatActivity implements
 
         JSONBuilder body = new JSONBuilder();body.add("id", merchant.getId());
         body.add("user_login", idUser);
+        body.add("id", merchant.getId());
+        body.add("idp", merchant.getIdPenugasan());
         body.add("nama", txt_nama_usaha.getText().toString());
         body.add("alamat", txt_alamat_usaha.getText().toString());
         body.add("telp_usaha", txt_telp_usaha.getText().toString());
@@ -554,6 +558,7 @@ public class PendaftaranWajibPajakActivity extends AppCompatActivity implements
                             if(status == 200){
                                 Intent i = new Intent(PendaftaranWajibPajakActivity.this, FormIsianActivity.class);
                                 i.putExtra(URL.EXTRA_ID_MERCHANT, merchant.getId());
+                                i.putExtra(URL.EXTRA_IDP, merchant.getIdPenugasan());
                                 i.putExtra(URL.EXTRA_ID_KATEGORI, listKategori.get(spn_klasifikasi_usaha.
                                         getSelectedItemPosition()).getIdKategori());
                                 startActivity(i);

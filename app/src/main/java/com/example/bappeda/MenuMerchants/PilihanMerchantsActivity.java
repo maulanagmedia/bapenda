@@ -15,7 +15,7 @@ import java.util.Set;
 
 public class PilihanMerchantsActivity extends AppCompatActivity {
 
-    private CardView merchantSekitar, merchantTutup;
+    private CardView merchantSekitar, merchantTutup, cvUbahLokasiMerchant;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,8 +36,9 @@ public class PilihanMerchantsActivity extends AppCompatActivity {
             }
         });
 
-        merchantSekitar = findViewById(R.id.CardSekitar);
-        merchantTutup = findViewById(R.id.CardTutup);
+        merchantSekitar = (CardView) findViewById(R.id.CardSekitar);
+        merchantTutup = (CardView) findViewById(R.id.CardTutup);
+        cvUbahLokasiMerchant = (CardView) findViewById(R.id.cv_lokasi);
 
         merchantSekitar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,6 +56,14 @@ public class PilihanMerchantsActivity extends AppCompatActivity {
             }
         });
 
+        cvUbahLokasiMerchant.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent b = new Intent(PilihanMerchantsActivity.this, UbahLokasiMerchantActivity.class);
+                startActivity(b);
+            }
+        });
+
         Set<String> listSubMenu = Preferences.getSubMenu(PilihanMerchantsActivity.this);
 
         for(String menu: listSubMenu){
@@ -65,6 +74,9 @@ public class PilihanMerchantsActivity extends AppCompatActivity {
             }else if (menu.equals("merchant_tutup")){
 
                 merchantTutup.setVisibility(View.VISIBLE);
+            }else if (menu.equals("ubah_lokasi_merchant")){
+
+                cvUbahLokasiMerchant.setVisibility(View.VISIBLE);
             }
         }
     }

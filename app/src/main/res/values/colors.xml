@@ -4,6 +4,8 @@
     <color name="colorPrimaryDark">#F52327</color>
     <color name="colorAccent">#C1000A</color>
 
+    <color name="colorOrange">#DD6731</color>
+
     <color name="blueBright">#0392FF</color>
     <color name="blueLight">#0B9AEC</color>
     <color name="blueSoft">#669BEB</color>
@@ -13,6 +15,7 @@
     <color name="white">#FFFFFF</color>
     <color name="transparent">#00FFFFFF</color>
     <color name="white_transfer">#97FFFFFF</color>
+    <color name="white_transparent">#92E4E4E4</color>
     <color name="red_login">#C2000A</color>
 
     <color name="hijau">#22CA00</color>
@@ -22,6 +25,7 @@
     <color name="redSoft">#F85757</color>
 
     <color name="grey">#A6A0A0</color>
+    <color name="grey1">#CECECE</color>
     <color name="light_grey">#F1F1F1</color>
     <color name="LightGrey">#F5F5F5</color>
 

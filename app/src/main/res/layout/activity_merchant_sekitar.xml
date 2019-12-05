@@ -32,14 +32,14 @@
                 android:text="@string/resetlokasi"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
-                android:textSize="12sp"
-                android:padding="10dp"
+                android:textSize="@dimen/text_medium"
+                android:padding="@dimen/padding_default"
                 android:background="@drawable/style_rounded_blue_dark_rectangle"
                 android:gravity="center"
                 android:layout_alignBottom="@id/mapFragment"
                 android:layout_alignEnd="@id/mapFragment"
-                android:layout_margin="10dp"
-                app:fontFamily="serif" />
+                android:layout_margin="@dimen/padding_default"
+                />
 
             <fragment
                 android:id="@+id/mapFragment"
@@ -62,9 +62,9 @@
         <View
             android:id="@+id/layout_divider1"
             android:layout_width="match_parent"
-            android:layout_height="3dp"
+            android:layout_height="@dimen/line"
             android:background="#E1E1E1"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="@dimen/padding_big"
             android:layout_marginStart="30dp"
             android:layout_marginEnd="30dp"/>
 
@@ -72,18 +72,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Merchant Terdekat"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="@dimen/text_big"
             android:textAllCaps="true"
             android:layout_gravity="center_horizontal"
-            android:textSize="18sp"
+            android:textSize="@dimen/text_big"
             android:textColor="#333"/>
 
         <View
             android:id="@+id/layout_divider2"
             android:layout_width="match_parent"
-            android:layout_height="3dp"
+            android:layout_height="@dimen/line"
             android:background="#E1E1E1"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="@dimen/padding_big"
             android:layout_marginStart="30dp"
             android:layout_marginEnd="30dp"/>
 
@@ -92,7 +92,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="@dimen/padding_mid"
             tools:listitem="@layout/item_kategori_merchant"/>
 
         <ListView

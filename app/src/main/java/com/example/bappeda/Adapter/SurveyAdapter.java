@@ -34,6 +34,7 @@ public class SurveyAdapter extends ArrayAdapter<MerchantModel> {
         ImageView img_merchant;
         TextView tmerchant;
         TextView talamat;
+        TextView tvStatus;
     }
 
     @NonNull
@@ -49,6 +50,7 @@ public class SurveyAdapter extends ArrayAdapter<MerchantModel> {
             holder.tmerchant = convertView.findViewById(R.id.txt_merchant);
             holder.talamat = convertView.findViewById(R.id.txt_alamat);
             holder.img_merchant = convertView.findViewById(R.id.img_survey);
+            holder.tvStatus = convertView.findViewById(R.id.tv_status);
             convertView.setTag(holder);
         } else
             holder = (Viewholder) convertView.getTag();
@@ -57,6 +59,19 @@ public class SurveyAdapter extends ArrayAdapter<MerchantModel> {
             holder.tmerchant.setText(merchantModel.getNamamerchant());
             holder.talamat.setText(merchantModel.getAlamat());
             ImageLoader.load(mContext, merchantModel.getImage(), holder.img_merchant);
+
+            if(merchantModel.getKodePendaftaran().equals("0")){
+
+                holder.tvStatus.setTextColor(mContext.getResources().getColor(R.color.orange));
+            }else if(merchantModel.getKodePendaftaran().equals("0")){
+
+                holder.tvStatus.setTextColor(mContext.getResources().getColor(R.color.redSoft));
+            }else{
+
+                holder.tvStatus.setTextColor(mContext.getResources().getColor(R.color.blueLight));
+            }
+
+            holder.tvStatus.setText(merchantModel.getStatusPendaftaran());
         }
 
         return convertView;

@@ -13,87 +13,87 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/blueLight"
-        app:titleTextColor="@color/white"
-        android:minHeight="?attr/actionBarSize"
-        app:popupTheme="@style/AppTheme.NoActionBar.TitleTextStyle">
-
-    </androidx.appcompat.widget.Toolbar>
-
-    <LinearLayout
-        android:id="@+id/linear_tanggal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:background="@color/blueLight">
-
-        <TextView
-            android:id="@+id/txt_tanggalawal"
-            android:layout_width="wrap_content"
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="20dp"
-            android:background="@drawable/custom_edt4"
-            android:clickable="true"
-            android:drawableStart="@drawable/ic_calendar"
-            android:focusable="true"
+            android:background="@color/colorPrimary"
+            app:titleTextColor="@color/white"
+            android:minHeight="?attr/actionBarSize"
+            app:popupTheme="@style/AppTheme.NoActionBar.TitleTextStyle">
+
+        </androidx.appcompat.widget.Toolbar>
+
+        <LinearLayout
+            android:id="@+id/linear_tanggal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@color/colorPrimary"
             android:gravity="center"
-            android:hint="Tanggal Awal"
-            android:paddingStart="10dp"
-            android:paddingEnd="10dp"
-            android:textSize="15sp"
-            android:textColor="#000000"/>
+            android:weightSum="1">
 
+            <TextView
+                android:id="@+id/txt_tanggalawal"
+                android:layout_width="0dp"
+                android:layout_weight="0.4"
+                android:layout_height="wrap_content"
+                android:background="@drawable/custom_edt4"
+                android:clickable="true"
+                android:drawableStart="@drawable/ic_date"
+                android:focusable="true"
+                android:gravity="center"
+                android:hint="Tanggal Awal"
+                android:textSize="@dimen/text_medium"
+                android:textColor="@color/black"
+                android:paddingTop="@dimen/padding_small"
+                android:paddingBottom="@dimen/padding_small"
+                android:paddingLeft="@dimen/padding_default"
+                android:paddingRight="@dimen/padding_default"
+                android:layout_margin="@dimen/padding_default"
+                />
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="15dp"
-            android:layout_gravity="center_horizontal|center_vertical|center"
-            android:layout_marginBottom="20dp"
-            android:src="@drawable/ic_remove" />
+            <ImageView
+                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="0.05"
+                android:layout_gravity="center_horizontal|center_vertical|center"
+                android:src="@drawable/ic_remove" />
 
-        <TextView
-            android:id="@+id/txt_tanggalakhir"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="20dp"
-            android:background="@drawable/custom_edt4"
-            android:clickable="true"
-            android:drawableStart="@drawable/ic_calendar"
-            android:focusable="true"
-            android:gravity="center"
-            android:hint="Tanggal Akhir"
-            android:paddingStart="10dp"
-            android:paddingEnd="10dp"
-            android:textSize="15sp"
-            android:textColor="#000000"/>
+            <TextView
+                android:id="@+id/txt_tanggalakhir"
+                android:layout_width="0dp"
+                android:layout_weight="0.4"
+                android:layout_height="wrap_content"
+                android:background="@drawable/custom_edt4"
+                android:clickable="true"
+                android:drawableStart="@drawable/ic_date"
+                android:focusable="true"
+                android:gravity="center"
+                android:hint="Tanggal Akhir"
+                android:textSize="@dimen/text_medium"
+                android:textColor="@color/black"
+                android:paddingTop="@dimen/padding_small"
+                android:paddingBottom="@dimen/padding_small"
+                android:paddingLeft="@dimen/padding_default"
+                android:paddingRight="@dimen/padding_default"
+                android:layout_margin="@dimen/padding_default"
+                />
 
-        <ImageButton
-            android:id="@+id/btnproses"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="13dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginBottom="20dp"
-            android:background="@drawable/custom_button3"
-            android:gravity="center"
-            android:src="@drawable/ic_proses"
-            android:textAllCaps="false"
-            android:textColor="#FFFFFF"
-            android:textSize="20sp"
-            app:fontFamily="sans-serif-condensed-medium" />
-    </LinearLayout>
+            <ImageButton
+                android:id="@+id/btnproses"
+                android:layout_height="match_parent"
+                android:layout_width="0dp"
+                android:layout_weight="0.1"
+                android:background="@drawable/custom_button3"
+                android:gravity="center"
+                android:layout_marginTop="@dimen/padding_default"
+                android:layout_marginBottom="@dimen/padding_default"
+                android:padding="@dimen/padding_small"
+                android:src="@drawable/ic_next"
+                />
+
+        </LinearLayout>
 
         <ListView
             android:id="@+id/list_tutup"

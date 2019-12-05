@@ -37,21 +37,29 @@
 
         <TextView
             android:id="@+id/txt_merchant"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/nama"
             android:textColor="@color/black"
-            android:textSize="16sp"
-            app:fontFamily="sans-serif-black" />
+            android:textSize="@dimen/text_big" />
 
         <TextView
             android:id="@+id/txt_alamat"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
             android:text="@string/alamat"
             android:textColor="#000000"
-            android:textSize="13sp"/>
+            android:textSize="@dimen/text_small"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Status Pendaftaran"
+            android:gravity="right"
+            android:layout_marginTop="@dimen/padding_tiny"
+            android:id="@+id/tv_status"
+            android:textSize="@dimen/text_medium"
+            android:textColor="@color/black"/>
 
     </LinearLayout>
 

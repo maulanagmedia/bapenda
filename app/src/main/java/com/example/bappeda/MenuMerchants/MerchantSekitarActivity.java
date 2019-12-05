@@ -2,13 +2,16 @@ package com.example.bappeda.MenuMerchants;
 
 import android.Manifest;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Looper;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -28,6 +31,7 @@ import com.example.bappeda.Model.MerchantModel;
 import com.example.bappeda.R;
 import com.example.bappeda.Utils.ApiVolley;
 import com.example.bappeda.Utils.AppLoadingScreen;
+import com.example.bappeda.Utils.ItemValidation;
 import com.example.bappeda.Utils.URL;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
@@ -63,17 +67,19 @@ import java.util.List;
 public class MerchantSekitarActivity extends AppCompatActivity implements
         OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
-    private final String TAG = "Mer chantSekitarActivity";
+    private final String TAG = "MerchantSekitarActivity";
 
     private SlidingUpPanelLayout mLayout;
 
     //For BOTTOM in Layout
     //Location
+    public String selectedKategori = "";
     private Button reset; //reset location
     private GoogleMap mGoogleMap;
     private GoogleApiClient mGoogleApiClient;
     private LocationRequest mLocationRequest;
     private MarkerOptions options;
+    private ItemValidation iv = new ItemValidation();
     private LocationCallback locationCallback = new LocationCallback(){
         @Override
         public void onLocationResult(LocationResult location) {
@@ -83,7 +89,9 @@ public class MerchantSekitarActivity extends AppCompatActivity implements
                 lat = location.getLastLocation().getLatitude();
                 lng = location.getLastLocation().getLongitude();
                 Log.d("_log", "latitude: " + lat + " longitude: " + lng);
-                loadListMerchant("");
+
+                start = 0;
+                loadListMerchant();
                 LatLng ll = new LatLng(location.getLastLocation().getLatitude(), location.getLastLocation().getLongitude());
                 CameraUpdate update = CameraUpdateFactory.newLatLngZoom(ll, 17);
                 mGoogleMap.animateCamera(update);
@@ -143,6 +151,11 @@ public class MerchantSekitarActivity extends AppCompatActivity implements
     private RecyclerView rvMerchantKategori;
     private CategoryAdapter categoryAdapter;
 
+    private int start = 0, count = 10;
+    private View footerList;
+    private boolean isLoading = false;
+    private String keyword = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -191,6 +204,41 @@ public class MerchantSekitarActivity extends AppCompatActivity implements
 
         listKategori.clear();
         loadKategoriMerchant();
+
+        keyword = "";
+        LayoutInflater li = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        footerList = li.inflate(R.layout.footer_list, null);
+
+        merchantModels = new ArrayList<>();
+        adapter = new SurveyAdapter(MerchantSekitarActivity.this, R.layout.activity_list_view_survey, merchantModels);
+        listMerchantSekitar.setAdapter(adapter);
+
+        listMerchantSekitar.addFooterView(footerList);
+        listMerchantSekitar.setAdapter(adapter);
+        listMerchantSekitar.removeFooterView(footerList);
+        listMerchantSekitar.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView absListView, int i) {
+
+                int threshold = 1;
+                int countMerchant = listMerchantSekitar.getCount();
+
+                if (i == SCROLL_STATE_IDLE) {
+                    if (listMerchantSekitar.getLastVisiblePosition() >= countMerchant - threshold && !isLoading) {
+
+                        isLoading = true;
+                        start += count;
+                        loadListMerchant();
+                        //Log.i(TAG, "onScroll: last ");
+                    }
+                }
+            }
+
+            @Override
+            public void onScroll(AbsListView absListView, int i, int i1, int i2) {
+
+            }
+        });
 
 }
 
@@ -355,17 +403,18 @@ public class MerchantSekitarActivity extends AppCompatActivity implements
         builder.addLocationRequest(mLocationRequest);
     }
 
-    public void loadListMerchant(String idKategori){
+    public void loadListMerchant(){
 
+        isLoading = true;
         AppLoadingScreen.getInstance().showLoading(this);
 
         final JSONObject body = new JSONObject();
         try {
             body.put("longitude", lng);
             body.put("latitude", lat);
-            body.put("start", "0");
-            body.put("count", "100");
-            body.put("id_kategori", idKategori);
+            body.put("start", String.valueOf(start));
+            body.put("count", String.valueOf(count));
+            body.put("id_kategori", selectedKategori);
         } catch (JSONException e) {
             e.printStackTrace();
             if (e.getMessage()!=null){
@@ -378,13 +427,17 @@ public class MerchantSekitarActivity extends AppCompatActivity implements
                     @Override
                     public void onSuccess(String result) {
                         Log.d(TAG, "Response" + result);
+
+                        AppLoadingScreen.getInstance().stopLoading();
+                        isLoading = false;
+                        listMerchantSekitar.removeFooterView(footerList);
+                        if(start == 0) merchantModels.clear();
                         try {
                             JSONObject object = new JSONObject(result);
                             String message =  object.getJSONObject("metadata").getString("message");
                             int status = object.getJSONObject("metadata").getInt("status");
                             if (status==200){
                                 JSONArray array = object.getJSONArray("response");
-                                merchantModels = new ArrayList<>();
                                 for (int i=0; i<array.length(); i++){
                                     JSONObject dataObject = array.getJSONObject(i);
                                     MerchantModel merchantModel = new MerchantModel();
@@ -392,6 +445,8 @@ public class MerchantSekitarActivity extends AppCompatActivity implements
                                     merchantModel.setNamamerchant(dataObject.getString("nama"));
                                     merchantModel.setAlamat(dataObject.getString("alamat"));
                                     merchantModel.setJarak(dataObject.getString("jarak"));
+                                    merchantModel.setLatitudeString(dataObject.getString("latitude"));
+                                    merchantModel.setLongitudeString(dataObject.getString("longitude"));
 
                                     CategoryModel kategori = new CategoryModel();
                                     kategori.setNama(dataObject.getString("kategori"));
@@ -403,37 +458,69 @@ public class MerchantSekitarActivity extends AppCompatActivity implements
                                         gambar.add(arrray.getJSONObject(p).getString("image"));
                                     }
                                     merchantModel.setImages(gambar);
-
                                     merchantModels.add(merchantModel);
                                 }
-                                adapter = new SurveyAdapter(MerchantSekitarActivity.this, R.layout.activity_list_view_survey, merchantModels);
-                                listMerchantSekitar.setAdapter(adapter);
+
                                 Log.d(TAG, "onSuccess" + message);
 //                                Toast.makeText(MerchantSekitarActivity.this, message, Toast.LENGTH_SHORT).show();
-                                AppLoadingScreen.getInstance().stopLoading();
                             } else {
-                                AppLoadingScreen.getInstance().stopLoading();
-                                merchantModels.clear();
-                                adapter.notifyDataSetChanged();
                                 Log.d(TAG, "onSuccess" + message + "," + status);
                                 Toast.makeText(MerchantSekitarActivity.this, message, Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
+
                             e.printStackTrace();
-                            AppLoadingScreen.getInstance().stopLoading();
                             if (e.getMessage()!=null){
                                 Log.d(TAG, e.getMessage());
                             }
                         }
+
+                        setMarker();
+                        adapter.notifyDataSetChanged();
                     }
 
                     @Override
                     public void onError(String result) {
+
+                        isLoading = false;
+                        listMerchantSekitar.removeFooterView(footerList);
+                        adapter.notifyDataSetChanged();
                         AppLoadingScreen.getInstance().stopLoading();
                         Toast.makeText(MerchantSekitarActivity.this, R.string.error_message, Toast.LENGTH_SHORT).show();
                         Log.d(TAG, "onError: " + result);
                     }
                 });
+    }
+
+    private void setMarker() {
+
+
+        if(mGoogleMap != null){
+
+            mGoogleMap.clear();
+            for(MerchantModel item : merchantModels){
+
+                LatLng ll = new LatLng(iv.parseNullDouble(item.getLatitudeString()), iv.parseNullDouble(item.getLongitudeString()));
+                options = new MarkerOptions()
+                        .position(ll)
+                        .draggable(false)
+                        .title(item.getNamamerchant())
+                        .snippet(item.getAlamat())
+                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
+                mGoogleMap.addMarker(options);
+
+            }
+
+            LatLng ll = new LatLng(lat, lng);
+            CameraUpdate update = CameraUpdateFactory.newLatLngZoom(ll, 17);
+            mGoogleMap.animateCamera(update);
+
+            options = new MarkerOptions()
+                    .position(ll)
+                    .draggable(false)
+                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
+            mGoogleMap.addMarker(options);
+        }
     }
 
     private void loadKategoriMerchant(){

@@ -28,7 +28,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_marginStart="20dp"
+        android:layout_marginLeft="@dimen/padding_default"
+        android:layout_marginRight="@dimen/padding_default"
         android:layout_toEndOf="@id/layout_petugas"
         android:layout_centerVertical="true">
 
@@ -37,16 +38,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="#000000"
-            android:textSize="20sp"
+            android:textSize="@dimen/text_big"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/txt_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
             android:textColor="#000000"
-            android:textSize="20sp" />
+            android:textSize="@dimen/text_mid" />
 
     </LinearLayout>
 

@@ -32,6 +32,7 @@ import com.example.bappeda.Utils.AppLoadingScreen;
 import com.example.bappeda.Utils.DialogFactory;
 import com.example.bappeda.Utils.JSONBuilder;
 import com.example.bappeda.Utils.MultipleImageLoader;
+import com.example.bappeda.Utils.Preferences;
 import com.example.bappeda.Utils.ScrollableMapView;
 import com.example.bappeda.Utils.URL;
 import com.google.android.gms.maps.CameraUpdate;
@@ -315,8 +316,10 @@ public class PreviewActivity extends AppCompatActivity  implements OnMapReadyCal
     }
 
     private void updateData(Bitmap signature){
+
         AppLoadingScreen.getInstance().showLoading(this);
         String base64 = convertToBase64(signature);
+        String idUser = Preferences.getId(PreviewActivity.this);
 
         ArrayList<String> listImageString = new ArrayList<>();
         for(ImagesModel i : PendaftaranWajibPajakActivity.list_images){
@@ -324,7 +327,9 @@ public class PreviewActivity extends AppCompatActivity  implements OnMapReadyCal
         }
 
         JSONBuilder body = new JSONBuilder();
+        body.add("user_login", idUser);
         body.add("id", m.getId());
+        body.add("idp", m.getIdPenugasan());
         body.add("nama", m.getNamamerchant());
         body.add("alamat", m.getAlamat());
         body.add("telp_usaha", m.getNotelp());
@@ -356,6 +361,7 @@ public class PreviewActivity extends AppCompatActivity  implements OnMapReadyCal
                             if(status == 200){
                                 Intent i = new Intent(PreviewActivity.this, FormIsianActivity.class);
                                 i.putExtra(URL.EXTRA_ID_MERCHANT, m.getId());
+                                i.putExtra(URL.EXTRA_IDP, m.getIdPenugasan());
                                 i.putExtra(URL.EXTRA_ID_KATEGORI, m.getKlasifikasi_usaha().getIdKategori());
                                 startActivity(i);
                             }

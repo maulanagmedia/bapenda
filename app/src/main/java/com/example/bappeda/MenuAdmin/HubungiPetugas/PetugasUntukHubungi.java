@@ -50,31 +50,31 @@ public class PetugasUntukHubungi extends AppCompatActivity {
     private ArrayList<PetugasModel> petugasModels = new ArrayList<>();
     private ListView listPetugas;
 
-    ApiVolley apiVolley;
-    String status = "";
-    String message = "";
+    private ApiVolley apiVolley;
+    private String status = "";
+    private String message = "";
 
-    Integer idPetugas;
+    private Integer idPetugas;
 
     //UI di dialog
-    Dialog dialog;
-    TextView namapetugas, emailpetugas, isitanggal;
-    EditText keterangan, judulHubungi;
-    Button kirimtugas;
-    CardView tanggal;
-    Calendar myCalendar;
+    private Dialog dialog;
+    private TextView namapetugas, emailpetugas, isitanggal;
+    private EditText keterangan, judulHubungi;
+    private Button kirimtugas;
+    private CardView tanggal;
+    private Calendar myCalendar;
 
-    RecyclerView rvJabatan;
+    private RecyclerView rvJabatan;
     private ArrayList<JabatanModel> list = new ArrayList<>();
-    JabatanAdapter jabatanAdapter;
+    private JabatanAdapter jabatanAdapter;
 
-    EditText searchPetugas;
+    private EditText searchPetugas;
 
     //Dialog konfirmasi
-    Dialog confirm_dialog;
-    CardView simpan, batal;
-    TextView judul;
-    TextView cancel, save; //di CardView
+    private Dialog confirm_dialog;
+    private CardView simpan, batal;
+    private TextView judul;
+    private TextView cancel, save; //di CardView
 
     private final String TAG = "PetugasUntukHubungi";
 
@@ -144,8 +144,6 @@ public class PetugasUntukHubungi extends AppCompatActivity {
                tanggal = dialog.findViewById(R.id.CardTanggal);
                isitanggal = dialog.findViewById(R.id.txttanggal);
                judulHubungi = dialog.findViewById(R.id.edt_judulHubungi);
-               judulHubungi.setText(R.string.hubungi);
-               keterangan.setText(R.string.hubungi);
 
                idPetugas = petugasModels.get(position).getIdpetugas();
                namapetugas.setText(petugasModels.get(position).getNamapetugas());

@@ -26,9 +26,10 @@ public class FormIsianActivity extends AppCompatActivity {
 
     private String idMerchant = "";
     private String idKategori = "";
+    private String idPenugasan= "";
     private String idUser = "";
-    String urlForm;
-    String urlSuccess;
+    private String urlForm;
+    private String urlSuccess;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,8 +39,13 @@ public class FormIsianActivity extends AppCompatActivity {
         if(getIntent().hasExtra(URL.EXTRA_ID_MERCHANT)){
             idMerchant = getIntent().getStringExtra(URL.EXTRA_ID_MERCHANT);
         }
+
         if(getIntent().hasExtra(URL.EXTRA_ID_KATEGORI)){
             idKategori = getIntent().getStringExtra(URL.EXTRA_ID_KATEGORI);
+        }
+
+        if(getIntent().hasExtra(URL.EXTRA_IDP)){
+            idPenugasan = getIntent().getStringExtra(URL.EXTRA_IDP);
         }
 
         idUser = Preferences.getId(this);
@@ -74,7 +80,7 @@ public class FormIsianActivity extends AppCompatActivity {
         webView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
 
         AppLoadingScreen.getInstance().showLoading(this);
-        urlForm = String.format(URL.URL_FORM + "?id=%s&kategori=%s&petugas=%s", idMerchant, idKategori, idUser);
+        urlForm = String.format(URL.URL_FORM + "?id=%s&kategori=%s&petugas=%s&idp=%s", idMerchant, idKategori, idUser, idPenugasan);
         urlSuccess = "http://gmedia.bz/bapenda/Form/sukses_respon";
 //        webView.setWebViewClient(new CustomWebViewClient());
         webView.setWebViewClient(new WebViewClient(){

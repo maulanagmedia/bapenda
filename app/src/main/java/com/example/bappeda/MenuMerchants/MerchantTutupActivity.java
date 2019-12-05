@@ -1,9 +1,13 @@
 package com.example.bappeda.MenuMerchants;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -23,26 +27,35 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.bappeda.Adapter.ImagesAdapter;
 import com.example.bappeda.Adapter.SurveyAdapter;
 import com.example.bappeda.Model.CategoryModel;
+import com.example.bappeda.Model.ImagesModel;
 import com.example.bappeda.Model.MerchantModel;
 import com.example.bappeda.R;
 import com.example.bappeda.Utils.ApiVolley;
 import com.example.bappeda.Utils.AppLoadingScreen;
+import com.example.bappeda.Utils.Converter;
 import com.example.bappeda.Utils.DialogFactory;
 import com.example.bappeda.Utils.ImageLoader;
 import com.example.bappeda.Utils.ItemValidation;
 import com.example.bappeda.Utils.Preferences;
 import com.example.bappeda.Utils.URL;
+import com.fxn.pix.Pix;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class MerchantTutupActivity extends AppCompatActivity {
@@ -50,7 +63,11 @@ public class MerchantTutupActivity extends AppCompatActivity {
     private final String TAG = "MerchantTutupActivity";
 
     private EditText searchmerchant;
+
     private int start = 0, count = 10;
+    private View footerList;
+    private boolean isLoading = false;
+    private String keyword = "";
 
     private ListView listMerchantTutup;
     private ApiVolley apiVolley;
@@ -74,9 +91,11 @@ public class MerchantTutupActivity extends AppCompatActivity {
     private TextView judul;
     private TextView cancel, save; //di CardView
 
+    private ImagesAdapter imageAdapter;
+    public ArrayList<ImagesModel> list_images = new ArrayList<>();
+
     private ItemValidation iv = new ItemValidation();
-    private View footerList;
-    private boolean isLoading = false;
+    private RecyclerView recyclerImages;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,7 +118,7 @@ public class MerchantTutupActivity extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
+                onBackPressed();
             }
         });
 
@@ -110,6 +129,7 @@ public class MerchantTutupActivity extends AppCompatActivity {
                 if(actionId == EditorInfo.IME_ACTION_SEARCH){
 
                     start = 0;
+                    keyword = searchmerchant.getText().toString();
                     loadMerchant();
                     iv.hideSoftKey(MerchantTutupActivity.this);
                     return true;
@@ -135,6 +155,7 @@ public class MerchantTutupActivity extends AppCompatActivity {
                 if(searchmerchant.getText().toString().length() == 0){
 
                     start = 0;
+                    keyword = "";
                     loadMerchant();
                 }
             }
@@ -155,6 +176,12 @@ public class MerchantTutupActivity extends AppCompatActivity {
                 alamatMerchant = dialog.findViewById(R.id.AlamatMerchant);
                 keteranganTutup = dialog.findViewById(R.id.edt_keteranganTutup);
                 cardTutup = dialog.findViewById(R.id.CardTutupMerchant);
+                recyclerImages = dialog.findViewById(R.id.recyclerView);
+
+                list_images.clear();
+                recyclerImages.setLayoutManager(new LinearLayoutManager(MerchantTutupActivity.this, LinearLayoutManager.HORIZONTAL, false));
+                imageAdapter = new ImagesAdapter(MerchantTutupActivity.this, list_images);
+                recyclerImages.setAdapter(imageAdapter);
 
                 // set Value
                 idMerchant = merchantModels.get(position).getId();
@@ -239,6 +266,31 @@ public class MerchantTutupActivity extends AppCompatActivity {
         confirm_dialog.show();
     }
 
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK && requestCode == URL.CODE_UPLOAD){
+            if (data!=null){
+                ArrayList<String> returnValue = data.getStringArrayListExtra(Pix.IMAGE_RESULTS);
+
+                if(returnValue!=null){
+                    for(String s : returnValue){
+                        try {
+                            Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(),
+                                    Uri.fromFile(new File(s)));
+                            list_images.add(new ImagesModel(bitmap));
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                            if (e.getMessage()!=null){
+                                Log.e("_log", e.getMessage());
+                            }
+                        }
+                    }
+                    imageAdapter.notifyDataSetChanged();
+                }
+            }
+        }
+    }
+
     private void loadMerchant(){
 
         isLoading = true;
@@ -247,15 +299,9 @@ public class MerchantTutupActivity extends AppCompatActivity {
 
         JSONObject body = new JSONObject();
         try {
-            body.put("id_user", idUser);
-            body.put("terdaftar", "");
-            body.put("start", "");
-            body.put("end", "");
-            body.put("kategori","");
-            body.put("keyword", searchmerchant.getText().toString());
-            body.put("buka", "Buka");
-            body.put("awal", String.valueOf(start));
-            body.put("jumlah", String.valueOf(count));
+            body.put("start", String.valueOf(start));
+            body.put("count", String.valueOf(count));
+            body.put("keyword", keyword);
         } catch (JSONException e) {
             e.printStackTrace();
             if (e.getMessage()!=null){
@@ -263,11 +309,12 @@ public class MerchantTutupActivity extends AppCompatActivity {
             }
         }
 
-        apiVolley = new ApiVolley(MerchantTutupActivity.this, body, "POST", URL.URL_SEARCH_MERCHANT,
+        apiVolley = new ApiVolley(MerchantTutupActivity.this, body, "POST", URL.getJadwalMerchantTertutup,
                 new ApiVolley.VolleyCallback() {
                     @Override
                     public void onSuccess(String result) {
 
+                        AppLoadingScreen.getInstance().stopLoading();
                         isLoading = false;
                         listMerchantTutup.removeFooterView(footerList);
                         if(start == 0) merchantModels.clear();
@@ -283,9 +330,7 @@ public class MerchantTutupActivity extends AppCompatActivity {
                                     JSONObject dataObject = array.getJSONObject(i);
                                     MerchantModel merchantModel = new MerchantModel();
                                     merchantModel.setId(dataObject.getString("id"));
-                                    merchantModel.setNpwpdwp(dataObject.getString("t_npwpdwp"));
                                     merchantModel.setNamamerchant(dataObject.getString("nama"));
-                                    merchantModel.setTanggal(dataObject.getString("tgl"));
                                     merchantModel.setAlamat(dataObject.getString("alamat"));
                                     merchantModel.setNamapemilik(dataObject.getString("pemilik"));
                                     merchantModel.setNotelp(dataObject.getString("no_telp"));
@@ -306,28 +351,27 @@ public class MerchantTutupActivity extends AppCompatActivity {
                                 }
 
                             } else {
-                                AppLoadingScreen.getInstance().stopLoading();
-                                merchantModels.clear();
-                                adapter.notifyDataSetChanged();
+
                                 Log.d(TAG, "onSuccess" + message);
                                 Toast.makeText(MerchantTutupActivity.this, message, Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
+
                             e.printStackTrace();
-                            AppLoadingScreen.getInstance().stopLoading();
                             if (e.getMessage()!=null){
                                 Log.e(TAG, "response" + e.getMessage());
                             }
                         }
 
                         adapter.notifyDataSetChanged();
-                        AppLoadingScreen.getInstance().stopLoading();
                     }
 
                     @Override
                     public void onError(String result) {
 
                         listMerchantTutup.removeFooterView(footerList);
+                        merchantModels.clear();
+                        adapter.notifyDataSetChanged();
                         isLoading = false;
                         Log.e("Error.Response", result);
                         Toast.makeText(MerchantTutupActivity.this, R.string.error_message, Toast.LENGTH_SHORT).show();
@@ -345,13 +389,19 @@ public class MerchantTutupActivity extends AppCompatActivity {
             return;
         }
 
+        ArrayList<String> listImageString = new ArrayList<>();
+        for(ImagesModel i : list_images){
+            listImageString.add(Converter.convertToBase64(i.getBitmap()));
+        }
+
         JSONObject body = new JSONObject();
         try {
             body.put("id_petugas", idUser);
             body.put("id_merchant", idMerchant);
-            body.put("t_npwpdwp", npwpdwp);
+            body.put("t_npwpdwp", idMerchant);
             body.put("alasan_tutup", keteranganTutup.getText().toString());
             body.put("flag", flag);
+            body.put("foto", new JSONArray(listImageString));
         } catch (JSONException e) {
             e.printStackTrace();
             if (e.getMessage()!=null){

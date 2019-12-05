@@ -50,10 +50,10 @@ public class KategoriMerchantAdapter extends RecyclerView.Adapter<KategoriMercha
 
         if (position == position_aktif){
             holder.btnNamaKategori.setBackground(context.getDrawable(R.drawable.style_rounded_blue_dark_rectangle));
-            holder.btnNamaKategori.setTextColor(Color.WHITE);
+            //holder.btnNamaKategori.setTextColor(Color.WHITE);
         } else {
             holder.btnNamaKategori.setBackground(context.getDrawable(R.drawable.style_rounded_white_rectangle));
-            holder.btnNamaKategori.setTextColor(Color.parseColor("#19096F"));
+            //holder.btnNamaKategori.setTextColor(Color.parseColor("#19096F"));
         }
 
         //untuk category merchant per activity

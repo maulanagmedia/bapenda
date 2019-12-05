@@ -21,6 +21,11 @@ public class MerchantModel {
     private String notelppemilik = "";
     private CategoryModel klasifikasi_usaha = new CategoryModel();
     private String keterangan = "";
+    private String idPenugasan = "";
+    private String statusPendaftaran = "";
+    private String kodePendaftaran = "";
+    private String latitudeString = "";
+    private String longitudeString = "";
 
     //list Gambar
     private ArrayList<String> Images = new ArrayList<>();
@@ -240,5 +245,45 @@ public class MerchantModel {
     }
     public void setNpwpdwp(String npwpdwp) {
         this.npwpdwp = npwpdwp;
+    }
+
+    public String getIdPenugasan() {
+        return idPenugasan;
+    }
+
+    public void setIdPenugasan(String idPenugasan) {
+        this.idPenugasan = idPenugasan;
+    }
+
+    public String getStatusPendaftaran() {
+        return statusPendaftaran;
+    }
+
+    public void setStatusPendaftaran(String statusPendaftaran) {
+        this.statusPendaftaran = statusPendaftaran;
+    }
+
+    public String getKodePendaftaran() {
+        return kodePendaftaran;
+    }
+
+    public void setKodePendaftaran(String kodePendaftaran) {
+        this.kodePendaftaran = kodePendaftaran;
+    }
+
+    public String getLatitudeString() {
+        return latitudeString;
+    }
+
+    public void setLatitudeString(String latitudeString) {
+        this.latitudeString = latitudeString;
+    }
+
+    public String getLongitudeString() {
+        return longitudeString;
+    }
+
+    public void setLongitudeString(String longitudeString) {
+        this.longitudeString = longitudeString;
     }
 }

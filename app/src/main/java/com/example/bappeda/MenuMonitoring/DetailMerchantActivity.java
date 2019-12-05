@@ -91,40 +91,40 @@ public class DetailMerchantActivity extends AppCompatActivity implements
     private final String TAG = "DetailMerchantActivity";
 
     //UI
-    ImageView imageHeader;
-    TextView namMerchant, alamatMerchant;
-    EditText keterangan;
-    TextView text_latitude, text_longitude;
-    Button tambah;
-    View reset;
+    private ImageView imageHeader;
+    private TextView namMerchant, alamatMerchant;
+    private EditText keterangan;
+    private TextView text_latitude, text_longitude;
+    private Button tambah;
+    private View reset;
 
     //Dialog konfirmasi
-    Dialog confirm_dialog;
-    CardView simpan, batal;
-    TextView judul;
-    TextView cancel, save; //di CardView
+    private Dialog confirm_dialog;
+    private CardView simpan, batal;
+    private TextView judul;
+    private TextView cancel, save; //di CardView
 
-    RecyclerView recyclerImages;
+    private RecyclerView recyclerImages;
     private MerchantModel m;
 
     private ImagesAdapter imageAdapter;
     public ArrayList<ImagesModel> list_images = new ArrayList<>();
-    String imageString;
-    Bitmap bitmap;
-    Dialog signature_dialog;
+    private String imageString;
+    private Bitmap bitmap;
+    private Dialog signature_dialog;
 
     public ApiVolley apiVolley;
-    String idMonitoring;
+    private String idMonitoring;
 
-    String tempDir;
-    SignatureBuilder mSignature;
+    private String tempDir;
+    private SignatureBuilder mSignature;
 
     //For Location
     private double lat, lng;
-    GoogleMap mGoogleMap;
-    GoogleApiClient mGoogleApiClient;
-    LocationRequest mLocationRequest;
-    MarkerOptions options;
+    private GoogleMap mGoogleMap;
+    private GoogleApiClient mGoogleApiClient;
+    private LocationRequest mLocationRequest;
+    private MarkerOptions options;
     private GoogleLocationManager locationManager;
     private LocationCallback locationCallback = new LocationCallback(){
         @Override
@@ -295,6 +295,8 @@ public class DetailMerchantActivity extends AppCompatActivity implements
         String base64 = convertToBase64(signature);
 
         if (keterangan.getText().toString().isEmpty()){
+
+            AppLoadingScreen.getInstance().stopLoading();
             keterangan.setError("Deksripsi harus diisi");
             keterangan.requestFocus();
             return;
@@ -318,6 +320,9 @@ public class DetailMerchantActivity extends AppCompatActivity implements
                     @Override
                     public void onSuccess(String result) {
                         Log.d("Response", result);
+                        AppLoadingScreen.getInstance().stopLoading();
+
+
                         try{
                             JSONObject response = new JSONObject(result);
                             String message =  response.getJSONObject("metadata").getString("message");
@@ -336,10 +341,10 @@ public class DetailMerchantActivity extends AppCompatActivity implements
                             if (e.getMessage()!=null){
                                 Log.e("errorResponse", e.getMessage());
                             }
-                            AppLoadingScreen.getInstance().stopLoading();
+
                             signature_dialog.dismiss();
                         }
-                        AppLoadingScreen.getInstance().stopLoading();
+
                     }
 
                     @Override

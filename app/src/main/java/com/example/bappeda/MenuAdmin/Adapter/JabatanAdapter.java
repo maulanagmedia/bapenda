@@ -51,11 +51,11 @@ public class JabatanAdapter extends RecyclerView.Adapter<JabatanAdapter.JabatanH
 
         if(position == position_aktif){
             holder.btnnamaJabatan.setBackground(context.getDrawable(R.drawable.style_rounded_blue_dark_rectangle));
-            holder.btnnamaJabatan.setTextColor(Color.WHITE);
+            //holder.btnnamaJabatan.setTextColor(Color.WHITE);
         }
         else{
             holder.btnnamaJabatan.setBackground(context.getDrawable(R.drawable.style_rounded_white_rectangle));
-            holder.btnnamaJabatan.setTextColor(Color.parseColor("#19096F"));
+            //holder.btnnamaJabatan.setTextColor(Color.parseColor("#19096F"));
         }
 
         holder.btnnamaJabatan.setOnClickListener(new View.OnClickListener() {

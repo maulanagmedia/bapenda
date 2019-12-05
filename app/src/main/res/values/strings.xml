@@ -28,6 +28,7 @@
     <string name="keterangan">Ketik alasan disini ......</string>
     <string name="keputusan">Keputusan</string>
     <string name="simpan">Simpan</string>
+    <string name="simpan_data_monitoring">Simpan Data Monitoring</string>
     <string name="daftarr">Daftar</string>
     <string name="text_popup">Apakah wajib pajak tersebut berkenan untuk di daftarkan?</string>
     <string name="setuju">  Wajib pajak setuju untuk didaftarkan</string>
@@ -67,7 +68,9 @@
     <string name="judul_monitor">Tugas Monitoring</string>
     <string name="monitoring">Monitoring</string>
     <string name="judul_survey">Tugas Survey</string>
+    <string name="judul_pendaftaran">Tugas Pendaftaran</string>
     <string name="survey">Survey</string>
+    <string name="pendaftaran">Pendaftaran</string>
     <string name="hubungi">Hubungi Petugas</string>
     <string name="text_tutup">Apakah wajib pajak tersebut telah berhenti beroperasi?</string>
     <string name="hint_Tutup">Tulis keterangan mengapa wajib pajak tersebut berhenti beroperasi</string>

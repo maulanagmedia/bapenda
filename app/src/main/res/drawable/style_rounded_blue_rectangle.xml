@@ -5,6 +5,6 @@
         android:color="@color/blueLight"/>
 
     <corners
-        android:radius="10dp" />
+        android:radius="@dimen/default_corner" />
 
 </shape>

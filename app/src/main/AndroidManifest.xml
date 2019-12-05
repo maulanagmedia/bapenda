@@ -3,6 +3,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.bappeda">
 
+    <permission
+        android:name="com.example.bappeda.permission.MAPS.RECEIVE"
+        android:protectionLevel="signature" />
+
+    <uses-feature
+        android:glEsVersion="0x00020000"
+        android:required="true" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="com.example.bappeda.permission.MAPS.RECEIVE" />
+    <uses-permission android:name="com.google.android.providers.gsf.permissions.READ_GSERVICES" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_bapenda"
@@ -12,18 +31,26 @@
         android:theme="@style/AppTheme.NoActionBar"
         android:usesCleartextTraffic="true"
         tools:replace="android:theme">
-        <activity android:name=".MenuMerchants.RiwayatMerchantTutupActivity"
+        <activity android:name=".MenuMerchants.UbahLokasiMerchantActivity"
             android:screenOrientation="portrait"></activity>
-        <activity android:name=".MenuMerchants.MerchantTutupActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".MenuMerchants.MerchantSekitarActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".MenuMerchants.PilihanMerchantsActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".MenuMonitoring.PreviewMerchantActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".MenuMonitoring.RiwayatMonitoringMerchantActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".MenuMerchants.RiwayatMerchantTutupActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".MenuMerchants.MerchantTutupActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".MenuMerchants.MerchantSekitarActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".MenuMerchants.PilihanMerchantsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".MenuMonitoring.PreviewMerchantActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".MenuMonitoring.RiwayatMonitoringMerchantActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".MenuAdmin.HubungiPetugas.PetugasUntukHubungi"
             android:screenOrientation="portrait" />
@@ -115,36 +142,6 @@
             android:name=".Login.MainActivity"
             android:screenOrientation="portrait">
 
-            <!--
-            <intent-filter>
-        <activity
-            android:name=".MenuPendaftaran.SurveyActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".ListViewSurvey"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".MenuPendaftaran.RiwayatSurveyActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".MenuHome.HomeActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".Login.MainActivity"
-            android:screenOrientation="portrait">
-
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW"/>
-
-                <category android:name="android.intent.category.DEFAULT"/>
-                <category android:name="android.intent.category.BROWSABLE"/>
-
-                <data
-                    android:host="www.bapenda.com"
-                    android:scheme="http"
-                    android:pathPattern="/.*"/>
-            </intent-filter>
-            -->
         </activity>
 
         <meta-data
@@ -194,24 +191,5 @@
             android:name="org.apache.http.legacy"
             android:required="false" />
     </application>
-
-    <permission
-        android:name="com.example.bappeda.permission.MAPS.RECEIVE"
-        android:protectionLevel="signature" />
-
-    <uses-feature
-        android:glEsVersion="0x00020000"
-        android:required="true" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="com.example.bappeda.permission.MAPS.RECEIVE" />
-    <uses-permission android:name="com.google.android.providers.gsf.permissions.READ_GSERVICES" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
 </manifest>

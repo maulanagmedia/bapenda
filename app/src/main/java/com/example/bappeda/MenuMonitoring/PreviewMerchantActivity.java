@@ -88,33 +88,33 @@ public class PreviewMerchantActivity extends AppCompatActivity implements
 
     private final String TAG = "PreviewMerchantActivity";
 
-    ImageView imageHeader;
-    TextView namMerchant, alamatMerchant;
-    EditText keterangan;
-    TextView text_latitude, text_longitude;
-    Button tambah;
-    View reset;
+    private ImageView imageHeader;
+    private TextView namMerchant, alamatMerchant;
+    private EditText keterangan;
+    private TextView text_latitude, text_longitude;
+    private Button tambah;
+    private View reset;
 
-    RecyclerView recyclerImages;
+    private RecyclerView recyclerImages;
     private MerchantModel m;
 
     private ImagesAdapter imageAdapter;
     public ArrayList<ImagesModel> list_images = new ArrayList<>();
-    String imageString;
-    Bitmap bitmap;
-    Dialog signature_dialog;
+    private String imageString;
+    private Bitmap bitmap;
+    private Dialog signature_dialog;
 
     public ApiVolley apiVolley;
-    String idMonitoring;
+    private String idMonitoring;
 
-    String tempDir;
-    SignatureBuilder mSignature;
+    private String tempDir;
+    private SignatureBuilder mSignature;
 
     private double lat, lng;
-    GoogleMap mGoogleMap;
-    GoogleApiClient mGoogleApiClient;
-    LocationRequest mLocationRequest;
-    MarkerOptions options;
+    private GoogleMap mGoogleMap;
+    private GoogleApiClient mGoogleApiClient;
+    private LocationRequest mLocationRequest;
+    private MarkerOptions options;
     private LocationCallback locationCallback = new LocationCallback(){
         @Override
         public void onLocationResult(LocationResult location) {
@@ -338,26 +338,6 @@ public class PreviewMerchantActivity extends AppCompatActivity implements
         }
         String gambar = m.getImage();
         ImageLoader.load(PreviewMerchantActivity.this, gambar, imageHeader);
-
-       /* //getLocation
-        LatLng ll = new LatLng(m.getLatitude(), m.getLongitude());
-        CameraUpdate update = CameraUpdateFactory.newLatLngZoom(ll, 17);
-        mGoogleMap.animateCamera(update);
-        mGoogleMap.clear();
-        options = new MarkerOptions()
-                .position(ll)
-                .draggable(true)
-                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
-        mGoogleMap.addMarker(options);
-
-        lat = m.getLatitude();
-        lng = m.getLongitude();
-
-        String lat_string = "Latitude : " + lat;
-        String long_string = "Longitude : " + lng;
-
-        text_latitude.setText(lat_string);
-        text_longitude.setText(long_string);*/
 
     }
 

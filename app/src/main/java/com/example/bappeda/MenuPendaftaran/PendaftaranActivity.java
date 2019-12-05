@@ -224,6 +224,9 @@ public class PendaftaranActivity extends AppCompatActivity implements GoogleApiC
                             merchantModel.setLongitude(iv.parseNullDouble(dataObject.getString("longitude")));
                             merchantModel.setNotelp(dataObject.getString("no_telp"));
                             merchantModel.setFlag(dataObject.getString("flag"));
+                            merchantModel.setIdPenugasan(dataObject.getString("idp"));
+                            merchantModel.setStatusPendaftaran(dataObject.getString("status_merchant"));
+                            merchantModel.setKodePendaftaran(dataObject.getString("kode_status"));
                             CategoryModel kategori = new CategoryModel();
                             kategori.setIdKategori(dataObject.getString("kategori"));
                             merchantModel.setKategori(kategori);

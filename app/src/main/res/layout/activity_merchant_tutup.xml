@@ -12,7 +12,7 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/blueLight"
+        android:background="@color/colorPrimary"
         app:titleTextColor="@color/white"
         android:minHeight="?attr/actionBarSize"
         app:popupTheme="@style/AppTheme.NoActionBar.TitleTextStyle"/>
@@ -29,16 +29,13 @@
         android:singleLine="true"
         android:hint="Cari Nama Merchant"
         android:padding="10dp"
-        android:textSize="18sp" />
+        android:textSize="@dimen/text_big" />
 
     <ListView
         android:id="@+id/list_merchantTutup"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="10dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginTop="@dimen/padding_default"
         android:scrollbars="vertical">
     </ListView>
 

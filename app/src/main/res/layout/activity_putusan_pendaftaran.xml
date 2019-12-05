@@ -72,7 +72,8 @@
             android:gravity="start|center_vertical"
             android:paddingStart="10dp"
             android:paddingEnd="10dp"
-            android:textColor="#000000"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_mid"
             />
 
         <TextView
@@ -98,7 +99,8 @@
             android:gravity="start|center_vertical"
             android:paddingStart="10dp"
             android:paddingEnd="10dp"
-            android:textColor="#000000"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_mid"
             />
 
         <View
@@ -134,7 +136,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/full_daftar"
-                android:textSize="16sp"
+                android:textSize="@dimen/text_mid"
                 android:textColor="#000000"
                 android:layout_marginTop="5dp"
                 android:theme="@style/RadioGroupStyle"/>
@@ -144,7 +146,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/full_tidakdaftar"
-                android:textSize="16sp"
+                android:textSize="@dimen/text_mid"
                 android:theme="@style/RadioGroupStyle"
                 android:textColor="#000000"
                 android:layout_marginTop="5dp"/>

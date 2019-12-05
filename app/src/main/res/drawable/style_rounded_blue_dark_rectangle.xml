@@ -2,9 +2,9 @@
     android:shape="rectangle" >
 
     <solid
-        android:color="@color/blueDark"/>
+        android:color="@color/merah"/>
 
     <corners
-        android:radius="10dp" />
+        android:radius="@dimen/default_corner" />
 
 </shape>

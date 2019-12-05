@@ -280,9 +280,11 @@ public class MerchantUntukMonitoring extends AppCompatActivity {
                 Log.d(TAG, "Response: " + result);
 
                 try {
+
                     JSONObject object = new JSONObject(result);
                     int status = object.getJSONObject("metadata").getInt("status");
                     String message;
+
                     if(status== 200){
 
                         message = object.getJSONObject("metadata").getString("message");

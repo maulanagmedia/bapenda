@@ -11,10 +11,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal|center_vertical"
-        android:layout_marginTop="25dp"
-        android:text="Tugas Survey"
+        android:layout_marginTop="@dimen/padding_big"
+        android:text="Tugas Pendaftaran"
         android:textColor="@color/blueSoft"
-        android:textSize="20sp"
+        android:textSize="@dimen/text_super"
         android:textStyle="bold" />
 
     <ScrollView
@@ -29,18 +29,18 @@
             <View
                 android:id="@+id/layout_divider1"
                 android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:background="#E1E1E1"
-                android:layout_marginTop="20dp"
-                android:layout_marginStart="30dp"
-                android:layout_marginEnd="30dp"/>
+                android:layout_height="@dimen/line"
+                android:background="@color/black"
+                android:layout_marginTop="@dimen/padding_big"
+                android:layout_marginStart="@dimen/padding_big"
+                android:layout_marginEnd="@dimen/padding_big"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="35dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="35dp"
+                android:layout_marginStart="@dimen/padding_super"
+                android:layout_marginEnd="@dimen/padding_super"
+                android:layout_marginTop="@dimen/padding_big"
                 android:orientation="horizontal">
 
                 <ImageView
@@ -69,8 +69,7 @@
                         android:layout_height="wrap_content"
                         android:text="diansastro88@gmail.com"
                         android:textColor="#000000"
-                        android:textSize="14sp"
-                        app:fontFamily="sans-serif"/>
+                        android:textSize="@dimen/text_small"/>
 
                 </LinearLayout>
 
@@ -80,8 +79,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:layout_marginStart="35dp"
-                android:layout_marginEnd="35dp"
+                android:layout_marginStart="@dimen/padding_super"
+                android:layout_marginEnd="@dimen/padding_super"
                 android:orientation="horizontal">
 
                 <ImageView
@@ -110,8 +109,7 @@
                         android:layout_height="wrap_content"
                         android:text="Jl.Mangga Dalam Selatan"
                         android:textColor="#000000"
-                        android:textSize="14sp"
-                        app:fontFamily="sans-serif"/>
+                        android:textSize="@dimen/text_small"/>
 
                 </LinearLayout>
 
@@ -120,30 +118,34 @@
             <View
                 android:id="@+id/layout_divider2"
                 android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:background="#E1E1E1"
-                android:layout_marginTop="20dp"
-                android:layout_marginStart="30dp"
-                android:layout_marginEnd="30dp"/>
+                android:layout_height="@dimen/line"
+                android:background="@color/black"
+                android:layout_marginTop="@dimen/padding_big"
+                android:layout_marginStart="@dimen/padding_big"
+                android:layout_marginEnd="@dimen/padding_big"/>
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/CardTanggal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="20dp"
-                app:cardCornerRadius="20dp">
+                android:layout_marginTop="@dimen/padding_big"
+                android:layout_marginBottom="@dimen/padding_big"
+                android:layout_marginStart="@dimen/padding_super"
+                android:layout_marginEnd="@dimen/padding_super"
+                app:cardCornerRadius="@dimen/default_corner">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:padding="15dp">
+                    android:background="@drawable/custom_date"
+                    android:padding="@dimen/padding_medium">
 
                     <ImageView
-                        android:layout_width="28dp"
-                        android:layout_height="28dp"
-                        android:layout_marginStart="20dp"
-                        android:src="@drawable/calender"/>
+                        android:layout_width="@dimen/icon_size_big"
+                        android:layout_height="@dimen/icon_size_big"
+                        android:layout_marginStart="@dimen/padding_default"
+                        android:src="@drawable/ic_date"/>
 
                     <TextView
                         android:id="@+id/txttanggal"
@@ -163,7 +165,8 @@
                 android:id="@+id/textketJudul"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="35dp"
+                android:layout_marginStart="@dimen/padding_super"
+                android:layout_marginEnd="@dimen/padding_super"
                 android:text="Tambahkan Judul"
                 android:textColor="#000000"
                 android:textSize="12sp"
@@ -172,52 +175,53 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="9sp"
+                android:textSize="@dimen/text_small"
                 android:textStyle="normal"
-                android:layout_marginStart="35dp"
-                android:layout_marginEnd="30dp"
+                android:layout_marginStart="@dimen/padding_super"
+                android:layout_marginEnd="@dimen/padding_super"
                 android:text="Tulis judul kegiatan"
                 android:textColor="@color/grey"/>
 
             <View
                 android:id="@+id/layout_divider4"
                 android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:layout_marginTop="2sp"
-                android:background="#E1E1E1"
-                android:layout_marginStart="30dp"
-                android:layout_marginEnd="30dp"/>
+                android:layout_height="@dimen/line"
+                android:layout_marginTop="@dimen/padding_default"
+                android:background="@color/transparent"
+                android:layout_marginStart="@dimen/padding_big"
+                android:layout_marginEnd="@dimen/padding_big"/>
 
             <EditText
                 android:id="@+id/edt_judulSurvey"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:minHeight="40dp"
-                android:layout_marginStart="35dp"
-                android:layout_marginEnd="35dp"
+                android:minHeight="50dp"
+                android:layout_marginStart="@dimen/padding_super"
+                android:layout_marginEnd="@dimen/padding_super"
                 android:gravity="top|start"
                 android:textSize="13sp"
                 android:maxLines="1"
                 android:hint="Judul"
+                android:padding="@dimen/padding_tanggung"
                 android:text=""
-                android:padding="8dp"
-                android:background="@android:color/transparent"
+                android:background="@drawable/custom_input"
                 android:theme="@style/RadioGroupStyle"/>
 
             <View
                 android:id="@+id/layout_divider5"
                 android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:background="#E1E1E1"
-                android:layout_marginStart="30dp"
-                android:layout_marginEnd="30dp"/>
+                android:layout_height="@dimen/line"
+                android:background="@color/transparent"
+                android:layout_marginStart="@dimen/padding_big"
+                android:layout_marginEnd="@dimen/padding_big"/>
 
             <TextView
                 android:id="@+id/textket"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:layout_marginStart="35dp"
+                android:layout_marginStart="@dimen/padding_super"
+                android:layout_marginEnd="@dimen/padding_super"
                 android:text="@string/ket"
                 android:textColor="#000000"
                 android:textSize="12sp"
@@ -226,45 +230,43 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="9sp"
+                android:textSize="@dimen/text_small"
                 android:textStyle="normal"
-                android:layout_marginStart="35dp"
-                android:layout_marginEnd="30dp"
+                android:layout_marginStart="@dimen/padding_super"
+                android:layout_marginEnd="@dimen/padding_super"
                 android:text="@string/hint_keterangan"
                 android:textColor="@color/grey"/>
 
             <View
                 android:id="@+id/layout_divider"
                 android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:background="#E1E1E1"
-                android:layout_marginTop="2dp"
-                android:layout_marginStart="30dp"
-                android:layout_marginEnd="30dp"/>
+                android:layout_height="@dimen/line"
+                android:background="@color/transparent"
+                android:layout_marginTop="@dimen/padding_default"
+                android:layout_marginStart="@dimen/padding_big"
+                android:layout_marginEnd="@dimen/padding_big"/>
 
             <EditText
                 android:id="@+id/edt_keterangan"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="35dp"
-                android:layout_marginEnd="35dp"
+                android:layout_marginStart="@dimen/padding_super"
+                android:layout_marginEnd="@dimen/padding_super"
                 android:gravity="top|start"
                 android:lines="5"
                 android:hint="Keterangan"
-                android:padding="8dp"
-                android:layout_marginTop="2dp"
-                android:background="@android:color/transparent"
+                android:padding="@dimen/padding_tanggung"
+                android:background="@drawable/custom_input"
                 android:textSize="13sp"
                 android:theme="@style/RadioGroupStyle"/>
 
             <View
                 android:id="@+id/layout_divider3"
                 android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:layout_marginTop="2dp"
-                android:background="#E1E1E1"
-                android:layout_marginStart="30dp"
-                android:layout_marginEnd="30dp"/>
+                android:layout_height="@dimen/line"
+                android:background="@color/transparent"
+                android:layout_marginStart="@dimen/padding_big"
+                android:layout_marginEnd="@dimen/padding_big"/>
 
             <Button
                 android:id="@+id/button_kirimtugas"
@@ -272,13 +274,13 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/custom_button2"
                 android:layout_marginTop="15dp"
-                android:layout_marginStart="60dp"
-                android:layout_marginEnd="60dp"
+                android:layout_marginStart="@dimen/padding_super"
+                android:layout_marginEnd="@dimen/padding_super"
                 android:text="Kirim Tugas Survey"
                 android:layout_marginBottom="20dp"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
-                android:textSize="18sp" />
+                android:textSize="@dimen/text_big" />
 
         </LinearLayout>
 

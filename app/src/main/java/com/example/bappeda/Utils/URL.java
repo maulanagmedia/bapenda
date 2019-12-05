@@ -19,7 +19,8 @@ public class URL {
     public static final String URL_UPDATE_GAMBAR = BASE_URL + "User/update_gambar_user";
     public static final String URL_UPDATE_FCM = BASE_URL + "Authentication/update_fcm";
     public static final String URL_UPDATE_LOCATION = BASE_URL + "Monitoring/udpate_lokasi_petugas";
-    public static final String URL_MONITORING_MERCHANT = BASE_URL + "monitoring";
+    public static final String URL_MONITORING_MERCHANT = BASE_URL + "MonitoringMerchant/jadwal_monitoring";
+    public static final String URL_RIWAYAT_MONITORING = BASE_URL + "MonitoringMerchant/riwayat_monitoring";
     public static final String URL_DETAIL_MONITORING = BASE_URL + "Monitoring/monitoring_merchant";
     public static final String URL_MERCHANT_PENUGASAN = BASE_URL + "Penugasan/merchant_penugasan";
     public static final String URL_DATA_PETUGAS = BASE_URL + "Authentication/data_petugas";
@@ -38,6 +39,7 @@ public class URL {
     public static final String getRiwayatSurvey = BASE_URL + "RiwayatSurvey/";
     public static final String getMerchantMonitoring = BASE_URL + "MonitoringMerchant/";
     public static final String getRiwayatPendaftaran = BASE_URL + "PendaftaranMerchant/riwayat_pendaftaran/";
+    public static final String getJadwalMerchantTertutup = BASE_URL + "MerchantTutup/view_merchant_buka/";
 
     //Form
     public static final String URL_FORM = "http://gmedia.bz/bapenda/Form/form_kategori";
@@ -47,6 +49,7 @@ public class URL {
     public static final String EXTRA_ID_KATEGORI = "id_kategori";
     public static final String EXTRA_MERCHANT = "merchant";
     public static final String EXTRA_IMAGES = "images";
+    public static final String EXTRA_IDP = "idp";
 
     //CODE
     public static final int CODE_UPLOAD = 909;

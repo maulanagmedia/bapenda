@@ -165,8 +165,8 @@ public class MerchantUntukSurveyActivity extends AppCompatActivity {
                 idMerchant = merchantModels.get(position).getId();
                 namamerchant.setText(merchantModels.get(position).getNamamerchant());
                 alamatmerchant.setText(merchantModels.get(position).getAlamat());
-                judulSurvey.setText(R.string.judul_survey);
-                keterangan.setText(R.string.survey);
+                judulSurvey.setText(R.string.judul_pendaftaran);
+                keterangan.setText(R.string.pendaftaran);
 
                 kirimsurvey.setOnClickListener(new View.OnClickListener() {
                     @Override

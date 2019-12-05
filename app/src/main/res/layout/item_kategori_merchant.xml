@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:background="@color/grey"
     android:orientation="horizontal"
-    app:cardCornerRadius="10dp"
+    app:cardCornerRadius="@dimen/default_corner"
     android:layout_margin="10dp">
 
     <TextView
@@ -20,6 +20,6 @@
         android:paddingEnd="20dp"
         android:textAllCaps="false"
         android:textColor="@color/black"
-        android:textSize="18sp"/>
+        android:textSize="@dimen/text_big"/>
 
 </androidx.cardview.widget.CardView>

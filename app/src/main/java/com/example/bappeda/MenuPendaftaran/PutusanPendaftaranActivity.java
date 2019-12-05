@@ -1,5 +1,6 @@
 package com.example.bappeda.MenuPendaftaran;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -23,6 +25,7 @@ import com.example.bappeda.Utils.ApiVolley;
 import com.example.bappeda.Utils.AppLoadingScreen;
 import com.example.bappeda.Utils.GoogleLocationManager;
 import com.example.bappeda.Utils.JSONBuilder;
+import com.example.bappeda.Utils.Preferences;
 import com.example.bappeda.Utils.URL;
 import com.google.gson.Gson;
 
@@ -119,14 +122,29 @@ public class PutusanPendaftaranActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-
-
                 if(alasan.getText().toString().equals("")){
                     Toast.makeText(PutusanPendaftaranActivity.this,
                             "Isi alasan penolakan terlebih dahulu", Toast.LENGTH_SHORT).show();
                 }
                 else{
-                    kirimHasilSurvey(false);
+
+                    AlertDialog dialog = new AlertDialog.Builder(PutusanPendaftaranActivity.this)
+                            .setTitle("Konfirmasi")
+                            .setMessage("Apakah anda yakin ingin melanjutkan proses?")
+                            .setNegativeButton("Tidak", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+
+                                }
+                            })
+                            .setPositiveButton("Ya", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+
+                                    kirimHasilSurvey(false);
+                                }
+                            })
+                            .show();
                 }
             }
         });
@@ -140,10 +158,12 @@ public class PutusanPendaftaranActivity extends AppCompatActivity {
             return;
         }
 
+        String idUser = Preferences.getId(PutusanPendaftaranActivity.this);
         AppLoadingScreen.getInstance().showLoading(this);
         JSONBuilder body = new JSONBuilder();
         body.add("id_merchant", merchant.getId());
 //        body.add("status", setuju?"Ya":"Tidak");
+        body.add("id_user", idUser);
         body.add("status", "Tidak");
         body.add("alasan", setuju?"":alasan.getText().toString());
         body.add("lat", lat);

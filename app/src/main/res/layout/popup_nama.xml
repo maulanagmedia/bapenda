@@ -10,16 +10,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Masukkan Nama Anda"
-        android:fontFamily="sans-serif-condensed-light"
-        android:textColor="#000000"
-        android:textSize="20sp"
+        android:textColor="@color/black"
+        android:textSize="@dimen/text_big"
         android:textStyle="bold"/>
 
     <EditText
         android:id="@+id/editTextNama"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"/>
+        android:text=""
+        />
 
     <RelativeLayout
         android:layout_width="match_parent"

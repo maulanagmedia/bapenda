@@ -16,18 +16,23 @@
     <dimen name="corner_big">16dp</dimen>
     <dimen name="padding_tiny">2dp</dimen>
     <dimen name="padding_small">4dp</dimen>
+    <dimen name="padding_tanggung">6dp</dimen>
     <dimen name="padding_default">8dp</dimen>
     <dimen name="padding_dexa">10dp</dimen>
     <dimen name="padding_medium">12dp</dimen>
     <dimen name="padding_mid">14dp</dimen>
     <dimen name="padding_big">16dp</dimen>
+    <dimen name="padding_supra">20dp</dimen>
     <dimen name="padding_super">40dp</dimen>
     <dimen name="text_home">28sp</dimen>
     <dimen name="text_small">10sp</dimen>
     <dimen name="text_medium">12sp</dimen>
     <dimen name="text_mid">14sp</dimen>
     <dimen name="text_big">16sp</dimen>
+    <dimen name="text_super">20sp</dimen>
     <dimen name="menu_height">180dp</dimen>
     <dimen name="icon_size">24dp</dimen>
+    <dimen name="icon_size_big">36dp</dimen>
+    <dimen name="icon">56dp</dimen>
     <dimen name="line">0.75dp</dimen>
 </resources>

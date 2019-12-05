@@ -12,7 +12,7 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/blueLight"
+        android:background="@color/colorPrimary"
         app:titleTextColor="@color/white"
         android:minHeight="?attr/actionBarSize"
         app:popupTheme="@style/AppTheme.NoActionBar.TitleTextStyle">
@@ -23,18 +23,18 @@
         android:id="@+id/CardSekitar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginEnd="30dp"
+        android:layout_marginTop="@dimen/padding_big"
+        android:layout_marginStart="@dimen/padding_big"
+        android:layout_marginEnd="@dimen/padding_big"
         android:visibility="gone"
-        app:cardCornerRadius="20dp">
+        app:cardCornerRadius="@dimen/padding_dexa">
 
         <LinearLayout
             android:id="@+id/LinearSekitar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal"
-            android:background="@color/purpleSoft"
+            android:background="@color/orange"
             android:padding="20dp">
 
             <TextView
@@ -43,7 +43,7 @@
                 android:text="Merchant Sekitar"
                 android:layout_marginStart="10dp"
                 android:layout_gravity="center_vertical"
-                android:textSize="20sp"
+                android:textSize="@dimen/text_big"
                 android:gravity="center_vertical|center_horizontal"
                 android:textColor="#FFFFFF" />
 
@@ -55,11 +55,11 @@
         android:id="@+id/CardTutup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginEnd="30dp"
+        android:layout_marginTop="@dimen/padding_big"
+        android:layout_marginStart="@dimen/padding_big"
+        android:layout_marginEnd="@dimen/padding_big"
         android:visibility="gone"
-        app:cardCornerRadius="20dp">
+        app:cardCornerRadius="@dimen/padding_dexa">
 
         <LinearLayout
             android:id="@+id/LinearTutup"
@@ -75,7 +75,39 @@
                 android:text="Merchant Tutup"
                 android:layout_marginStart="10dp"
                 android:layout_gravity="center_vertical"
-                android:textSize="20sp"
+                android:textSize="@dimen/text_big"
+                android:gravity="center_vertical|center_horizontal"
+                android:textColor="#FFFFFF" />
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cv_lokasi"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/padding_big"
+        android:layout_marginStart="@dimen/padding_big"
+        android:layout_marginEnd="@dimen/padding_big"
+        android:visibility="gone"
+        app:cardCornerRadius="@dimen/padding_dexa">
+
+        <LinearLayout
+            android:id="@+id/ll_lokasi"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:background="@color/blueSoft"
+            android:padding="20dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Ubah Lokasi Merchant"
+                android:layout_marginStart="10dp"
+                android:layout_gravity="center_vertical"
+                android:textSize="@dimen/text_big"
                 android:gravity="center_vertical|center_horizontal"
                 android:textColor="#FFFFFF" />
 

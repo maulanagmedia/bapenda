@@ -1,9 +1,12 @@
 package com.example.bappeda.MenuMonitoring;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -35,11 +38,16 @@ public class RiwayatMonitoringMerchantActivity extends AppCompatActivity {
 
     private final String TAG = "RiwayatMonitoring";
 
-    ListView listmerchant;
-    TextView hari, tanggal;
+    private ListView listmerchant;
+    private TextView hari, tanggal;
     private SurveyAdapter adapter;
-    ArrayList<MerchantModel> merchantModels = new ArrayList<>();
-    ApiVolley apiVolley;
+    private ArrayList<MerchantModel> merchantModels = new ArrayList<>();
+    private ApiVolley apiVolley;
+
+    private int start = 0, count = 10;
+    private View footerList;
+    private boolean isLoading = false;
+    private String keyword = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +73,37 @@ public class RiwayatMonitoringMerchantActivity extends AppCompatActivity {
 
         tanggalFormat(); //format tanggal hari ini
         DayFormat(); //format hari ini (ex: senin, selasa, dll)
+
+        keyword = "";
+        LayoutInflater li = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        footerList = li.inflate(R.layout.footer_list, null);
+
+        adapter = new SurveyAdapter(RiwayatMonitoringMerchantActivity.this, R.layout.activity_list_view_survey, merchantModels);
+        listmerchant.setAdapter(adapter);
+
+        listmerchant.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView absListView, int i) {
+
+                int threshold = 1;
+                int countMerchant = listmerchant.getCount();
+
+                if (i == SCROLL_STATE_IDLE) {
+                    if (listmerchant.getLastVisiblePosition() >= countMerchant - threshold && !isLoading) {
+
+                        isLoading = true;
+                        start += count;
+                        loadData();
+                        //Log.i(TAG, "onScroll: last ");
+                    }
+                }
+            }
+
+            @Override
+            public void onScroll(AbsListView absListView, int i, int i1, int i2) {
+
+            }
+        });
 
         listmerchant.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -96,16 +135,16 @@ public class RiwayatMonitoringMerchantActivity extends AppCompatActivity {
 
     private void loadData() {
 
-        AppLoadingScreen.getInstance().showLoading(RiwayatMonitoringMerchantActivity.this);
-
+        isLoading = true;
+        AppLoadingScreen.getInstance().showLoading(this);
         final String idUser = Preferences.getId(getBaseContext());
 
         JSONObject body = new JSONObject();
         try {
             body.put("id_user", idUser);
-            // "0" = sudah dikunjungi
-            // "1" = belum dikunjungi
-            body.put("status", "0");
+            body.put("keyword", "");
+            body.put("start", String.valueOf(start));
+            body.put("count", String.valueOf(count));
         } catch (JSONException e) {
             e.printStackTrace();
             if (e.getMessage()!=null){
@@ -113,18 +152,23 @@ public class RiwayatMonitoringMerchantActivity extends AppCompatActivity {
             }
         }
 
-        apiVolley = new ApiVolley(RiwayatMonitoringMerchantActivity.this, body, "POST", URL.URL_MONITORING_MERCHANT,
+        apiVolley = new ApiVolley(RiwayatMonitoringMerchantActivity.this, body, "POST", URL.URL_RIWAYAT_MONITORING,
                 new ApiVolley.VolleyCallback() {
                     @Override
                     public void onSuccess(String result) {
+
+                        isLoading = false;
+                        listmerchant.removeFooterView(footerList);
+                        if(start == 0) merchantModels.clear();
+                        AppLoadingScreen.getInstance().stopLoading();
                         Log.d(TAG, "Response" + result);
+
                         try {
                             JSONObject object = new JSONObject(result);
                             String message =  object.getJSONObject("metadata").getString("message");
                             int status = object.getJSONObject("metadata").getInt("status");
                             if (status==200){
                                 JSONArray array = object.getJSONArray("response");
-                                merchantModels = new ArrayList<>();
                                 for (int i = 0; i < array.length(); i++) {
                                     JSONObject dataObject = array.getJSONObject(i);
                                     MerchantModel merchantModel = new MerchantModel();
@@ -147,12 +191,9 @@ public class RiwayatMonitoringMerchantActivity extends AppCompatActivity {
                                     merchantModel.setImages(gambar);
                                     merchantModels.add(merchantModel);
                                 }
-                                adapter = new SurveyAdapter(RiwayatMonitoringMerchantActivity.this, R.layout.activity_list_view_survey, merchantModels);
-                                listmerchant.setAdapter(adapter);
+
                             } else {
                                 AppLoadingScreen.getInstance().stopLoading();
-                                merchantModels.clear();
-                                adapter.notifyDataSetChanged();
                                 Toast.makeText(RiwayatMonitoringMerchantActivity.this, message, Toast.LENGTH_SHORT).show();
                             }
                             Log.d(TAG, "onSuccess: " + message);
@@ -163,11 +204,16 @@ public class RiwayatMonitoringMerchantActivity extends AppCompatActivity {
                                 Log.e(TAG, "response" + e.getMessage());
                             }
                         }
-                        AppLoadingScreen.getInstance().stopLoading();
+                        adapter.notifyDataSetChanged();
                     }
 
                     @Override
                     public void onError(String result) {
+                        isLoading = false;
+                        listmerchant.removeFooterView(footerList);
+                        Log.e("Error.Response", result);
+                        merchantModels.clear();
+                        adapter.notifyDataSetChanged();
                         AppLoadingScreen.getInstance().stopLoading();
                         Toast.makeText(RiwayatMonitoringMerchantActivity.this, R.string.error_message, Toast.LENGTH_SHORT).show();
                         Log.d("Error.Response", result);
