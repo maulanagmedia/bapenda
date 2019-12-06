@@ -83,7 +83,9 @@
     <string name="confirm_kirim">Apakah Anda yakin ingin mengirim tugas ini?</string>
     <string name="confirm_send">Kirim Data</string>
     <string name="confirm_tutup">Apakah Anda yakin ingin menutup wajib pajak ini?</string>
+    <string name="confirm_update_loc">Apakah Anda yakin ingin mengubah lokasi wajib pajak?</string>
     <string name="confirm_close">Tutup Wajib Pajak</string>
+    <string name="update_loc">Update Lokasi Wajib Pajak</string>
     <string name="confirm_no">Cancel</string>
     <string name="riwayat_merchant_tutup">Anda belum melakukan penutupan wajib pajak hari ini</string>
 

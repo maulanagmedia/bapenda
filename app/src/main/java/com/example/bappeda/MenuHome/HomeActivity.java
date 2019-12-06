@@ -108,7 +108,7 @@ public class HomeActivity extends AppCompatActivity {
         }
 
         int menuWidth = 0;
-        menuWidth = (size.x / 2) - iv.dpToPx(HomeActivity.this, 20  );
+        menuWidth = (size.x / 2) - iv.dpToPx(HomeActivity.this, 32  );
 
         LinearLayout.LayoutParams lpp = (LinearLayout.LayoutParams) menuContainer.getLayoutParams();
         lpp.height = size.y;
@@ -117,7 +117,7 @@ public class HomeActivity extends AppCompatActivity {
         GridLayout.LayoutParams lp = (GridLayout.LayoutParams) pendaftaran.getLayoutParams();
         lp.width = menuWidth;
         lp.height = menuWidth;
-        int lenght = iv.dpToPx(context, 2);
+        int lenght = iv.dpToPx(context, 8);
         lp.setMargins(lenght, lenght, lenght, lenght);
         pendaftaran.setLayoutParams(lp);
 

@@ -211,6 +211,7 @@ public class DetailMerchantActivity extends AppCompatActivity implements
                 ResetLokasi();
             }
         });
+
         tambah.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -391,26 +392,6 @@ public class DetailMerchantActivity extends AppCompatActivity implements
         }
         String gambar = m.getImage();
         ImageLoader.load(DetailMerchantActivity.this, gambar, imageHeader);
-
-       /* //getLocation
-        LatLng ll = new LatLng(m.getLatitude(), m.getLongitude());
-        CameraUpdate update = CameraUpdateFactory.newLatLngZoom(ll, 17);
-        mGoogleMap.animateCamera(update);
-        mGoogleMap.clear();
-        options = new MarkerOptions()
-                .position(ll)
-                .draggable(true)
-                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
-        mGoogleMap.addMarker(options);
-
-        lat = m.getLatitude();
-        lng = m.getLongitude();
-
-        String lat_string = "Latitude : " + lat;
-        String long_string = "Longitude : " + lng;
-
-        text_latitude.setText(lat_string);
-        text_longitude.setText(long_string);*/
 
     }
 
@@ -688,10 +669,4 @@ public class DetailMerchantActivity extends AppCompatActivity implements
             initLocation();
         }
     }
-
-    /*@Override
-    protected void onDestroy() {
-        list_images = null;
-        super.onDestroy();
-    }*/
 }

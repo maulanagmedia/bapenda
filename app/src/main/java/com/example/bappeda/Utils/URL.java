@@ -40,6 +40,8 @@ public class URL {
     public static final String getMerchantMonitoring = BASE_URL + "MonitoringMerchant/";
     public static final String getRiwayatPendaftaran = BASE_URL + "PendaftaranMerchant/riwayat_pendaftaran/";
     public static final String getJadwalMerchantTertutup = BASE_URL + "MerchantTutup/view_merchant_buka/";
+    public static final String simpanLokasiMerchant = BASE_URL + "MerchantTutup/update_tempat/";
+    public static final String getRiwayatPerubahanLokasi = BASE_URL + "MerchantTutup/riwayat_tempat/";
 
     //Form
     public static final String URL_FORM = "http://gmedia.bz/bapenda/Form/form_kategori";

@@ -1,5 +1,9 @@
 package com.example.bappeda.MenuMerchants;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,14 +14,12 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
 import com.example.bappeda.Adapter.RiwayatTutupAdapter;
 import com.example.bappeda.Model.MerchantModel;
 import com.example.bappeda.R;
 import com.example.bappeda.Utils.ApiVolley;
 import com.example.bappeda.Utils.AppLoadingScreen;
+import com.example.bappeda.Utils.Preferences;
 import com.example.bappeda.Utils.URL;
 
 import org.json.JSONArray;
@@ -30,13 +32,13 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-public class RiwayatMerchantTutupActivity extends AppCompatActivity {
+public class RiwayatUpdateLokasiMerchant extends AppCompatActivity {
 
     final String TAG = "RiwayatMerchantTutup";
 
     //Variabel UI
     private TextView tanggal_awal, tanggal_akhir;
-    ImageButton button_proses;
+    private ImageButton button_proses;
     private ListView listTutup;
     private Calendar Mycalendar;
 
@@ -46,11 +48,12 @@ public class RiwayatMerchantTutupActivity extends AppCompatActivity {
     //Filter
     private String start_date = "";
     private String end_date = "";
+    private Activity activity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_riwayat_merchant_tutup);
+        setContentView(R.layout.activity_riwayat_update_lokasi_merchant);
 
         tanggal_awal = findViewById(R.id.txt_tanggalawal);
         tanggal_akhir = findViewById(R.id.txt_tanggalakhir);
@@ -58,16 +61,19 @@ public class RiwayatMerchantTutupActivity extends AppCompatActivity {
         button_proses = findViewById(R.id.btnproses);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        if (getSupportActionBar()!= null){
+        if (getSupportActionBar()!=null){
             getSupportActionBar().setTitle("Riwayat");
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
+
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
             }
         });
+
+        activity = this;
 
         DateCalendar();
         tanggaFormat();
@@ -83,12 +89,19 @@ public class RiwayatMerchantTutupActivity extends AppCompatActivity {
 
     private void loadMerchantTutup(){
 
+        String idUser = Preferences.getId(this);
         AppLoadingScreen.getInstance().showLoading(this);
 
         JSONObject body = new JSONObject();
         try {
+            /*"keyword":"",
+                    "tanggal_awal":"",
+                    "tanggal_akhir":"",
+                    "id_user":""*/
+            body.put("keyword", "");
             body.put("tanggal_awal", start_date);
             body.put("tanggal_akhir", end_date);
+            body.put("id_user", idUser);
         } catch (JSONException e) {
             e.printStackTrace();
             if (e.getMessage()!=null){
@@ -96,7 +109,7 @@ public class RiwayatMerchantTutupActivity extends AppCompatActivity {
             }
         }
 
-        new ApiVolley(RiwayatMerchantTutupActivity.this, body, "POST", URL.URL_VIEW_MERCHANT_TUTUP,
+        new ApiVolley(activity, body, "POST", URL.getRiwayatPerubahanLokasi,
                 new ApiVolley.VolleyCallback() {
                     @Override
                     public void onSuccess(String result) {
@@ -115,8 +128,8 @@ public class RiwayatMerchantTutupActivity extends AppCompatActivity {
                                     merchantModel.setId(tutup.getString("id"));
                                     merchantModel.setNamamerchant(tutup.getString("nama"));
                                     merchantModel.setAlamat(tutup.getString("alamat"));
-                                    merchantModel.setAlasan_tutup(tutup.getString("alasan_tutup"));
-                                    merchantModel.setTanggal(tutup.getString("insert_at"));
+                                    merchantModel.setTanggal(tutup.getString("update_at"));
+                                    merchantModel.setAlasan_tutup("");
 
                                     ArrayList<String> gambar = new ArrayList<>();
                                     final JSONArray arrray = tutup.getJSONArray("image");
@@ -127,14 +140,14 @@ public class RiwayatMerchantTutupActivity extends AppCompatActivity {
 
                                     merchantModels.add(merchantModel);
                                 }
-                                adapter = new RiwayatTutupAdapter(RiwayatMerchantTutupActivity.this, R.layout.list_merchant_tutup, merchantModels);
+                                adapter = new RiwayatTutupAdapter(activity, R.layout.list_merchant_tutup, merchantModels);
                                 listTutup.setAdapter(adapter);
                             } else {
                                 AppLoadingScreen.getInstance().stopLoading();
                                 merchantModels.clear();
 //                                adapter.notifyDataSetChanged();
                                 Log.d(TAG, "onSuccess" + message);
-                                Toast.makeText(RiwayatMerchantTutupActivity.this, R.string.riwayat_merchant_tutup, Toast.LENGTH_SHORT).show();
+                                Toast.makeText(activity, R.string.riwayat_merchant_tutup, Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -149,7 +162,7 @@ public class RiwayatMerchantTutupActivity extends AppCompatActivity {
                     @Override
                     public void onError(String result) {
                         Log.e(TAG, "Error.Response" + result);
-                        Toast.makeText(RiwayatMerchantTutupActivity.this, R.string.error_message, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(activity, R.string.error_message, Toast.LENGTH_SHORT).show();
                         AppLoadingScreen.getInstance().stopLoading();
                     }
                 });
@@ -172,7 +185,7 @@ public class RiwayatMerchantTutupActivity extends AppCompatActivity {
         tanggal_awal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new DatePickerDialog(RiwayatMerchantTutupActivity.this, date_awal, Mycalendar.get(Calendar.YEAR),
+                new DatePickerDialog(activity, date_awal, Mycalendar.get(Calendar.YEAR),
                         Mycalendar.get(Calendar.MONTH), Mycalendar.get(Calendar.DAY_OF_MONTH)).show();
             }
         });
@@ -190,7 +203,7 @@ public class RiwayatMerchantTutupActivity extends AppCompatActivity {
         tanggal_akhir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new DatePickerDialog(RiwayatMerchantTutupActivity.this, date_akhir, Mycalendar.get(Calendar.YEAR),
+                new DatePickerDialog(activity, date_akhir, Mycalendar.get(Calendar.YEAR),
                         Mycalendar.get(Calendar.MONTH), Mycalendar.get(Calendar.DAY_OF_MONTH)).show();
             }
         });

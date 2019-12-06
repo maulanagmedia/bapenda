@@ -108,6 +108,10 @@
                             android:layout_width="@dimen/menu_height"
                             android:layout_height="@dimen/menu_height"
                             android:visibility="gone"
+                            android:layout_margin="@dimen/padding_small"
+                            app:cardElevation="@dimen/padding_tanggung"
+                            android:elevation="@dimen/padding_tanggung"
+                            app:cardCornerRadius="@dimen/default_corner"
                             >
 
                             <LinearLayout
@@ -116,7 +120,7 @@
                                 android:layout_height="match_parent"
                                 android:orientation="vertical"
                                 android:gravity="center"
-                                android:background="@drawable/bg_menu"
+                                android:background="@drawable/custom_date"
                                 android:padding="@dimen/padding_big">
 
                                 <ImageView
@@ -143,7 +147,11 @@
                             android:id="@+id/CardPendaftaran"
                             android:layout_width="@dimen/menu_height"
                             android:layout_height="@dimen/menu_height"
-                            android:visibility="gone">
+                            android:visibility="gone"
+                            android:layout_margin="@dimen/padding_small"
+                            app:cardElevation="@dimen/padding_tanggung"
+                            android:elevation="@dimen/padding_tanggung"
+                            app:cardCornerRadius="@dimen/default_corner">
 
                             <LinearLayout
                                 android:id="@+id/LinearSurvey"
@@ -151,7 +159,7 @@
                                 android:layout_height="match_parent"
                                 android:orientation="vertical"
                                 android:gravity="center"
-                                android:background="@drawable/bg_menu"
+                                android:background="@drawable/custom_date"
                                 android:padding="@dimen/padding_big">
 
                                 <ImageView
@@ -178,7 +186,11 @@
                             android:id="@+id/CardMonitoring"
                             android:layout_width="@dimen/menu_height"
                             android:layout_height="@dimen/menu_height"
-                            android:visibility="gone">
+                            android:visibility="gone"
+                            android:layout_margin="@dimen/padding_small"
+                            app:cardElevation="@dimen/padding_tanggung"
+                            android:elevation="@dimen/padding_tanggung"
+                            app:cardCornerRadius="@dimen/default_corner">
 
                             <LinearLayout
                                 android:id="@+id/LinearMonitoring"
@@ -186,7 +198,7 @@
                                 android:layout_height="match_parent"
                                 android:orientation="vertical"
                                 android:gravity="center"
-                                android:background="@drawable/bg_menu"
+                                android:background="@drawable/custom_date"
                                 android:padding="@dimen/padding_big">
 
                                 <ImageView
@@ -213,7 +225,11 @@
                             android:id="@+id/CardMerchant"
                             android:layout_width="@dimen/menu_height"
                             android:layout_height="@dimen/menu_height"
-                            android:visibility="gone">
+                            android:visibility="gone"
+                            android:layout_margin="@dimen/padding_small"
+                            app:cardElevation="@dimen/padding_tanggung"
+                            android:elevation="@dimen/padding_tanggung"
+                            app:cardCornerRadius="@dimen/default_corner">
 
                             <LinearLayout
                                 android:id="@+id/LinearMerchant"
@@ -221,7 +237,7 @@
                                 android:layout_height="match_parent"
                                 android:orientation="vertical"
                                 android:gravity="center"
-                                android:background="@drawable/bg_menu"
+                                android:background="@drawable/custom_date"
                                 android:padding="@dimen/padding_big">
 
                                 <ImageView
@@ -248,7 +264,11 @@
                             android:id="@+id/CardAdmin"
                             android:layout_width="@dimen/menu_height"
                             android:layout_height="@dimen/menu_height"
-                            android:visibility="gone">
+                            android:visibility="gone"
+                            android:layout_margin="@dimen/padding_small"
+                            app:cardElevation="@dimen/padding_tanggung"
+                            android:elevation="@dimen/padding_tanggung"
+                            app:cardCornerRadius="@dimen/default_corner">
 
                             <LinearLayout
                                 android:id="@+id/LinearAdmin"
@@ -256,7 +276,7 @@
                                 android:layout_height="match_parent"
                                 android:orientation="vertical"
                                 android:gravity="center"
-                                android:background="@drawable/bg_menu"
+                                android:background="@drawable/custom_date"
                                 android:padding="@dimen/padding_big">
 
                                 <ImageView
@@ -284,7 +304,6 @@
                 </LinearLayout>
 
             </LinearLayout>
-
 
         </ScrollView>
 

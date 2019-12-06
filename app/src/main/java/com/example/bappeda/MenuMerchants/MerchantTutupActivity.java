@@ -168,6 +168,7 @@ public class MerchantTutupActivity extends AppCompatActivity {
         listMerchantTutup.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+
                 dialog = DialogFactory.getInstance().createDialog(MerchantTutupActivity.this, R.layout.popup_merchant_tutup, 90);
 
                 //Inisialisasi UI di dialog
@@ -258,7 +259,7 @@ public class MerchantTutupActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 tambahMerchantTutup();
-                confirm_dialog.dismiss();
+                //confirm_dialog.dismiss();
                 loadMerchant();
             }
         });
@@ -381,6 +382,7 @@ public class MerchantTutupActivity extends AppCompatActivity {
     }
 
     private void tambahMerchantTutup(){
+
         String idUser = Preferences.getId(this);
 
         if (keteranganTutup.getText().toString().isEmpty()){
@@ -414,28 +416,35 @@ public class MerchantTutupActivity extends AppCompatActivity {
         new ApiVolley(MerchantTutupActivity.this, body, "POST", URL.URL_ADD_MERCHANT_TUTUP, new ApiVolley.VolleyCallback() {
             @Override
             public void onSuccess(String result) {
+
+                AppLoadingScreen.getInstance().stopLoading();
                 Log.d(TAG, "Response" + result);
+
                 try {
                     JSONObject object = new JSONObject(result);
                     String message = object.getJSONObject("metadata").getString("message");
                     int status = object.getJSONObject("metadata").getInt("status");
                     if (status==200){
-                        AppLoadingScreen.getInstance().stopLoading();
+
                         Toast.makeText(MerchantTutupActivity.this, message, Toast.LENGTH_SHORT).show();
-                        dialog.dismiss();
+                        if (confirm_dialog != null) confirm_dialog.dismiss();
+                        if(dialog != null) dialog.dismiss();
+                        start = 0;
+                        loadMerchant();
                     } else {
-                        AppLoadingScreen.getInstance().stopLoading();
+
                         Toast.makeText(MerchantTutupActivity.this, message, Toast.LENGTH_SHORT).show();
                     }
                     Log.d(TAG, "onSuccess: " + message);
                 } catch (JSONException e) {
+
                     e.printStackTrace();
                     AppLoadingScreen.getInstance().stopLoading();
                     if (e.getMessage()!=null){
                         Log.e(TAG, "response" + e.getMessage());
                     }
                 }
-                AppLoadingScreen.getInstance().stopLoading();
+
             }
 
             @Override

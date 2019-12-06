@@ -31,8 +31,11 @@
         android:theme="@style/AppTheme.NoActionBar"
         android:usesCleartextTraffic="true"
         tools:replace="android:theme">
-        <activity android:name=".MenuMerchants.UbahLokasiMerchantActivity"
+        <activity android:name=".MenuMerchants.RiwayatUpdateLokasiMerchant"
             android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".MenuMerchants.UbahLokasiMerchantActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".MenuMerchants.RiwayatMerchantTutupActivity"
             android:screenOrientation="portrait" />
@@ -140,9 +143,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".Login.MainActivity"
-            android:screenOrientation="portrait">
-
-        </activity>
+            android:screenOrientation="portrait"></activity>
 
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
