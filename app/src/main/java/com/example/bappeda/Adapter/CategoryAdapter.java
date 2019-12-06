@@ -55,6 +55,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
             public void onClick(View view) {
                 if (context instanceof MerchantSekitarActivity){
                     ((MerchantSekitarActivity) context).selectedKategori = listCategory.get(position).getIdKategori();
+                    ((MerchantSekitarActivity) context).start = 0;
                     ((MerchantSekitarActivity) context).loadListMerchant();
                     Log.d("_log", "id: " + listCategory.get(position).getIdKategori());
                 }

@@ -111,7 +111,7 @@ public class MerchantTutupActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         if (getSupportActionBar()!=null){
-            getSupportActionBar().setTitle("Merchant Tutup");
+            getSupportActionBar().setTitle("Wajib Pajak Tutup");
             getSupportActionBar().setDisplayShowTitleEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }

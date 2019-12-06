@@ -37,7 +37,7 @@
         android:imeOptions="actionSearch"
         android:inputType="textPersonName"
         android:singleLine="true"
-        android:hint="Cari Nama Merchant"
+        android:hint="Cari Nama Wajib Pajak"
         android:padding="10dp"
         android:textSize="18sp" />
 

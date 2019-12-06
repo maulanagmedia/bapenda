@@ -115,7 +115,7 @@ public class MerchantUntukMonitoring extends AppCompatActivity {
 
         setSupportActionBar(toolbar);
         if (getSupportActionBar()!=null){
-            getSupportActionBar().setTitle("Daftar Merchant");
+            getSupportActionBar().setTitle("Daftar Wajib Pajak");
             getSupportActionBar().setDisplayShowTitleEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }

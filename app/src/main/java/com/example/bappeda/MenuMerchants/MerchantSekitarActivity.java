@@ -151,7 +151,7 @@ public class MerchantSekitarActivity extends AppCompatActivity implements
     private RecyclerView rvMerchantKategori;
     private CategoryAdapter categoryAdapter;
 
-    private int start = 0, count = 10;
+    public int start = 0, count = 10;
     private View footerList;
     private boolean isLoading = false;
     private String keyword = "";

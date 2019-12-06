@@ -159,7 +159,7 @@ public class UbahLokasiMerchantActivity extends AppCompatActivity implements
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         if (getSupportActionBar()!=null){
-            getSupportActionBar().setTitle("Merchant");
+            getSupportActionBar().setTitle("Wajib Pajak");
             getSupportActionBar().setDisplayShowTitleEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }

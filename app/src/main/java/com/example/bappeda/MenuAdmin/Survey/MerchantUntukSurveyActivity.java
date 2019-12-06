@@ -94,7 +94,7 @@ public class MerchantUntukSurveyActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         if (getSupportActionBar()!=null){
-            getSupportActionBar().setTitle("Daftar Merchant");
+            getSupportActionBar().setTitle("Daftar Wajib Pajak");
             getSupportActionBar().setDisplayShowTitleEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
