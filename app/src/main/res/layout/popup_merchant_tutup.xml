@@ -105,12 +105,36 @@
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerView"
-                    android:layout_margin="10dp"
+                    android:layout_margin="@dimen/padding_big"
                     android:layout_width="match_parent"
                     android:layout_height="150dp"
                     android:orientation="horizontal">
 
                 </androidx.recyclerview.widget.RecyclerView>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Tambah Tanda Tangan"
+                    android:gravity="center"
+                    android:id="@+id/tv_tambah_ttd"
+                    android:layout_gravity="center"
+                    android:textSize="@dimen/text_big"
+                    android:paddingTop="@dimen/padding_small"
+                    android:paddingBottom="@dimen/padding_small"
+                    android:paddingLeft="@dimen/padding_default"
+                    android:paddingRight="@dimen/padding_default"
+                    android:textColor="@color/white"
+                    android:background="@drawable/style_rounded_blue_rectangle"
+                    android:layout_marginBottom="5dp"/>
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="240dp"
+                    android:layout_marginLeft="@dimen/padding_big"
+                    android:layout_marginRight="@dimen/padding_big"
+                    android:id="@+id/iv_ttd"
+                    />
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/CardTutupMerchant"
@@ -135,7 +159,7 @@
                             android:gravity="center"
                             android:layout_margin="@dimen/padding_default"
                             android:textColor="@color/white"
-                            android:text="Ya, merchant telah berhenti beroperasi"
+                            android:text="Ya, wajib pajak telah berhenti beroperasi"
                             android:textSize="@dimen/padding_big" />
 
                     </LinearLayout>

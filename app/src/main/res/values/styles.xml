@@ -67,4 +67,8 @@
         <item name="android:textColor">@color/white</item>
     </style>
 
+    <style name="AppTheme.SearchView" parent="Widget.AppCompat.SearchView">
+        <item name="queryBackground">@drawable/ic_search_black_24dp</item>
+    </style>
+
 </resources>

@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.bappeda.MenuReklame.DetailReklameActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbar"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:fitsSystemWindows="true">
+
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:id="@+id/main.collapsing"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fitsSystemWindows="true"
+            app:contentScrim="?attr/colorPrimary"
+            app:expandedTitleMarginEnd="64dp"
+            app:expandedTitleMarginStart="48dp"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
+            <ImageView
+                android:id="@+id/image_header"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fitsSystemWindows="true"
+                android:scaleType="centerCrop"
+                app:layout_collapseMode="parallax" />
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@android:color/transparent"
+                app:layout_collapseMode="pin"
+                app:popupTheme="@style/AppTheme.NoActionBar"
+                app:titleTextColor="@color/white" />
+
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nestedScroll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/LightGrey"
+                android:orientation="vertical"
+                android:paddingTop="@dimen/padding_dexa"
+                android:paddingBottom="@dimen/padding_dexa"
+                android:paddingLeft="@dimen/padding_big"
+                android:paddingRight="@dimen/padding_big"
+                >
+
+                <TextView
+                    android:id="@+id/txtnamaMerchant"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/text_big"
+                    android:textStyle="bold"
+                    android:text="Nama Wajib Pajak"
+                    android:textColor="@color/black"/>
+
+                <TextView
+                    android:id="@+id/txtalamatMerchant"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/text_medium"
+                    android:textStyle="normal"
+                    android:text="Alamat"
+                    android:textColor="@color/black"/>
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_big"
+                android:textStyle="bold"
+                android:layout_marginTop="@dimen/padding_default"
+                android:layout_marginStart="@dimen/padding_big"
+                android:layout_marginEnd="@dimen/padding_big"
+                android:text="Deskripsi"
+                android:spinnerMode="dropdown"
+                android:backgroundTint="@color/grey"
+
+                android:textColor="@color/black"/>
+
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/sp_keterangan"
+                android:layout_marginTop="@dimen/padding_default"
+                android:layout_marginStart="@dimen/padding_big"
+                android:layout_marginEnd="@dimen/padding_big"/>
+
+
+            <View
+                android:id="@+id/layout_divider3"
+                android:layout_width="match_parent"
+                android:layout_height="27dp"
+                android:background="#E1E1E1"
+                android:layout_marginTop="@dimen/padding_big"/>
+
+            <RelativeLayout
+                android:id="@+id/relstive2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    android:id="@+id/lbl_map"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/padding_big"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="@dimen/padding_big"
+                    android:text="Map"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_big"
+                    android:layout_marginBottom="@dimen/padding_big"
+                    android:textStyle="bold"
+                    />
+
+                <Button
+                    android:id="@+id/btnreset"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/resetlokasi"
+                    android:textAllCaps="false"
+                    android:textSize="10sp"
+                    android:gravity="center"
+                    android:layout_alignBottom="@id/mapFragment"
+                    android:layout_alignEnd="@id/mapFragment"
+                    android:layout_margin="10dp"
+                    />
+
+                <fragment
+                    android:id="@+id/mapFragment"
+                    android:layout_below="@id/lbl_map"
+                    android:name="com.google.android.gms.maps.MapFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    class="com.example.bappeda.Utils.ScrollableMapView"/>
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/linear2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bacgroundgradien"
+                android:padding="15dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textLatitude"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    android:textSize="14sp"
+                    android:ellipsize="end"
+                    android:layout_marginEnd="5dp"
+                    app:fontFamily="sans-serif-condensed-medium" />
+
+                <TextView
+                    android:id="@+id/textLongitude"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:layout_marginStart="5dp"
+                    android:textColor="@color/white"
+                    android:textSize="14sp"
+                    android:ellipsize="end"
+                    app:fontFamily="sans-serif-condensed-medium" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/lbl_foto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/padding_big"
+                android:layout_marginTop="@dimen/padding_big"
+                android:layout_marginRight="@dimen/padding_big"
+                android:text="Upload Foto"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:textSize="@dimen/text_big"/>
+
+            <TextView
+                android:id="@+id/txt_foto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/padding_big"
+                android:layout_marginRight="@dimen/padding_big"
+                android:layout_marginBottom="@dimen/padding_big"
+                android:text="@string/icon_camera"
+                android:textSize="@dimen/text_medium" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_margin="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:orientation="horizontal">
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+            <Button
+                android:id="@+id/buttontambah"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/padding_super"
+                android:layout_marginTop="@dimen/padding_big"
+                android:layout_marginRight="@dimen/padding_super"
+                android:layout_marginBottom="@dimen/padding_big"
+                android:background="@drawable/custom_button2"
+                android:gravity="center"
+                android:text="@string/simpan_data_monitoring"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_big" />
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

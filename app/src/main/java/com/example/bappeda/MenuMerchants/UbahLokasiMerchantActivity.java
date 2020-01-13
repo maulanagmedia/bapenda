@@ -5,14 +5,18 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Looper;
+import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -36,13 +40,23 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.widget.NestedScrollView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
+import com.example.bappeda.Adapter.ImagesAdapter;
 import com.example.bappeda.Adapter.SurveyAdapter;
 import com.example.bappeda.Model.CategoryModel;
+import com.example.bappeda.Model.ImagesModel;
 import com.example.bappeda.Model.MerchantModel;
 import com.example.bappeda.R;
 import com.example.bappeda.Utils.ApiVolley;
 import com.example.bappeda.Utils.AppLoadingScreen;
+import com.example.bappeda.Utils.Converter;
 import com.example.bappeda.Utils.DialogFactory;
 import com.example.bappeda.Utils.GoogleLocationManager;
 import com.example.bappeda.Utils.ImageLoader;
@@ -50,6 +64,7 @@ import com.example.bappeda.Utils.ItemValidation;
 import com.example.bappeda.Utils.Preferences;
 import com.example.bappeda.Utils.ScrollableMapView;
 import com.example.bappeda.Utils.URL;
+import com.fxn.pix.Pix;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -78,6 +93,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class UbahLokasiMerchantActivity extends AppCompatActivity implements
@@ -150,6 +167,10 @@ public class UbahLokasiMerchantActivity extends AppCompatActivity implements
     private MapView mvPeta;
     private Button btnReset;
     private Dialog confirm_dialog;
+    private RecyclerView recyclerImages;
+
+    private ImagesAdapter imageAdapter;
+    public ArrayList<ImagesModel> list_images = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -245,6 +266,40 @@ public class UbahLokasiMerchantActivity extends AppCompatActivity implements
                 tvLongitude = (TextView) dialog.findViewById(R.id.textLongitude);
                 btnReset = (Button) dialog.findViewById(R.id.btnreset);
                 cvSimpan = (CardView) dialog.findViewById(R.id.cv_simpan);
+                recyclerImages = dialog.findViewById(R.id.recyclerView);
+
+                list_images.clear();
+
+                //Init foto
+                ArrayList<String> listImagesUrl = m.getImages();
+                if (listImagesUrl!=null){
+                    for(String url : listImagesUrl){
+                        Glide.with(UbahLokasiMerchantActivity.this).asBitmap().load(url).listener(new RequestListener<Bitmap>() {
+                            @Override
+                            public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Bitmap> target, boolean isFirstResource) {
+                                Log.e("glide_log", "load failed");
+                                return false;
+                            }
+
+                            @Override
+                            public boolean onResourceReady(Bitmap resource, Object model, Target<Bitmap> target, DataSource dataSource, boolean isFirstResource) {
+                                if(imageAdapter != null){
+                                    list_images.add(new ImagesModel(resource));
+                                    imageAdapter.notifyDataSetChanged();
+                                    return true;
+                                }
+                                else{
+                                    return false;
+                                }
+                            }
+                        }).preload();
+                    }
+                }
+
+                recyclerImages.setLayoutManager(new LinearLayoutManager(UbahLokasiMerchantActivity.this, LinearLayoutManager.HORIZONTAL, false));
+                imageAdapter = new ImagesAdapter(UbahLokasiMerchantActivity.this, list_images);
+                recyclerImages.setAdapter(imageAdapter);
+                recyclerImages = dialog.findViewById(R.id.recyclerView);
 
                 MapsInitializer.initialize(UbahLokasiMerchantActivity.this);
                 mvPeta = (MapView) dialog.findViewById(R.id.mv_peta);
@@ -466,6 +521,31 @@ public class UbahLokasiMerchantActivity extends AppCompatActivity implements
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK && requestCode == URL.CODE_UPLOAD){
+            if (data!=null){
+                ArrayList<String> returnValue = data.getStringArrayListExtra(Pix.IMAGE_RESULTS);
+
+                if(returnValue!=null){
+                    for(String s : returnValue){
+                        try {
+                            Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(),
+                                    Uri.fromFile(new File(s)));
+                            list_images.add(new ImagesModel(bitmap));
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                            if (e.getMessage()!=null){
+                                Log.e("_log", e.getMessage());
+                            }
+                        }
+                    }
+                    imageAdapter.notifyDataSetChanged();
+                }
+            }
+        }
     }
 
     private void ResetLokasi(){
@@ -692,6 +772,11 @@ public class UbahLokasiMerchantActivity extends AppCompatActivity implements
         String idUser = Preferences.getId(this);
         String nama = Preferences.getUsername(this);
 
+        ArrayList<String> listImageString = new ArrayList<>();
+        for(ImagesModel i : list_images){
+            listImageString.add(Converter.convertToBase64(i.getBitmap()));
+        }
+
         JSONObject body = new JSONObject();
         try {
 
@@ -701,6 +786,7 @@ public class UbahLokasiMerchantActivity extends AppCompatActivity implements
             body.put("longitude", iv.doubleToStringFull(lng));
             body.put("user_update", nama);
             body.put("flag", flag);
+            body.put("foto", new JSONArray(listImageString));
         } catch (JSONException e) {
             e.printStackTrace();
             if (e.getMessage()!=null){

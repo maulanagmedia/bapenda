@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -17,11 +18,13 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -34,12 +37,18 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.example.bappeda.Adapter.ImagesAdapter;
 import com.example.bappeda.Adapter.SurveyAdapter;
 import com.example.bappeda.Model.CategoryModel;
 import com.example.bappeda.Model.ImagesModel;
 import com.example.bappeda.Model.MerchantModel;
 import com.example.bappeda.R;
+import com.example.bappeda.Signature.SignatureBuilder;
 import com.example.bappeda.Utils.ApiVolley;
 import com.example.bappeda.Utils.AppLoadingScreen;
 import com.example.bappeda.Utils.Converter;
@@ -96,6 +105,11 @@ public class MerchantTutupActivity extends AppCompatActivity {
 
     private ItemValidation iv = new ItemValidation();
     private RecyclerView recyclerImages;
+    private SignatureBuilder mSignature;
+    private FrameLayout layout_signature;
+    private Bitmap bitmapSigmantur;
+    private TextView tvTambahTtd;
+    private ImageView ivTtd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -179,7 +193,57 @@ public class MerchantTutupActivity extends AppCompatActivity {
                 cardTutup = dialog.findViewById(R.id.CardTutupMerchant);
                 recyclerImages = dialog.findViewById(R.id.recyclerView);
 
-                list_images.clear();
+                tvTambahTtd = (TextView) dialog.findViewById(R.id.tv_tambah_ttd);
+                ivTtd = (ImageView) dialog.findViewById(R.id.iv_ttd);
+
+                tvTambahTtd.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        showSignature();
+                    }
+                });
+
+                /*layout_signature = (FrameLayout) dialog.findViewById(R.id.layout_signature);
+                mSignature = new SignatureBuilder(MerchantTutupActivity.this, null, layout_signature);
+                mSignature.setBackgroundColor(Color.WHITE);
+                layout_signature.addView(mSignature, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+
+                dialog.findViewById(R.id.img_refresh).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        mSignature.clear();
+                    }
+                });
+
+                list_images.clear();*/
+
+                //Init foto
+                /*ArrayList<String> listImagesUrl = merchantModels.get(position).getImages();
+                if (listImagesUrl!=null){
+                    for(String url : listImagesUrl){
+                        Glide.with(MerchantTutupActivity.this).asBitmap().load(url).listener(new RequestListener<Bitmap>() {
+                            @Override
+                            public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Bitmap> target, boolean isFirstResource) {
+                                Log.e("glide_log", "load failed");
+                                return false;
+                            }
+
+                            @Override
+                            public boolean onResourceReady(Bitmap resource, Object model, Target<Bitmap> target, DataSource dataSource, boolean isFirstResource) {
+                                if(imageAdapter != null){
+                                    list_images.add(new ImagesModel(resource));
+                                    imageAdapter.notifyDataSetChanged();
+                                    return true;
+                                }
+                                else{
+                                    return false;
+                                }
+                            }
+                        }).preload();
+                    }
+                }*/
+
                 recyclerImages.setLayoutManager(new LinearLayoutManager(MerchantTutupActivity.this, LinearLayoutManager.HORIZONTAL, false));
                 imageAdapter = new ImagesAdapter(MerchantTutupActivity.this, list_images);
                 recyclerImages.setAdapter(imageAdapter);
@@ -197,7 +261,7 @@ public class MerchantTutupActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         showDialogConfirm();
-                        dialog.dismiss();
+                        //dialog.dismiss();
                     }
                 });
 
@@ -232,6 +296,40 @@ public class MerchantTutupActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void showSignature(){
+        final Dialog signature_dialog = DialogFactory.getInstance().
+                createDialog(this, R.layout.popup_signature, 90);
+
+        final FrameLayout layout_signature = signature_dialog.findViewById(R.id.layout_signature);
+        mSignature = new SignatureBuilder(this, null, layout_signature);
+        mSignature.setBackgroundColor(Color.WHITE);
+        layout_signature.addView(mSignature, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+
+        signature_dialog.findViewById(R.id.btn_simpan).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(mSignature.getBitmap(layout_signature) == null){
+                    Toast.makeText(MerchantTutupActivity.this,
+                            "Tanda tangan belum terisi", Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    bitmapSigmantur = mSignature.getBitmap(layout_signature);
+                    ivTtd.setImageBitmap(bitmapSigmantur);
+                    signature_dialog.dismiss();
+                }
+            }
+        });
+
+        signature_dialog.findViewById(R.id.img_refresh).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mSignature.clear();
+            }
+        });
+
+        signature_dialog.show();
     }
 
     //Dialog
@@ -322,10 +420,12 @@ public class MerchantTutupActivity extends AppCompatActivity {
                         Log.d(TAG, "Response" + result);
 
                         try {
+
                             JSONObject object = new JSONObject(result);
                             String message = object.getJSONObject("metadata").getString("message");
                             int status = object.getJSONObject("metadata").getInt("status");
-                            if (status==200){
+                            if (status == 200){
+
                                 JSONArray array = object.getJSONArray("response");
                                 for (int i = 0; i < array.length(); i++) {
                                     JSONObject dataObject = array.getJSONObject(i);
@@ -385,12 +485,6 @@ public class MerchantTutupActivity extends AppCompatActivity {
 
         String idUser = Preferences.getId(this);
 
-        if (keteranganTutup.getText().toString().isEmpty()){
-            keteranganTutup.setError("Alasan harus diisi");
-            keteranganTutup.requestFocus();
-            return;
-        }
-
         ArrayList<String> listImageString = new ArrayList<>();
         for(ImagesModel i : list_images){
             listImageString.add(Converter.convertToBase64(i.getBitmap()));
@@ -404,6 +498,7 @@ public class MerchantTutupActivity extends AppCompatActivity {
             body.put("alasan_tutup", keteranganTutup.getText().toString());
             body.put("flag", flag);
             body.put("foto", new JSONArray(listImageString));
+            body.put("ttd", bitmapSigmantur != null ? Converter.convertToBase64(bitmapSigmantur) : "");
         } catch (JSONException e) {
             e.printStackTrace();
             if (e.getMessage()!=null){
@@ -426,11 +521,12 @@ public class MerchantTutupActivity extends AppCompatActivity {
                     int status = object.getJSONObject("metadata").getInt("status");
                     if (status==200){
 
-                        Toast.makeText(MerchantTutupActivity.this, message, Toast.LENGTH_SHORT).show();
-                        if (confirm_dialog != null) confirm_dialog.dismiss();
                         if(dialog != null) dialog.dismiss();
+                        if(confirm_dialog != null) confirm_dialog.dismiss();
                         start = 0;
                         loadMerchant();
+                        Toast.makeText(MerchantTutupActivity.this, message, Toast.LENGTH_SHORT).show();
+
                     } else {
 
                         Toast.makeText(MerchantTutupActivity.this, message, Toast.LENGTH_SHORT).show();
@@ -449,6 +545,9 @@ public class MerchantTutupActivity extends AppCompatActivity {
 
             @Override
             public void onError(String result) {
+
+                if(dialog != null) dialog.dismiss();
+                if(confirm_dialog != null) confirm_dialog.dismiss();
                 Log.e(TAG, "Error.Response" + result);
                 Toast.makeText(MerchantTutupActivity.this, R.string.error_message, Toast.LENGTH_SHORT).show();
                 AppLoadingScreen.getInstance().stopLoading();

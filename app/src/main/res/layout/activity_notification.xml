@@ -17,9 +17,10 @@
         android:minHeight="?attr/actionBarSize"
         app:popupTheme="@style/AppTheme.NoActionBar.TitleTextStyle"/>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_notification"
+    <ListView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:id="@+id/lv_notif"
+        android:divider="@null"/>
 
 </LinearLayout>

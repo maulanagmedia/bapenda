@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.bappeda.MenuReklame.ReklameActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        app:titleTextColor="@color/white"
+        android:minHeight="?attr/actionBarSize"
+        app:popupTheme="@style/AppTheme.NoActionBar.TitleTextStyle">
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <EditText
+        android:id="@+id/edt_search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/LightGrey"
+        android:drawableStart="@drawable/search_grey"
+        android:gravity="center_horizontal"
+        android:imeOptions="actionSearch"
+        android:inputType="textPersonName"
+        android:singleLine="true"
+        android:hint="Cari Nama Wajib Pajak"
+        android:padding="10dp"
+        android:textSize="@dimen/text_big" />
+
+    <ListView
+        android:id="@+id/lv_reklame"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/padding_default"
+        android:scrollbars="vertical">
+    </ListView>
+
+</LinearLayout>

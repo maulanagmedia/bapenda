@@ -28,6 +28,7 @@ import com.example.bappeda.MenuAdmin.PenugasanPetugasActivity;
 import com.example.bappeda.MenuMerchants.PilihanMerchantsActivity;
 import com.example.bappeda.MenuMonitoring.MonitoringMerchantActivity;
 import com.example.bappeda.MenuPendaftaran.PendaftaranActivity;
+import com.example.bappeda.MenuReklame.ReklameActivity;
 import com.example.bappeda.MenuSurvey.SurveyActivity;
 import com.example.bappeda.Model.AccountModel;
 import com.example.bappeda.R;
@@ -43,15 +44,17 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashSet;
 import java.util.Set;
 
 public class HomeActivity extends AppCompatActivity {
 
     private TextView namacustomer;
-    private CardView pendaftaran, survey, monitoring, menu_admin, merchants;
+    private CardView pendaftaran, survey, monitoring, menu_admin, merchants, reklame;
     private ImageView profile;
 
     private String name;
@@ -92,6 +95,7 @@ public class HomeActivity extends AppCompatActivity {
         monitoring = findViewById(R.id.CardMonitoring);
         menu_admin = findViewById(R.id.CardAdmin);
         merchants = findViewById(R.id.CardMerchant);
+        reklame = findViewById(R.id.CardReklame);
         menuContainer = (LinearLayout) findViewById(R.id.LinearPutih);
 
         Display display = getWindowManager().getDefaultDisplay();
@@ -145,6 +149,12 @@ public class HomeActivity extends AppCompatActivity {
         lp4.setMargins(lenght, lenght, lenght, lenght);
         monitoring.setLayoutParams(lp4);
 
+        GridLayout.LayoutParams lp5 = (GridLayout.LayoutParams) reklame.getLayoutParams();
+        lp5.width = menuWidth;
+        lp5.height = menuWidth;
+        lp5.setMargins(lenght, lenght, lenght, lenght);
+        reklame.setLayoutParams(lp5);
+
         id_level = Preferences.getLevelPref(getBaseContext());
 
         /*if (id_level.equals("2")){ //Petugas
@@ -197,8 +207,51 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
+        reklame.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent a = new Intent(HomeActivity.this, ReklameActivity.class);
+                startActivity(a);
+            }
+        });
+
+        FirebaseInstanceId.getInstance().getInstanceId().addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+            @Override
+            public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                if (!task.isSuccessful()) {
+                    //To do//
+                    return;
+                }
+                // Get the Instance ID token//
+                String token = task.getResult().getToken();
+                String msg = getString(R.string.fcm_token, token);
+                Preferences.setFcmPref(HomeActivity.this, token);
+                Log.d(TAG, msg);
+            }
+        });
+
+        updateMenu();
+    }
+
+    @Override
+    protected void onResume() {
+        LoadImage();
+        updateFCM();
+        loadMenu();
+        super.onResume();
+    }
+
+    private void updateMenu(){
+
         Set<String> listMenu = Preferences.getMenu(HomeActivity.this);
         //Set<String> listSubMenu = Preferences.getSubMenu(HomeActivity.this);
+
+        menu_admin.setVisibility(View.GONE);
+        survey.setVisibility(View.GONE);
+        pendaftaran.setVisibility(View.GONE);
+        monitoring.setVisibility(View.GONE);
+        merchants.setVisibility(View.GONE);
+        reklame.setVisibility(View.GONE);
 
         for(String menu: listMenu){
 
@@ -217,30 +270,75 @@ public class HomeActivity extends AppCompatActivity {
             }else if (menu.equals("merchants")){
 
                 merchants.setVisibility(View.VISIBLE);
+            }else if (menu.equals("reklame")){
+
+                reklame.setVisibility(View.VISIBLE);
             }
         }
-
-        FirebaseInstanceId.getInstance().getInstanceId().addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
-            @Override
-            public void onComplete(@NonNull Task<InstanceIdResult> task) {
-                if (!task.isSuccessful()) {
-                    //To do//
-                    return;
-                }
-                // Get the Instance ID token//
-                String token = task.getResult().getToken();
-                String msg = getString(R.string.fcm_token, token);
-                Preferences.setFcmPref(HomeActivity.this, token);
-                Log.d(TAG, msg);
-            }
-        });
     }
 
-    @Override
-    protected void onResume() {
-        LoadImage();
-        updateFCM();
-        super.onResume();
+    private void loadMenu() {
+
+        JSONObject jBody = new JSONObject();
+        try {
+            jBody.put("id_user", Preferences.getId(HomeActivity.this));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        apiVolley = new ApiVolley(HomeActivity.this, jBody, "POST", URL.getMenu,
+                new ApiVolley.VolleyCallback() {
+                    @Override
+                    public void onSuccess(String result) {
+                        Log.d(TAG, "OnSuccess" +result);
+                        try {
+                            JSONObject object = new JSONObject(result);
+                            int status = object.getJSONObject("metadata").getInt("status") ;
+                            String message = "";
+                            if (status == 200){
+
+                                //getting information
+                                message = object.getJSONObject("metadata").getString("message");
+                                Log.d(TAG, "onSuccess" + message);
+
+                                Set<String> listMenu = new HashSet<>();
+                                Set<String> listSubMenu = new HashSet<>();
+                                JSONArray jMenu = object.getJSONArray("response");
+
+                                for(int i = 0; i < jMenu.length(); i++){
+
+                                    JSONObject jo = jMenu.getJSONObject(i);
+                                    listMenu.add(jo.getString("code"));
+                                    JSONArray jSubMenu = jo.getJSONArray("sub");
+
+                                    for(int j = 0; j < jSubMenu.length(); j++){
+
+                                        JSONObject jA = jSubMenu.getJSONObject(j);
+                                        listSubMenu.add(jA.getString("code"));
+                                    }
+                                }
+
+                                Preferences.setMenu(HomeActivity.this, listMenu);
+                                Preferences.setSubMenu(HomeActivity.this, listSubMenu);
+
+                                updateMenu();
+                            } else {
+                                message = object.getJSONObject("metadata").getString("message");
+                                Log.d(TAG, "onSuccess.else: " + message);
+                                Toast.makeText(HomeActivity.this, message, Toast.LENGTH_LONG).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            Toast.makeText(HomeActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
+                        }
+                    }
+
+                    @Override
+                    public void onError(String result) {
+                        Log.d(TAG, "onError: " +result);
+                        Toast.makeText(HomeActivity.this, R.string.error_message, Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 
     private void LoadImage(){

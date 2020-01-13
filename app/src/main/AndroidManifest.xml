@@ -31,8 +31,16 @@
         android:theme="@style/AppTheme.NoActionBar"
         android:usesCleartextTraffic="true"
         tools:replace="android:theme">
-        <activity android:name=".MenuMerchants.RiwayatUpdateLokasiMerchant"
+        <activity android:name=".MenuReklame.DetailReklameActivity"
             android:screenOrientation="portrait"></activity>
+        <activity android:name=".MenuReklame.ReklameActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".MenuHome.DetailNotificationActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".MenuMerchants.RiwayatUpdateLokasiMerchant"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".MenuMerchants.UbahLokasiMerchantActivity"
             android:screenOrientation="portrait" />
@@ -143,7 +151,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".Login.MainActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
 
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"

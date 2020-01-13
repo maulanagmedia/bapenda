@@ -734,13 +734,13 @@ public class AccountActivity extends AppCompatActivity {
         if (isVisible==1){
             isVisible = 0;
             editText.setTransformationMethod(null);
-            if (editText.getText().length()<0)
+            if (editText.getText().length() < 0)
                 editText.setSelection(editText.getText().length());
             imageButton.setImageResource(R.drawable.eye_grey); //saat password terlihat
         } else {
             isVisible = 1;
             editText.setTransformationMethod(new PasswordTransformationMethod());
-            if (editText.getText().length()<0)
+            if (editText.getText().length() < 0)
                 editText.setSelection(editText.getText().length());
             imageButton.setImageResource(R.drawable.eye); //saat password tidak terlihat
         }

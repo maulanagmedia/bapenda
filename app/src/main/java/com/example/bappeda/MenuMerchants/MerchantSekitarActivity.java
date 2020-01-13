@@ -8,12 +8,18 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Looper;
+import android.text.TextUtils;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.AbsListView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.SearchView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -155,6 +161,7 @@ public class MerchantSekitarActivity extends AppCompatActivity implements
     private View footerList;
     private boolean isLoading = false;
     private String keyword = "";
+    private SearchView svWajipPajak;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -240,7 +247,46 @@ public class MerchantSekitarActivity extends AppCompatActivity implements
             }
         });
 
-}
+        initUI();
+
+    }
+
+    private void initUI() {
+
+        svWajipPajak = (SearchView) findViewById(R.id.sv_wp);
+
+        svWajipPajak.setOnSearchClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
+            }
+        });
+
+        int searchViewPlateId = svWajipPajak.getContext().getResources().getIdentifier("android:id/search_src_text", null, null);
+        EditText searchPlateEditText = (EditText) svWajipPajak.findViewById(searchViewPlateId);
+        searchPlateEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    if(!TextUtils.isEmpty(v.getText().toString())){
+                        //Text entered
+                    }
+                    else {
+                        //no string
+                    }
+
+                    keyword = svWajipPajak.getQuery().toString();
+                    start = 0;
+                    loadListMerchant();
+                }
+                return true;
+            }
+
+        });
+
+    }
 
     //Location
     private void initMap() {
@@ -415,6 +461,7 @@ public class MerchantSekitarActivity extends AppCompatActivity implements
             body.put("start", String.valueOf(start));
             body.put("count", String.valueOf(count));
             body.put("id_kategori", selectedKategori);
+            body.put("keyword", keyword);
         } catch (JSONException e) {
             e.printStackTrace();
             if (e.getMessage()!=null){

@@ -97,7 +97,7 @@
                     android:background="@drawable/bg_main"
                     >
 
-                    <GridLayout
+                    <com.example.bappeda.CustomView.CustomGridLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:columnCount="2"
@@ -222,6 +222,45 @@
                         </androidx.cardview.widget.CardView>
 
                         <androidx.cardview.widget.CardView
+                            android:id="@+id/CardReklame"
+                            android:layout_width="@dimen/menu_height"
+                            android:layout_height="@dimen/menu_height"
+                            android:visibility="gone"
+                            android:layout_margin="@dimen/padding_small"
+                            app:cardElevation="@dimen/padding_tanggung"
+                            android:elevation="@dimen/padding_tanggung"
+                            app:cardCornerRadius="@dimen/default_corner">
+
+                            <LinearLayout
+                                android:id="@+id/LinearReklame"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical"
+                                android:gravity="center"
+                                android:background="@drawable/custom_date"
+                                android:padding="@dimen/padding_big">
+
+                                <ImageView
+                                    android:id="@+id/img_reklame"
+                                    android:layout_width="50dp"
+                                    android:layout_height="50dp"
+                                    android:src="@drawable/reklame"/>
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Reklame"
+                                    android:fontFamily="@font/cantarell"
+                                    android:layout_marginTop="@dimen/padding_default"
+                                    android:gravity="center"
+                                    android:textColor="@color/black"
+                                    android:textSize="20sp"/>
+
+                            </LinearLayout>
+
+                        </androidx.cardview.widget.CardView>
+
+                        <androidx.cardview.widget.CardView
                             android:id="@+id/CardMerchant"
                             android:layout_width="@dimen/menu_height"
                             android:layout_height="@dimen/menu_height"
@@ -299,7 +338,7 @@
 
                         </androidx.cardview.widget.CardView>
 
-                    </GridLayout>
+                    </com.example.bappeda.CustomView.CustomGridLayout>
 
                 </LinearLayout>
 

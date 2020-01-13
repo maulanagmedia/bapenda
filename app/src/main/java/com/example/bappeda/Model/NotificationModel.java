@@ -1,5 +1,7 @@
 package com.example.bappeda.Model;
 
+import java.util.ArrayList;
+
 public class NotificationModel {
 
     private String judul;
@@ -8,6 +10,7 @@ public class NotificationModel {
     private String merchant;
     private String alamat;
     private String image;
+    private ArrayList<String> images = new ArrayList<>();
 
     //Type
     public static final int TYPE_GENERAL = 0;
@@ -84,5 +87,14 @@ public class NotificationModel {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    //Ambil gambar pertama
+    public ArrayList<String> getImages() {
+        return images;
+    }
+
+    public void setImages(ArrayList<String> urlImages) {
+        this.images = urlImages;
     }
 }

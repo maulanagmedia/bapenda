@@ -139,6 +139,8 @@ public class RiwayatSurveyActivity extends AppCompatActivity {
         button_proses.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                start = 0;
                 loadData();
             }
         });
