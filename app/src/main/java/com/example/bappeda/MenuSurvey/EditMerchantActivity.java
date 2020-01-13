@@ -171,7 +171,7 @@ public class EditMerchantActivity extends AppCompatActivity implements OnMapRead
 
     public ApiVolley apiVolley;
 
-    public static final int UPLOAD_CODE = 999;
+    public static final int UPLOAD_CODE = 909;
     RecyclerView recyclerImages;
 
     public ArrayList<ImagesModel> list_images = new ArrayList<>();
@@ -478,7 +478,7 @@ public class EditMerchantActivity extends AppCompatActivity implements OnMapRead
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.editmenu, menu);
+        //inflater.inflate(R.menu.editmenu, menu);
         return true;
     }
 
@@ -509,6 +509,9 @@ public class EditMerchantActivity extends AppCompatActivity implements OnMapRead
                     Log.e("_log", Objects.requireNonNull(e.getMessage()));
                 }
             }
+        }else{
+
+            Log.d(TAG, "onActivityResult: ");
         }
     }
 
