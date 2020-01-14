@@ -41,6 +41,9 @@ import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.example.bappeda.Adapter.ImagesAdapter;
+import com.example.bappeda.MenuSurvey.SurveyActivity;
+import com.example.bappeda.Model.CategoryModel;
+
 import com.example.bappeda.Model.ImagesModel;
 import com.example.bappeda.Model.MerchantModel;
 import com.example.bappeda.R;
@@ -116,6 +119,9 @@ public class DetailReklameActivity extends AppCompatActivity implements
     private String imageString;
     private Bitmap bitmap;
     private Dialog signature_dialog;
+
+    private ArrayList<CategoryModel> categoryModels = new ArrayList<>();
+
 
     public ApiVolley apiVolley;
     private String idMonitoring;
@@ -232,7 +238,45 @@ public class DetailReklameActivity extends AppCompatActivity implements
 
         adapter = new ArrayAdapter<>(DetailReklameActivity.this, android.R.layout.simple_list_item_1, listKeterangan);
         spKeterangan.setAdapter(adapter);
+
+        Loadspinner();
     }
+
+    //Spinner
+    private void Loadspinner() {
+            apiVolley = new ApiVolley(DetailReklameActivity.this, new JSONObject(), "GET", URL.getKetReklame, new ApiVolley.VolleyCallback() {
+                @Override
+                public void onSuccess(String result) {
+                    Log.d(TAG, "Response" + result);
+                    try {
+                        JSONObject object = new JSONObject(result);
+                        JSONArray array = object.getJSONArray("response");
+                        categoryModels = new ArrayList<>();
+                        for (int i=0; i<array.length(); i++){
+                            JSONObject dataObject = array.getJSONObject(i);
+                            CategoryModel categoryModel = new CategoryModel();
+                            categoryModel.setIdKategori(dataObject.getString("id"));
+                            categoryModel.setNama(dataObject.getString("ket"));
+                            categoryModels.add(categoryModel);
+                        }
+
+                        ArrayAdapter<CategoryModel> adapter = new ArrayAdapter<>(DetailReklameActivity.this, android.R.layout.simple_list_item_1, categoryModels);
+                        spKeterangan.setAdapter(adapter);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        if (e.getMessage()!=null){
+                            Log.e(TAG, "response" + e.getMessage());
+                        }
+                    }
+                }
+                @Override
+                public void onError(String result) {
+                    Log.d(TAG, "Error.Response" + result);
+                }
+            });
+        }
+
+
 
     private boolean isInputValid(){
         return true;

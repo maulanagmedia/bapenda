@@ -101,8 +101,11 @@
 
             <Spinner
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="50dp"
                 android:id="@+id/sp_keterangan"
+                android:textColor="@color/black"
+                android:spinnerMode="dropdown"
+                android:backgroundTint="@color/grey"
                 android:layout_marginTop="@dimen/padding_default"
                 android:layout_marginStart="@dimen/padding_big"
                 android:layout_marginEnd="@dimen/padding_big"/>

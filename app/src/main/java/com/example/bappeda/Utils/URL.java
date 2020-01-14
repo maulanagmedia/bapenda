@@ -44,6 +44,7 @@ public class URL {
     public static final String getRiwayatPerubahanLokasi = BASE_URL + "MerchantTutup/riwayat_tempat/";
     public static final String getMenu = BASE_URL + "authentication/menu/";
     public static final String getReklame = BASE_URL + "Merchant/reklame/";
+    public static final String getKetReklame = BASE_URL + "merchant/ms_ket_reklame";
 
     //Form
     public static final String URL_FORM = "http://gmedia.bz/bapenda/Form/form_kategori";

@@ -165,8 +165,8 @@ public class HomeActivity extends AppCompatActivity {
            forKasubbag();
         } else if (id_level.equals("5")){ //Admin
            forAdmin();
-        }*/
-
+        }
+*/
         menu_admin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
