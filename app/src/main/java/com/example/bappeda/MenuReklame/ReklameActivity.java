@@ -276,7 +276,7 @@ public class ReklameActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
 
-                    startActivity(new Intent(context, RiwayatMonitoringMerchantActivity.class));
+                    startActivity(new Intent(context, RiwayatReklameActivity.class));
                 }
             });
         }

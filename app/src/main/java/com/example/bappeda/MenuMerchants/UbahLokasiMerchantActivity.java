@@ -796,6 +796,7 @@ public class UbahLokasiMerchantActivity extends AppCompatActivity implements
 
         AppLoadingScreen.getInstance().showLoading(this);
 
+
         new ApiVolley(UbahLokasiMerchantActivity.this, body, "POST", URL.simpanLokasiMerchant, new ApiVolley.VolleyCallback() {
             @Override
             public void onSuccess(String result) {

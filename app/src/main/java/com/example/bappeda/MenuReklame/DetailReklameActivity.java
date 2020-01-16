@@ -23,6 +23,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Looper;
 import android.provider.MediaStore;
+import android.text.TextUtils;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,6 +58,7 @@ import com.example.bappeda.Utils.GoogleLocationManager;
 import com.example.bappeda.Utils.ImageLoader;
 import com.example.bappeda.Utils.JSONBuilder;
 import com.example.bappeda.Utils.OptionItem;
+import com.example.bappeda.Utils.Preferences;
 import com.example.bappeda.Utils.ScrollableMapView;
 import com.example.bappeda.Utils.URL;
 import com.fxn.pix.Pix;
@@ -86,6 +89,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -105,6 +109,8 @@ public class DetailReklameActivity extends AppCompatActivity implements
     private Button tambah;
     private View reset;
 
+    private String idReklam;
+
     //Dialog konfirmasi
     private Dialog confirm_dialog;
     private CardView simpan, batal;
@@ -121,6 +127,7 @@ public class DetailReklameActivity extends AppCompatActivity implements
     private Dialog signature_dialog;
 
     private ArrayList<CategoryModel> categoryModels = new ArrayList<>();
+    private ArrayList<MerchantModel> merchantModels = new ArrayList<>();
 
 
     public ApiVolley apiVolley;
@@ -232,7 +239,8 @@ public class DetailReklameActivity extends AppCompatActivity implements
             @Override
             public void onClick(View view) {
                 if (isInputValid()){
-                    showSignature();
+                    //showSignature();
+                    showDialogConfirm();
                 }
             }
         });
@@ -283,7 +291,7 @@ public class DetailReklameActivity extends AppCompatActivity implements
         return true;
     }
 
-    private void showSignature(){
+/*    private void showSignature(){
         signature_dialog = DialogFactory.getInstance().
                 createDialog(this, R.layout.popup_signature, 90);
 
@@ -314,9 +322,9 @@ public class DetailReklameActivity extends AppCompatActivity implements
         });
 
         signature_dialog.show();
-    }
+    }*/
 
-    private void showDialogConfirm(final Bitmap bitmap_signature){
+    private void showDialogConfirm(){
         confirm_dialog = DialogFactory.getInstance().
                 createDialog(DetailReklameActivity.this, R.layout.popup_confirm, 90);
 
@@ -339,7 +347,7 @@ public class DetailReklameActivity extends AppCompatActivity implements
         simpan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                TambahData(bitmap_signature);
+                TambahData();
                 confirm_dialog.dismiss();
             }
         });
@@ -347,17 +355,79 @@ public class DetailReklameActivity extends AppCompatActivity implements
         confirm_dialog.show();
     }
 
-    private void TambahData(final Bitmap signature){
+    private void TambahData(){
+        final String id = categoryModels.get(spKeterangan.getSelectedItemPosition()).getIdKategori();
+        final String idUser = Preferences.getId(this);
+        final JSONObject body = new JSONObject();
+        try {
+            ArrayList<String> listImageString = new ArrayList<>();
+            for(ImagesModel i : list_images){
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                i.getBitmap().compress(Bitmap.CompressFormat.JPEG, 100, baos);
+                byte[] imageBytes = baos.toByteArray();
+                imageString = Base64.encodeToString(imageBytes, Base64.DEFAULT);
+                listImageString.add(imageString);
+            }
+            body.put("id_user", idUser);
+            body.put("id_reklame",m.getId());
+            body.put("status_reklame", id);
+            body.put("latitude", lat);
+            body.put("longitude", lng);
+            body.put("foto", new JSONArray(listImageString));
+            Log.d("pendaftaran_body_log", body.toString());
+        } catch (JSONException e) {
+            if (e.getMessage()!=null){
+                Log.e(TAG, "exception_log" + e.getMessage());
+            }
+        }
+
+        AppLoadingScreen.getInstance().showLoading(DetailReklameActivity.this);
+
+        apiVolley = new ApiVolley(DetailReklameActivity.this, body, "POST", URL.getSimpanReklame, new ApiVolley.VolleyCallback() {
+            @Override
+            public void onSuccess(String result) {
+                Log.d(TAG, "Response" + result);
+                try {
+                    JSONObject response = new JSONObject(result);
+                    int status = response.getJSONObject("metadata").getInt("status");
+                    String message;
+                    if(status== 200){
+                        message = response.getJSONObject("metadata").getString("message");
+                        confirm_dialog.dismiss();
+                        Toast.makeText(DetailReklameActivity.this, "Data Berhasil Ditambahkan", Toast.LENGTH_LONG).show();
+                        finish();
+                    }else{
+                        message = response.getJSONObject("metadata").getString("message");
+                        confirm_dialog.dismiss();
+                        Toast.makeText(DetailReklameActivity.this, message, Toast.LENGTH_SHORT).show();
+                    }
+                    Log.d(TAG, "onSuccess: " + message);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    Log.e(TAG, "response" + result);
+                }
+                AppLoadingScreen.getInstance().stopLoading();
+            }
+            @Override
+            public void onError(String result) {
+                AppLoadingScreen.getInstance().stopLoading();
+                Toast.makeText(DetailReklameActivity.this, R.string.error_message, Toast.LENGTH_SHORT).show();
+                Log.d(TAG, "Error.Response" + result);
+            }
+        });
+    }
+
+   /* private void TambahData(final Bitmap signature){
         AppLoadingScreen.getInstance().showLoading(this);
         String base64 = convertToBase64(signature);
 
-        /*if (keterangan.getText().toString().isEmpty()){
+        *//*if (keterangan.getText().toString().isEmpty()){
 
             AppLoadingScreen.getInstance().stopLoading();
             keterangan.setError("Deksripsi harus diisi");
             keterangan.requestFocus();
             return;
-        }*/
+        }*//*
 
         ArrayList<String> listImageString = new ArrayList<>();
         for(ImagesModel i : list_images){
@@ -411,7 +481,7 @@ public class DetailReklameActivity extends AppCompatActivity implements
                         AppLoadingScreen.getInstance().stopLoading();
                     }
                 });
-    }
+    }*/
 
     //Load Data
     private void InitData(){

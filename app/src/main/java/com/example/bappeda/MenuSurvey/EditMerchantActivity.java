@@ -220,7 +220,7 @@ public class EditMerchantActivity extends AppCompatActivity implements OnMapRead
             initData(gson.fromJson(getIntent().getStringExtra("id_merchant"), MerchantModel.class));
         }
         LoadSpinner();
-        EditTextFalse();
+        //EditTextFalse();
 
         //Spinner Kategori
         categoryModels = new ArrayList<>();
