@@ -155,6 +155,9 @@
         <activity
             android:name=".MenuReklame.RiwayatReklameActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".MenuReklame.ActivityDetailRiwayatReklame"
+            android:screenOrientation="portrait" />
 
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"

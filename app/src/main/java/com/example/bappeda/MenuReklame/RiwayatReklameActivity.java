@@ -15,6 +15,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.example.bappeda.Adapter.RiwayatReklameAdapter;
 import com.example.bappeda.Adapter.SurveyAdapter;
 import com.example.bappeda.MenuMonitoring.PreviewMerchantActivity;
 import com.example.bappeda.Model.CategoryModel;
@@ -37,17 +38,18 @@ import java.util.Locale;
 
 public class RiwayatReklameActivity extends AppCompatActivity {
 
-    private final String TAG = "RiwayatMonitoring";
+    private final String TAG = "RiwayatReklame";
 
     private ListView listmerchant;
     private TextView hari, tanggal;
-    private SurveyAdapter adapter;
+    private RiwayatReklameAdapter adapter;
     private ArrayList<MerchantModel> merchantModels = new ArrayList<>();
     private ApiVolley apiVolley;
 
     private int start = 0, count = 10;
     private View footerList;
     private boolean isLoading = false;
+    private boolean bidangUsaha = true;
     private String keyword = "";
 
     @Override
@@ -62,7 +64,7 @@ public class RiwayatReklameActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         if (getSupportActionBar()!=null){
-            getSupportActionBar().setTitle("Riwayat Monitoring");
+            getSupportActionBar().setTitle("Riwayat Reklame");
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -79,7 +81,7 @@ public class RiwayatReklameActivity extends AppCompatActivity {
         LayoutInflater li = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         footerList = li.inflate(R.layout.footer_list, null);
 
-        adapter = new SurveyAdapter(RiwayatReklameActivity.this, R.layout.activity_list_view_survey, merchantModels);
+        adapter = new RiwayatReklameAdapter(RiwayatReklameActivity.this, R.layout.activity_list_view_survey, merchantModels);
         listmerchant.setAdapter(adapter);
 
         listmerchant.setOnScrollListener(new AbsListView.OnScrollListener() {
@@ -110,7 +112,7 @@ public class RiwayatReklameActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 MerchantModel ItemList = (MerchantModel) listmerchant.getItemAtPosition(i);
-                Intent intent = new Intent(RiwayatReklameActivity.this, PreviewMerchantActivity.class);
+                Intent intent = new Intent(RiwayatReklameActivity.this, ActivityDetailRiwayatReklame.class);
                 Gson gson = new Gson();
                 intent.putExtra("id_merchant", gson.toJson(ItemList));
                 startActivity(intent);
@@ -153,7 +155,7 @@ public class RiwayatReklameActivity extends AppCompatActivity {
             }
         }
 
-        apiVolley = new ApiVolley(RiwayatReklameActivity.this, body, "POST", URL.URL_RIWAYAT_MONITORING,
+        apiVolley = new ApiVolley(RiwayatReklameActivity.this, body, "POST", URL.getRiwayatReklame,
                 new ApiVolley.VolleyCallback() {
                     @Override
                     public void onSuccess(String result) {
@@ -173,14 +175,19 @@ public class RiwayatReklameActivity extends AppCompatActivity {
                                 for (int i = 0; i < array.length(); i++) {
                                     JSONObject dataObject = array.getJSONObject(i);
                                     MerchantModel merchantModel = new MerchantModel();
-                                    //id_monitoring
                                     merchantModel.setId(dataObject.getString("id"));
                                     merchantModel.setNamamerchant(dataObject.getString("nama"));
                                     merchantModel.setAlamat(dataObject.getString("alamat"));
                                     merchantModel.setLongitude(dataObject.getDouble("longitude"));
                                     merchantModel.setLatitude(dataObject.getDouble("latitude"));
-                                    merchantModel.setDeskripsi(dataObject.getString("hasil_monitor"));
+                                    merchantModel.setNamapemilik(dataObject.getString("pemilik"));
+                                    merchantModel.setBidangusaha(dataObject.getString("bidang_usaha"));
+                                    merchantModel.setNotelp(dataObject.getString("telp_usaha"));
+                                    merchantModel.setInsertat(dataObject.getString("insert_at"));
+                                    merchantModel.setKeterangan(dataObject.getString("status_reklame"));
+                                    merchantModel.setKetstatusreklame(dataObject.getString("ket_status_reklame"));
                                     CategoryModel categoryModel = new CategoryModel();
+                                    categoryModel.setIdKategori(dataObject.getString("id_kategori"));
                                     categoryModel.setIdKategori(dataObject.getString("kategori"));
                                     merchantModel.setKategori(categoryModel);
 

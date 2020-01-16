@@ -1,15 +1,5 @@
 package com.example.bappeda.MenuReklame;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.cardview.widget.CardView;
-import androidx.core.app.ActivityCompat;
-import androidx.core.widget.NestedScrollView;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.Manifest;
 import android.app.Activity;
 import android.app.Dialog;
@@ -23,19 +13,24 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Looper;
 import android.provider.MediaStore;
-import android.text.TextUtils;
-import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
+import androidx.core.widget.NestedScrollView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
@@ -43,21 +38,17 @@ import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.example.bappeda.Adapter.ImagesAdapter;
-import com.example.bappeda.MenuSurvey.SurveyActivity;
+import com.example.bappeda.MenuMonitoring.MonitoringMerchantActivity;
 import com.example.bappeda.Model.CategoryModel;
-
 import com.example.bappeda.Model.ImagesModel;
 import com.example.bappeda.Model.MerchantModel;
 import com.example.bappeda.R;
 import com.example.bappeda.Signature.SignatureBuilder;
 import com.example.bappeda.Utils.ApiVolley;
 import com.example.bappeda.Utils.AppLoadingScreen;
-import com.example.bappeda.Utils.CustomModel;
 import com.example.bappeda.Utils.DialogFactory;
-import com.example.bappeda.Utils.GoogleLocationManager;
 import com.example.bappeda.Utils.ImageLoader;
 import com.example.bappeda.Utils.JSONBuilder;
-import com.example.bappeda.Utils.OptionItem;
 import com.example.bappeda.Utils.Preferences;
 import com.example.bappeda.Utils.ScrollableMapView;
 import com.example.bappeda.Utils.URL;
@@ -89,36 +80,27 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
 import static com.example.bappeda.Utils.Converter.convertToBase64;
 
-public class DetailReklameActivity extends AppCompatActivity implements
+public class ActivityDetailRiwayatReklame extends AppCompatActivity implements
         OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener{
 
-    private final String TAG = "DetailMerchantActivity";
+    private final String TAG = "PreviewMerchantActivity";
 
-    //UI
     private ImageView imageHeader;
     private TextView namMerchant, alamatMerchant;
+    private EditText keterangan;
     private TextView text_latitude, text_longitude;
     private Button tambah;
     private View reset;
 
-    private String idReklam;
-
-    //Dialog konfirmasi
-    private Dialog confirm_dialog;
-    private CardView simpan, batal;
-    private TextView judul;
-    private TextView cancel, save; //di CardView
-
     private RecyclerView recyclerImages;
     private MerchantModel m;
+    private CategoryModel s;
 
     private ImagesAdapter imageAdapter;
     public ArrayList<ImagesModel> list_images = new ArrayList<>();
@@ -126,35 +108,28 @@ public class DetailReklameActivity extends AppCompatActivity implements
     private Bitmap bitmap;
     private Dialog signature_dialog;
 
-    private ArrayList<CategoryModel> categoryModels = new ArrayList<>();
-    private ArrayList<MerchantModel> merchantModels = new ArrayList<>();
-
-
     public ApiVolley apiVolley;
     private String idMonitoring;
 
     private String tempDir;
     private SignatureBuilder mSignature;
 
-    //For Location
     private double lat, lng;
     private GoogleMap mGoogleMap;
     private GoogleApiClient mGoogleApiClient;
     private LocationRequest mLocationRequest;
     private MarkerOptions options;
-    private GoogleLocationManager locationManager;
     private LocationCallback locationCallback = new LocationCallback(){
         @Override
         public void onLocationResult(LocationResult location) {
             if (location == null) {
-                Toast.makeText(DetailReklameActivity.this,
+                Toast.makeText(ActivityDetailRiwayatReklame.this,
                         "Gagal memperoleh lokasi", Toast.LENGTH_LONG).show();
             } else {
                 /*lat = location.getLastLocation().getLatitude();
                 lng = location.getLastLocation().getLongitude();*/
                 lat = m.getLatitude();
                 lng = m.getLongitude();
-//                LatLng ll = new LatLng(location.getLastLocation().getLatitude(), location.getLastLocation().getLongitude());
                 LatLng ll = new LatLng(m.getLatitude(), m.getLongitude());
                 CameraUpdate update = CameraUpdateFactory.newLatLngZoom(ll, 17);
                 mGoogleMap.animateCamera(update);
@@ -173,26 +148,22 @@ public class DetailReklameActivity extends AppCompatActivity implements
             }
             //menghentikan pembaruan lokasi
             if (mGoogleApiClient != null) {
-                LocationServices.getFusedLocationProviderClient(DetailReklameActivity.this).
+                LocationServices.getFusedLocationProviderClient(ActivityDetailRiwayatReklame.this).
                         removeLocationUpdates(locationCallback);
             }
         }
     };
-    private Spinner spKeterangan;
-    private List<OptionItem> listKeterangan = new ArrayList<>();
-    private ArrayAdapter<OptionItem> adapter;
-    private CategoryModel s;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_detail_reklame);
+        setContentView(R.layout.activity_detail_riwayat_reklame);
 
         //Inisialisasi UI
         imageHeader = findViewById(R.id.image_header);
         namMerchant = findViewById(R.id.txtnamaMerchant);
         alamatMerchant = findViewById(R.id.txtalamatMerchant);
-        spKeterangan = (Spinner) findViewById(R.id.sp_keterangan);
+        keterangan = findViewById(R.id.edt_deskripsi);
         text_latitude = findViewById(R.id.textLatitude);
         text_longitude = findViewById(R.id.textLongitude);
         recyclerImages = findViewById(R.id.recyclerView);
@@ -200,13 +171,10 @@ public class DetailReklameActivity extends AppCompatActivity implements
         reset = findViewById(R.id.btnreset);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         if (getSupportActionBar()!=null){
             getSupportActionBar().setDisplayShowTitleEnabled(false);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
-
-
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -218,16 +186,15 @@ public class DetailReklameActivity extends AppCompatActivity implements
             initMap();
         }
 
-        if (getIntent().hasExtra("merchant")){
+        if (getIntent().hasExtra("id_merchant")){
             Gson gson = new Gson();
-            m = gson.fromJson(getIntent().getStringExtra("merchant"), MerchantModel.class);
-            s = gson.fromJson(getIntent().getStringExtra("id_merchant"), CategoryModel.class);
+            m = gson.fromJson(getIntent().getStringExtra("id_merchant"), MerchantModel.class);
             InitData();
         }
 
         //Load Images
         recyclerImages.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        imageAdapter = new ImagesAdapter(this, list_images);
+        imageAdapter = new ImagesAdapter(this, list_images,false);
         recyclerImages.setAdapter(imageAdapter);
 
         reset.setOnClickListener(new View.OnClickListener() {
@@ -236,64 +203,21 @@ public class DetailReklameActivity extends AppCompatActivity implements
                 ResetLokasi();
             }
         });
-
         tambah.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (isInputValid()){
-                    //showSignature();
-                    showDialogConfirm();
+                    showSignature();
                 }
             }
         });
-
-        adapter = new ArrayAdapter<>(DetailReklameActivity.this, android.R.layout.simple_list_item_1, listKeterangan);
-        spKeterangan.setAdapter(adapter);
-
-        Loadspinner();
     }
-
-    //Spinner
-    private void Loadspinner() {
-            apiVolley = new ApiVolley(DetailReklameActivity.this, new JSONObject(), "GET", URL.getKetReklame, new ApiVolley.VolleyCallback() {
-                @Override
-                public void onSuccess(String result) {
-                    Log.d(TAG, "Response" + result);
-                    try {
-                        JSONObject object = new JSONObject(result);
-                        JSONArray array = object.getJSONArray("response");
-                        categoryModels = new ArrayList<>();
-                        for (int i=0; i<array.length(); i++){
-                            JSONObject dataObject = array.getJSONObject(i);
-                            CategoryModel categoryModel = new CategoryModel();
-                            categoryModel.setIdKategori(dataObject.getString("id"));
-                            categoryModel.setNama(dataObject.getString("ket"));
-                            categoryModels.add(categoryModel);
-                        }
-
-                        ArrayAdapter<CategoryModel> adapter = new ArrayAdapter<>(DetailReklameActivity.this, android.R.layout.simple_list_item_1, categoryModels);
-                        spKeterangan.setAdapter(adapter);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                        if (e.getMessage()!=null){
-                            Log.e(TAG, "response" + e.getMessage());
-                        }
-                    }
-                }
-                @Override
-                public void onError(String result) {
-                    Log.d(TAG, "Error.Response" + result);
-                }
-            });
-        }
-
-
 
     private boolean isInputValid(){
         return true;
     }
 
-/*    private void showSignature(){
+    private void showSignature(){
         signature_dialog = DialogFactory.getInstance().
                 createDialog(this, R.layout.popup_signature, 90);
 
@@ -306,11 +230,11 @@ public class DetailReklameActivity extends AppCompatActivity implements
             @Override
             public void onClick(View view) {
                 if(mSignature.getBitmap(layout_signature) == null){
-                    Toast.makeText(DetailReklameActivity.this,
+                    Toast.makeText(ActivityDetailRiwayatReklame.this,
                             "Tanda tangan belum terisi", Toast.LENGTH_SHORT).show();
                 }
                 else{
-                    showDialogConfirm(mSignature.getBitmap(layout_signature));
+                    tampilData(mSignature.getBitmap(layout_signature));
                     signature_dialog.dismiss();
                 }
             }
@@ -324,145 +248,41 @@ public class DetailReklameActivity extends AppCompatActivity implements
         });
 
         signature_dialog.show();
-    }*/
-
-    private void showDialogConfirm(){
-        confirm_dialog = DialogFactory.getInstance().
-                createDialog(DetailReklameActivity.this, R.layout.popup_confirm, 90);
-
-        simpan = confirm_dialog.findViewById(R.id.CardSimpan);
-        batal = confirm_dialog.findViewById(R.id.CardCancel);
-        save = confirm_dialog.findViewById(R.id.textSimpan);
-        cancel = confirm_dialog.findViewById(R.id.textCancel);
-        judul = confirm_dialog.findViewById(R.id.textJudulConfirm);
-        judul.setText(R.string.confirm_simpan);
-        save.setText(R.string.confirm_yes);
-        cancel.setText(R.string.confirm_no);
-
-        batal.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                confirm_dialog.dismiss();
-            }
-        });
-
-        simpan.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                TambahData();
-                confirm_dialog.dismiss();
-            }
-        });
-
-        confirm_dialog.show();
     }
 
-    private void TambahData(){
-        final String id = categoryModels.get(spKeterangan.getSelectedItemPosition()).getIdKategori();
-        final String idUser = Preferences.getId(this);
-        final JSONObject body = new JSONObject();
-        try {
-            ArrayList<String> listImageString = new ArrayList<>();
-            for(ImagesModel i : list_images){
-                ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                i.getBitmap().compress(Bitmap.CompressFormat.JPEG, 100, baos);
-                byte[] imageBytes = baos.toByteArray();
-                imageString = Base64.encodeToString(imageBytes, Base64.DEFAULT);
-                listImageString.add(imageString);
-            }
-            body.put("id_user", idUser);
-            body.put("id_reklame",m.getId());
-            body.put("status_reklame", id);
-            body.put("latitude", lat);
-            body.put("longitude", lng);
-            body.put("foto", new JSONArray(listImageString));
-            Log.d("pendaftaran_body_log", body.toString());
-        } catch (JSONException e) {
-            if (e.getMessage()!=null){
-                Log.e(TAG, "exception_log" + e.getMessage());
-            }
-        }
-
-        AppLoadingScreen.getInstance().showLoading(DetailReklameActivity.this);
-
-        apiVolley = new ApiVolley(DetailReklameActivity.this, body, "POST", URL.getSimpanReklame, new ApiVolley.VolleyCallback() {
-            @Override
-            public void onSuccess(String result) {
-                Log.d(TAG, "Response" + result);
-                try {
-                    JSONObject response = new JSONObject(result);
-                    int status = response.getJSONObject("metadata").getInt("status");
-                    String message;
-                    if(status== 200){
-                        message = response.getJSONObject("metadata").getString("message");
-                        confirm_dialog.dismiss();
-                        Toast.makeText(DetailReklameActivity.this, "Data Berhasil Ditambahkan", Toast.LENGTH_LONG).show();
-                        finish();
-                    }else{
-                        message = response.getJSONObject("metadata").getString("message");
-                        confirm_dialog.dismiss();
-                        Toast.makeText(DetailReklameActivity.this, message, Toast.LENGTH_SHORT).show();
-                    }
-                    Log.d(TAG, "onSuccess: " + message);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                    Log.e(TAG, "response" + result);
-                }
-                AppLoadingScreen.getInstance().stopLoading();
-            }
-            @Override
-            public void onError(String result) {
-                AppLoadingScreen.getInstance().stopLoading();
-                Toast.makeText(DetailReklameActivity.this, R.string.error_message, Toast.LENGTH_SHORT).show();
-                Log.d(TAG, "Error.Response" + result);
-            }
-        });
-    }
-
-   /* private void TambahData(final Bitmap signature){
+    private void tampilData(final Bitmap signature){
         AppLoadingScreen.getInstance().showLoading(this);
         String base64 = convertToBase64(signature);
-
-        *//*if (keterangan.getText().toString().isEmpty()){
-
-            AppLoadingScreen.getInstance().stopLoading();
-            keterangan.setError("Deksripsi harus diisi");
-            keterangan.requestFocus();
-            return;
-        }*//*
-
+        final String idUser = Preferences.getId(this);
         ArrayList<String> listImageString = new ArrayList<>();
         for(ImagesModel i : list_images){
             listImageString.add(convertToBase64(i.getBitmap()));
         }
-
         JSONBuilder body = new JSONBuilder();
-        body.add("id_monitor", idMonitoring );
-        //body.add("deskripsi",keterangan.getText().toString());
-        body.add("lat", lat);
-        body.add("long", lng);
-        body.add("ttd", base64);
+        body.add("id_user", idUser);
+        body.add("id_reklame",m.getId());
+        body.add("status_reklame", m.getKeterangan());
+        body.add("latitude", lat);
+        body.add("longitude", lng);
         body.add("foto", new JSONArray(listImageString));
+        Log.d(TAG, "body : " + body.create());
 
-        new ApiVolley(this, body.create(), "POST", URL.URL_DETAIL_MONITORING,
+        new ApiVolley(this, body.create(), "POST", URL.getSimpanReklame,
                 new ApiVolley.VolleyCallback() {
                     @Override
                     public void onSuccess(String result) {
                         Log.d("Response", result);
-                        AppLoadingScreen.getInstance().stopLoading();
-
-
                         try{
                             JSONObject response = new JSONObject(result);
                             String message =  response.getJSONObject("metadata").getString("message");
                             int status = response.getJSONObject("metadata").getInt("status");
                             if (status == 200){
-                                Toast.makeText(DetailReklameActivity.this, message, Toast.LENGTH_SHORT).show();
+                                Toast.makeText(ActivityDetailRiwayatReklame.this, message, Toast.LENGTH_SHORT).show();
                                 signature_dialog.dismiss();
-//                                startActivity(new Intent(DetailMerchantActivity.this, MonitoringMerchantActivity.class));
+                                startActivity(new Intent(ActivityDetailRiwayatReklame.this, MonitoringMerchantActivity.class));
                                 finish();
                             } else {
-                                Toast.makeText(DetailReklameActivity.this, message, Toast.LENGTH_SHORT).show();
+                                Toast.makeText(ActivityDetailRiwayatReklame.this, message, Toast.LENGTH_SHORT).show();
                             }
                             Log.d(TAG, "onSuccess: " + message);
                         }
@@ -470,28 +290,29 @@ public class DetailReklameActivity extends AppCompatActivity implements
                             if (e.getMessage()!=null){
                                 Log.e("errorResponse", e.getMessage());
                             }
-
                             signature_dialog.dismiss();
                         }
-
+                        AppLoadingScreen.getInstance().stopLoading();
                     }
 
                     @Override
                     public void onError(String result) {
-                        Toast.makeText(DetailReklameActivity.this, R.string.error_message, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ActivityDetailRiwayatReklame.this, R.string.error_message, Toast.LENGTH_SHORT).show();
                         Log.e(TAG, "Error.Response" + result);
                         AppLoadingScreen.getInstance().stopLoading();
                     }
                 });
-    }*/
+    }
 
-    //Load Data
     private void InitData(){
         idMonitoring = m.getId();
         namMerchant.setText(m.getNamamerchant());
         alamatMerchant.setText(m.getAlamat());
+        keterangan.setText(m.getKetstatusreklame());
         text_latitude.setText(String.valueOf(m.getLatitude()));
+        Log.d("_log", "Latitude: " + m.getLatitude());
         text_longitude.setText(String.valueOf(m.getLongitude()));
+        Log.d("_log", "Longitude: " + m.getLongitude());
 
         //Init foto
         ArrayList<String> listImagesUrl = m.getImages();
@@ -519,43 +340,16 @@ public class DetailReklameActivity extends AppCompatActivity implements
             }
         }
         String gambar = m.getImage();
-        ImageLoader.load(DetailReklameActivity.this, gambar, imageHeader);
+        ImageLoader.load(ActivityDetailRiwayatReklame.this, gambar, imageHeader);
 
     }
 
-    //Load Photos
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == Activity.RESULT_OK && requestCode == URL.CODE_UPLOAD){
-            if (data!=null){
-                ArrayList<String> returnValue = data.getStringArrayListExtra(Pix.IMAGE_RESULTS);
-
-                if(returnValue!=null){
-                    for(String s : returnValue){
-                        try {
-                            Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(),
-                                    Uri.fromFile(new File(s)));
-                            list_images.add(new ImagesModel(bitmap));
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                            if (e.getMessage()!=null){
-                                Log.e("_log", e.getMessage());
-                            }
-                        }
-                    }
-                    imageAdapter.notifyDataSetChanged();
-                }
-            }
-        }
-    }
-
-    //Location
     private void initMap() {
         ScrollableMapView mapFragment = (ScrollableMapView) getSupportFragmentManager().findFragmentById(R.id.mapFragment);
         if (mapFragment!=null){
             mapFragment.getMapAsync(this);
         }
-    }  //showMap
+    }
 
     private void initLocation(){
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -564,7 +358,7 @@ public class DetailReklameActivity extends AppCompatActivity implements
 
                 Log.d("location_log", "Permission needed");
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION,
-                        Manifest.permission.ACCESS_COARSE_LOCATION}, URL.CODE_PERMISSION_LOCATION);
+                        Manifest.permission.ACCESS_COARSE_LOCATION}, 999);
                 return;
             }
         }
@@ -619,53 +413,10 @@ public class DetailReklameActivity extends AppCompatActivity implements
 
                     text_latitude.setText(lat_string);
                     text_longitude.setText(long_string);
-                    Log.i(TAG, "Drag End: " +  "location : " + ll);
+                    Log.i("Drag End", "location : " + ll);
                 }
             });
         }
-    }
-
-    public boolean googleServicesAvailable() {
-        GoogleApiAvailability api = GoogleApiAvailability.getInstance();
-        int isAvailable = api.isGooglePlayServicesAvailable(this);
-        if (isAvailable == ConnectionResult.SUCCESS) {
-            return true;
-        } else if (api.isUserResolvableError(isAvailable)) {
-            Dialog dialog = api.getErrorDialog(this, isAvailable, 0);
-            dialog.show();
-        } else {
-            Toast.makeText(this, "Please Install google play services to use this application", Toast.LENGTH_LONG).show();
-        }
-        return false;
-    }
-
-    @Override
-    public void onMapReady(GoogleMap googleMap) {
-        mGoogleMap = googleMap;
-        final NestedScrollView scrollView = findViewById(R.id.nestedScroll);
-        ScrollableMapView mapView = (ScrollableMapView) getSupportFragmentManager().findFragmentById(R.id.mapFragment);
-
-        if (mapView!=null){
-
-            mapView.setListener(new ScrollableMapView.OnTouchListener() {
-                @Override
-                public void onTouch() {
-                    scrollView.requestDisallowInterceptTouchEvent(true);
-                }
-            });
-        }
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
-                    && checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-
-                Log.d("_log", "Permission needed");
-                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION,
-                        Manifest.permission.ACCESS_COARSE_LOCATION}, URL.CODE_PERMISSION_LOCATION);
-                return;
-            }
-        }
-        initLocation();
     }
 
     @Override
@@ -673,8 +424,8 @@ public class DetailReklameActivity extends AppCompatActivity implements
         mLocationRequest = LocationRequest.create();
         mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
         mLocationRequest.setInterval(100000);
-        LocationServices.getFusedLocationProviderClient(DetailReklameActivity.this).requestLocationUpdates(mLocationRequest, locationCallback, Looper.myLooper());
-        SettingsClient settingsClient = LocationServices.getSettingsClient(DetailReklameActivity.this);
+        LocationServices.getFusedLocationProviderClient(ActivityDetailRiwayatReklame.this).requestLocationUpdates(mLocationRequest, locationCallback, Looper.myLooper());
+        SettingsClient settingsClient = LocationServices.getSettingsClient(ActivityDetailRiwayatReklame.this);
         LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder();
         builder.addLocationRequest(mLocationRequest);
         LocationSettingsRequest locationSettingsRequest = builder.build();
@@ -685,7 +436,7 @@ public class DetailReklameActivity extends AppCompatActivity implements
                     public void onSuccess(LocationSettingsResponse locationSettingsResponse) {
 
                     }
-                }).addOnFailureListener(DetailReklameActivity.this, new OnFailureListener() {
+                }).addOnFailureListener(ActivityDetailRiwayatReklame.this, new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
                 //showActivateGPS();
@@ -696,7 +447,7 @@ public class DetailReklameActivity extends AppCompatActivity implements
                         // Show the dialog by calling startResolutionForResult(),
                         // and check the result in onActivityResult().
                         ResolvableApiException resolvable = (ResolvableApiException) e;
-                        resolvable.startResolutionForResult(DetailReklameActivity.this,
+                        resolvable.startResolutionForResult(ActivityDetailRiwayatReklame.this,
                                 999);
                     } catch (IntentSender.SendIntentException sendEx) {
                         if (sendEx.getMessage()!=null){
@@ -723,75 +474,139 @@ public class DetailReklameActivity extends AppCompatActivity implements
 
     }
 
-    private void ResetLokasi(){
-        LocationCallback callback = new LocationCallback(){
-            @Override
-            public void onLocationResult(LocationResult location) {
-                if (location == null) {
-                    Toast.makeText(DetailReklameActivity.this,
-                            "Gagal memperoleh lokasi", Toast.LENGTH_LONG).show();
-                } else {
-                    lat = location.getLastLocation().getLatitude();
-                    lng = location.getLastLocation().getLongitude();
-                  /*  lat = m.getLatitude();
-                    lng = m.getLongitude();*/
-                    LatLng ll = new LatLng(location.getLastLocation().getLatitude(), location.getLastLocation().getLongitude());
-//                    LatLng ll = new LatLng(m.getLatitude(), m.getLongitude());
-                    CameraUpdate update = CameraUpdateFactory.newLatLngZoom(ll, 17);
-                    mGoogleMap.animateCamera(update);
-                    mGoogleMap.clear();
-                    options = new MarkerOptions()
-                            .position(ll)
-                            .draggable(true)
-                            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
-                    mGoogleMap.addMarker(options);
-
-                    String lat_string = "Latitude : " + lat;
-                    String long_string = "Longitude : " + lng;
-
-                    text_latitude.setText(lat_string);
-                    text_longitude.setText(long_string);
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        mGoogleMap = googleMap;
+        final NestedScrollView scrollView = findViewById(R.id.nestedScroll);
+        ScrollableMapView mapView = (ScrollableMapView) getSupportFragmentManager().findFragmentById(R.id.mapFragment);
+        if (mapView!=null){
+            mapView.setListener(new ScrollableMapView.OnTouchListener() {
+                @Override
+                public void onTouch() {
+                    scrollView.requestDisallowInterceptTouchEvent(true);
                 }
-                //menghentikan pembaruan lokasi
-                if (mGoogleApiClient != null) {
-                    LocationServices.getFusedLocationProviderClient(DetailReklameActivity.this).
-                            removeLocationUpdates(locationCallback);
-                }
+            });
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                    && checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+
+                Log.d("_log", "Permission needed");
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION,
+                        Manifest.permission.ACCESS_COARSE_LOCATION}, 999);
+                return;
             }
-        };
-        LocationServices.getFusedLocationProviderClient(this).
-                requestLocationUpdates(mLocationRequest, callback, Looper.myLooper());
-        LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder();
-        builder.addLocationRequest(mLocationRequest);
+        }
+        initLocation();
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if(requestCode == URL.CODE_PERMISSION_LOCATION){
-            if(grantResults[0] == PackageManager.PERMISSION_GRANTED){
-                if(mGoogleMap != null){
-                    initLocation();
+        public boolean googleServicesAvailable() {
+            GoogleApiAvailability api = GoogleApiAvailability.getInstance();
+            int isAvailable = api.isGooglePlayServicesAvailable(this);
+            if (isAvailable == ConnectionResult.SUCCESS) {
+                return true;
+            } else if (api.isUserResolvableError(isAvailable)) {
+                Dialog dialog = api.getErrorDialog(this, isAvailable, 0);
+                dialog.show();
+            } else {
+                Toast.makeText(this, "Please Install google play services to use this application", Toast.LENGTH_LONG).show();
+            }
+            return false;
+        }
+
+        private void ResetLokasi(){
+            LocationCallback callback = new LocationCallback(){
+                @Override
+                public void onLocationResult(LocationResult location) {
+                    if (location == null) {
+                        Toast.makeText(ActivityDetailRiwayatReklame.this,
+                                "Gagal memperoleh lokasi", Toast.LENGTH_LONG).show();
+                    } else {
+                        lat = location.getLastLocation().getLatitude();
+                        lng = location.getLastLocation().getLongitude();
+                  /*  lat = m.getLatitude();
+                    lng = m.getLongitude();*/
+                        LatLng ll = new LatLng(location.getLastLocation().getLatitude(), location.getLastLocation().getLongitude());
+                        CameraUpdate update = CameraUpdateFactory.newLatLngZoom(ll, 17);
+                        mGoogleMap.animateCamera(update);
+                        mGoogleMap.clear();
+                        options = new MarkerOptions()
+                                .position(ll)
+                                .draggable(true)
+                                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
+                        mGoogleMap.addMarker(options);
+
+                        String lat_string = "Latitude : " + lat;
+                        String long_string = "Longitude : " + lng;
+
+                        text_latitude.setText(lat_string);
+                        text_longitude.setText(long_string);
+                    }
+                    //menghentikan pembaruan lokasi
+                    if (mGoogleApiClient != null) {
+                        LocationServices.getFusedLocationProviderClient(ActivityDetailRiwayatReklame.this).
+                                removeLocationUpdates(locationCallback);
+                    }
+                }
+            };
+            LocationServices.getFusedLocationProviderClient(this).
+                    requestLocationUpdates(mLocationRequest, callback, Looper.myLooper());
+            LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder();
+            builder.addLocationRequest(mLocationRequest);
+        }
+
+        @Override
+        public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+            if(requestCode == URL.CODE_PERMISSION_LOCATION){
+                if(grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                    if(mGoogleMap != null){
+                        initLocation();
+                    }initLocation();
+                }
+                else{
+                    Toast.makeText(this, "Tidak memperoleh ijin mengakses lokasi", Toast.LENGTH_SHORT).show();
+                }
+            }
+            else if(requestCode == URL.CODE_PERMISSION_WRITE_STORAGE){
+                if(grantResults[0] == PackageManager.PERMISSION_DENIED){
+                    Toast.makeText(this, "Tidak memperoleh ijin menyimpan tanda tangan", Toast.LENGTH_SHORT).show();
                 }
             }
             else{
-                Toast.makeText(this, "Tidak memperoleh ijin mengakses lokasi", Toast.LENGTH_SHORT).show();
+                super.onRequestPermissionsResult(requestCode, permissions, grantResults);
             }
         }
-        else if(requestCode == URL.CODE_PERMISSION_WRITE_STORAGE){
-            if(grantResults[0] == PackageManager.PERMISSION_DENIED){
-                Toast.makeText(this, "Tidak memperoleh ijin menyimpan tanda tangan", Toast.LENGTH_SHORT).show();
-            }
-        }
-        else{
-            super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        }
-    }
 
-    @Override
-    public boolean onSupportNavigateUp() {
-        onBackPressed();
-        return true;
-    }
+        protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+            super.onActivityResult(requestCode, resultCode, data);
+            if (resultCode == Activity.RESULT_OK && requestCode == URL.CODE_UPLOAD){
+                if (data!=null){
+                    ArrayList<String> returnValue = data.getStringArrayListExtra(Pix.IMAGE_RESULTS);
+
+                    if(returnValue!=null){
+                        for(String s : returnValue){
+                            try {
+                                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(),
+                                        Uri.fromFile(new File(s)));
+                                list_images.add(new ImagesModel(bitmap));
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                                if (e.getMessage()!=null){
+                                    Log.e("_log", e.getMessage());
+                                }
+                            }
+                        }
+                        imageAdapter.notifyDataSetChanged();
+                    }
+                }
+            }
+        }
+
+        @Override
+        public boolean onSupportNavigateUp() {
+            onBackPressed();
+            return true;
+        }
 
     @Override
     protected void onResume() {
@@ -800,4 +615,12 @@ public class DetailReklameActivity extends AppCompatActivity implements
             initLocation();
         }
     }
+
+        /*@Override
+        protected void onDestroy() {
+            list_images = null;
+            super.onDestroy();
+        }*/
+
 }
+

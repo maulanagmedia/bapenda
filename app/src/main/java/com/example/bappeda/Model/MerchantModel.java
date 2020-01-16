@@ -26,6 +26,14 @@ public class MerchantModel {
     private String kodePendaftaran = "";
     private String latitudeString = "";
     private String longitudeString = "";
+    private String statusreklame = "";
+    private String insertat = "";
+    private String ketstatusreklame = "";
+    private String bidangusaha = "";
+    private String idketerangan = "";
+
+
+
 
     //list Gambar
     private ArrayList<String> Images = new ArrayList<>();
@@ -79,11 +87,25 @@ public class MerchantModel {
         this.id = id;
     }
 
+    public String getIdKterangan() {
+        return this.idketerangan;
+    }
+    public void setIdketerangan(String idketerangan) {
+        this.idketerangan = idketerangan;
+    }
+
     public String getNamapemilik() {
         return namapemilik;
     }
     public void setNamapemilik(String namapemilik) {
         this.namapemilik = namapemilik;
+    }
+
+    public String getBidangusaha() {
+        return bidangusaha;
+    }
+    public void setBidangusaha(String bidangusaha) {
+        this.bidangusaha = bidangusaha;
     }
 
     public String getNotelp() {
@@ -261,6 +283,23 @@ public class MerchantModel {
 
     public void setStatusPendaftaran(String statusPendaftaran) {
         this.statusPendaftaran = statusPendaftaran;
+    }
+
+    ////////////////////////////////////////////
+
+    public void setStatusReklame(String statusReklame) {
+        this.statusreklame = statusReklame;
+    }
+
+    public void setInsertat(String statusInsertat) {
+        this.insertat = statusInsertat;
+    }
+
+    public  String getKetstatusreklame(){
+        return ketstatusreklame;
+    }
+    public void setKetstatusreklame(String ketstatusreklame) {
+        this.ketstatusreklame = ketstatusreklame;
     }
 
     public String getKodePendaftaran() {

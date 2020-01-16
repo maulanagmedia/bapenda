@@ -46,7 +46,7 @@ public class URL {
     public static final String getReklame = BASE_URL + "Merchant/reklame/";
     public static final String getKetReklame = BASE_URL + "merchant/ms_ket_reklame";
     public static final String getSimpanReklame = BASE_URL + "merchant/monitor_reklame/";
-    public static final String getRiwayatReklame = BASE_URL + "merchant/monitor_reklame/";
+    public static final String getRiwayatReklame = BASE_URL + "merchant/riwayat_reklame/";
 
 
     //Form
