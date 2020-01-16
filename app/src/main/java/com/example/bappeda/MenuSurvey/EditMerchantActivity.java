@@ -350,7 +350,7 @@ public class EditMerchantActivity extends AppCompatActivity implements OnMapRead
             body.put("latitude", lat);
             body.put("longitude", lng);
             body.put("kategori", id);
-            body.put("no_telp", "");
+            body.put("no_telp", telepon);
             body.put("kelurahan", "");
             body.put("kecamatan", "");
             body.put("kota", "");

@@ -161,14 +161,14 @@ public class RiwayatPendaftaranActivity extends AppCompatActivity {
                     ((DaftarFragment) fragment).tglAkhir = tanggal_akhir.getText().toString();
                     ((DaftarFragment) fragment).start = 0;
                     ((DaftarFragment) fragment).keyword = s;
-                    ((DaftarFragment) fragment).loadData();
+                    //((DaftarFragment) fragment).loadData();
                 }
                 return true;
             }
 
             @Override
             public boolean onQueryTextChange(String s) {
-                if (!searchView.isIconified() && TextUtils.isEmpty(s)) {
+                if (!searchView.isIconified()) {
 
                     Fragment fragment = pageAdapter.getActiveFragment();
                     if (fragment!=null){
@@ -187,7 +187,7 @@ public class RiwayatPendaftaranActivity extends AppCompatActivity {
                         ((DaftarFragment) fragment).tglAkhir = tanggal_akhir.getText().toString();
                         ((DaftarFragment) fragment).start = 0;
                         ((DaftarFragment) fragment).keyword = s;
-                        ((DaftarFragment) fragment).loadData();
+                        //((DaftarFragment) fragment).loadData();
                     }
                 }
                 return false;

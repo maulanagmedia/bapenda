@@ -12,7 +12,9 @@ import androidx.annotation.NonNull;
 
 import com.example.bappeda.Model.MerchantModel;
 import com.example.bappeda.R;
+import com.example.bappeda.Utils.FormatItem;
 import com.example.bappeda.Utils.ImageLoader;
+import com.example.bappeda.Utils.ItemValidation;
 
 import java.util.List;
 
@@ -24,6 +26,7 @@ import java.util.List;
 public class SurveyAdapter extends ArrayAdapter<MerchantModel> {
 
     private Context mContext;
+    private ItemValidation iv = new ItemValidation();
 
     public SurveyAdapter(Context context, int resource, List<MerchantModel> objects) {
         super(context, resource, objects);
@@ -40,6 +43,7 @@ public class SurveyAdapter extends ArrayAdapter<MerchantModel> {
     @NonNull
     @Override
     public View getView(int position, View convertView, @NonNull ViewGroup parent) {
+
         Viewholder holder;
         MerchantModel merchantModel = getItem(position);
 
@@ -72,6 +76,10 @@ public class SurveyAdapter extends ArrayAdapter<MerchantModel> {
             }
 
             holder.tvStatus.setText(merchantModel.getStatusPendaftaran());
+
+            if(merchantModel.getTanggal() != null && !merchantModel.getTanggal().isEmpty()){
+                holder.tvStatus.setText(iv.ChangeFormatDateString(merchantModel.getTanggal(), FormatItem.formatDate, FormatItem.formatDateDisplay));
+            }
         }
 
         return convertView;

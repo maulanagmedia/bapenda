@@ -160,15 +160,17 @@ public class RiwayatSurveyActivity extends AppCompatActivity {
             public boolean onQueryTextSubmit(String s) {
                 start = 0;
                 keyword = s;
-                loadData();
+                //loadData();
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String s) {
-                if (!searchView.isIconified() && TextUtils.isEmpty(s)) {
+                start = 0;
+                keyword = s;
+                /*if (!searchView.isIconified() && TextUtils.isEmpty(s)) {
                     loadData();
-                }
+                }*/
                 return false;
             }
         });
