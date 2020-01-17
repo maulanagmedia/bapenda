@@ -1,5 +1,6 @@
 package com.example.bappeda.MenuReklame;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.SearchManager;
 import android.content.Context;
@@ -163,6 +164,7 @@ public class RiwayatReklameActivity extends AppCompatActivity {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
+
                 start = 0;
                 keyword = s;
                 //loadData();
@@ -283,6 +285,8 @@ public class RiwayatReklameActivity extends AppCompatActivity {
         try {
             body.put("id_user", idUser);
             body.put("keyword", "");
+            body.put("tgl_awal",start_date);
+            body.put("tgl_akhir",end_date);
             body.put("start", String.valueOf(start));
             body.put("count", String.valueOf(count));
         } catch (JSONException e) {
@@ -323,6 +327,7 @@ public class RiwayatReklameActivity extends AppCompatActivity {
                                     merchantModel.setInsertat(dataObject.getString("insert_at"));
                                     merchantModel.setKeterangan(dataObject.getString("status_reklame"));
                                     merchantModel.setKetstatusreklame(dataObject.getString("ket_status_reklame"));
+                                    merchantModel.setTanggal(dataObject.getString("tgl_reklame"));
                                     CategoryModel categoryModel = new CategoryModel();
                                     categoryModel.setIdKategori(dataObject.getString("id_kategori"));
                                     categoryModel.setIdKategori(dataObject.getString("kategori"));

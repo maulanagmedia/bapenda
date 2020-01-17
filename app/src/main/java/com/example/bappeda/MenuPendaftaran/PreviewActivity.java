@@ -261,14 +261,14 @@ public class PreviewActivity extends AppCompatActivity  implements OnMapReadyCal
                         m.setNik(merchant.getString("nik_pemilik"));
                         m.setAlamatpemilik(merchant.getString("alamat_pemilik"));
                         m.setNotelppemilik(merchant.getString("no_telp_pemilik"));
-
                         m.setKlasifikasi_usaha(new CategoryModel("", merchant.getString("klasifikasi_usaha")));
-                        m.setKeterangan("");
+                        m.setKeterangan(merchant.getString("keteranganm"));
                         m.setLatitude(merchant.getDouble("latitude"));
                         m.setLongitude(merchant.getDouble("longitude"));
                         m.setKota(new CategoryModel("", merchant.getString("kota")));
                         m.setKecamatan(new CategoryModel("", merchant.getString("kecamatan")));
                         m.setKelurahan(new CategoryModel("", merchant.getString("kelurahan")));
+//                        m.setKeterangan(merchant.getString("keterangan"));
 
                         JSONArray listImagesJson = merchant.getJSONArray("img");
                         List<String> listImagesString = new ArrayList<>();
@@ -346,7 +346,7 @@ public class PreviewActivity extends AppCompatActivity  implements OnMapReadyCal
         body.add("kota", m.getKota().getIdKategori());
         body.add("ttd", base64);
         body.add("image", new JSONArray(listImageString));
-        body.add("keterangan", txt_keterangan.getText().toString());
+        body.add("keterangan", m.getKeterangan());
         Log.d("body_log", "body : " + body.create());
 
         new ApiVolley(this, body.create(), "POST", URL.URL_EDIT_MERCHANT,

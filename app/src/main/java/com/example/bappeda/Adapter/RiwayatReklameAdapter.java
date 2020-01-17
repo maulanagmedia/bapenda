@@ -59,8 +59,9 @@ public class RiwayatReklameAdapter extends ArrayAdapter<MerchantModel> {
             holder.tmerchant.setText(merchantModel.getNamamerchant());
             holder.talamat.setText(merchantModel.getAlamat());
             ImageLoader.load(mContext, merchantModel.getImage(), holder.img_merchant);
+            holder.tvStatus.setText(merchantModel.getTanggal());
 
-            if(merchantModel.getKodePendaftaran().equals("0")){
+           /* if(merchantModel.getKodePendaftaran().equals("0")){
 
                 holder.tvStatus.setTextColor(mContext.getResources().getColor(R.color.orange));
             }else if(merchantModel.getKodePendaftaran().equals("0")){
@@ -69,9 +70,9 @@ public class RiwayatReklameAdapter extends ArrayAdapter<MerchantModel> {
             }else{
 
                 holder.tvStatus.setTextColor(mContext.getResources().getColor(R.color.blueLight));
-            }
-
-            holder.tvStatus.setText(merchantModel.getStatusPendaftaran());
+            }*/
+/*
+            holder.tvStatus.setText(merchantModel.getStatusPendaftaran());*/
         }
 
         return convertView;
