@@ -346,6 +346,7 @@ public class PreviewActivity extends AppCompatActivity  implements OnMapReadyCal
         body.add("kota", m.getKota().getIdKategori());
         body.add("ttd", base64);
         body.add("image", new JSONArray(listImageString));
+        body.add("keterangan", txt_keterangan.getText().toString());
         Log.d("body_log", "body : " + body.create());
 
         new ApiVolley(this, body.create(), "POST", URL.URL_EDIT_MERCHANT,

@@ -74,7 +74,7 @@ public class DetailNotificationActivity extends AppCompatActivity {
         rvPhoto = (RecyclerView) findViewById(R.id.rv_photo);
 
         rvPhoto.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        imageAdapter = new ImagesAdapter(this, list_images);
+        imageAdapter = new ImagesAdapter(this, list_images, false);
         rvPhoto.setAdapter(imageAdapter);
 
         if (getIntent().hasExtra("notif")){

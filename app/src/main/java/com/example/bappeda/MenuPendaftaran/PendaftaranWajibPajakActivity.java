@@ -543,7 +543,7 @@ public class PendaftaranWajibPajakActivity extends AppCompatActivity implements
         body.add("kota", selectedKota.getIdKategori());
         body.add("ttd", base64);
         body.add("image", new JSONArray(listImageString));
-
+        body.add("keterangan", txt_keterangan.getText().toString());
 
         new ApiVolley(this, body.create(), "POST", URL.URL_EDIT_MERCHANT,
                 new ApiVolley.VolleyCallback() {

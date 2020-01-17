@@ -1,23 +1,31 @@
 package com.example.bappeda.MenuReklame;
 
+import android.app.DatePickerDialog;
+import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.DatePicker;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 
 import com.example.bappeda.Adapter.RiwayatReklameAdapter;
 import com.example.bappeda.Adapter.SurveyAdapter;
 import com.example.bappeda.MenuMonitoring.PreviewMerchantActivity;
+import com.example.bappeda.MenuSurvey.RiwayatSurveyActivity;
 import com.example.bappeda.Model.CategoryModel;
 import com.example.bappeda.Model.MerchantModel;
 import com.example.bappeda.R;
@@ -33,12 +41,16 @@ import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
 public class RiwayatReklameActivity extends AppCompatActivity {
 
     private final String TAG = "RiwayatReklame";
+    private Calendar Mycalendar;
+    private String start_date = "";
+    private String end_date = "";
 
     private ListView listmerchant;
     private TextView hari, tanggal;
@@ -51,6 +63,8 @@ public class RiwayatReklameActivity extends AppCompatActivity {
     private boolean isLoading = false;
     private boolean bidangUsaha = true;
     private String keyword = "";
+    private TextView tanggal_akhir, tanggal_awal;
+    private ImageView button_proses;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +75,9 @@ public class RiwayatReklameActivity extends AppCompatActivity {
         listmerchant = findViewById(R.id.list_merchant);
         hari = findViewById(R.id.txtHari);
         tanggal = findViewById(R.id.txtTanggal);
+        tanggal_awal = findViewById(R.id.txt_tanggalawal);
+        tanggal_akhir = findViewById(R.id.txt_tanggalakhir);
+        button_proses = findViewById(R.id.btnproses);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         if (getSupportActionBar()!=null){
@@ -102,12 +119,26 @@ public class RiwayatReklameActivity extends AppCompatActivity {
                 }
             }
 
+
             @Override
             public void onScroll(AbsListView absListView, int i, int i1, int i2) {
 
             }
         });
 
+        button_proses.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                start = 0;
+                loadData();
+            }
+        });
+
+
+        tanggalAwalFormat();
+        tanggalAkhirFormat();
+        DateCalendar();
         listmerchant.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -119,6 +150,112 @@ public class RiwayatReklameActivity extends AppCompatActivity {
             }
         });
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        final MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.searchbar, menu);
+
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        final SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                start = 0;
+                keyword = s;
+                //loadData();
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                start = 0;
+                keyword = s;
+                /*if (!searchView.isIconified() && TextUtils.isEmpty(s)) {
+                    loadData();
+                }*/
+                return false;
+            }
+        });
+        return true;
+    }
+
+    private void DateCalendar() {
+        Mycalendar = Calendar.getInstance();
+
+        final DatePickerDialog.OnDateSetListener date_awal = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                Mycalendar.set(Calendar.YEAR, year);
+                Mycalendar.set(Calendar.MONTH, month);
+                Mycalendar.set(Calendar.DAY_OF_MONTH, day);
+                updateDateAwal();
+            }
+        };
+
+        tanggal_awal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new DatePickerDialog(RiwayatReklameActivity.this, date_awal, Mycalendar.get(Calendar.YEAR),
+                        Mycalendar.get(Calendar.MONTH), Mycalendar.get(Calendar.DAY_OF_MONTH)).show();
+            }
+        });
+
+        final DatePickerDialog.OnDateSetListener date_akhir = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                Mycalendar.set(Calendar.YEAR, year);
+                Mycalendar.set(Calendar.MONTH, month);
+                Mycalendar.set(Calendar.DAY_OF_MONTH, day);
+                updateDateAkhir();
+            }
+        };
+
+        tanggal_akhir.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new DatePickerDialog(RiwayatReklameActivity.this, date_akhir, Mycalendar.get(Calendar.YEAR),
+                        Mycalendar.get(Calendar.MONTH), Mycalendar.get(Calendar.DAY_OF_MONTH)).show();
+            }
+        });
+
+
+    }
+
+    private void updateDateAwal() {
+        String myFormat = "yyyy-MM-dd"; //In which you need put here
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+        tanggal_awal.setText(sdf.format(Mycalendar.getTime()));
+        start_date = sdf.format(Mycalendar.getTime());
+    }
+
+    private void updateDateAkhir() {
+        String myFormat = "yyyy-MM-dd"; //In which you need put here
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+        tanggal_akhir.setText(sdf.format(Mycalendar.getTime()));
+        end_date = sdf.format(Mycalendar.getTime());
+    }
+
+    private void tanggalAwalFormat(){
+        String myFormat = "yyyy-MM-01";
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+        Date myDate = new Date();
+        String dateName = sdf.format(myDate);
+        tanggal_awal.setText(dateName);
+        start_date = dateName;
+    }
+
+    private void tanggalAkhirFormat(){
+        String myFormat = "yyyy-MM-dd";
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+        Date myDate = new Date();
+        String dateName = sdf.format(myDate);
+        tanggal_akhir.setText(dateName);
+        end_date = dateName;
+    }
+
 
     private void tanggalFormat(){
         String myFormat = "yyyy-MM-dd";
