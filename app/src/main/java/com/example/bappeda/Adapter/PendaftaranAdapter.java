@@ -66,7 +66,7 @@ public class PendaftaranAdapter extends ArrayAdapter<MerchantModel> {
             holder.txt_merchant.setText(pendaftaranModel.getNamamerchant());
             holder.txt_alamat.setText(pendaftaranModel.getAlamat());
 
-            if(pendaftaranModel.getKeterangan().toLowerCase().equals("ya")){
+            if(pendaftaranModel.getStatusPendaftaran().toLowerCase().equals("ya")){
 
                 holder.txt_status.setVisibility(View.VISIBLE);
                 holder.txt_status_batal.setVisibility(View.GONE);
@@ -76,8 +76,8 @@ public class PendaftaranAdapter extends ArrayAdapter<MerchantModel> {
                 holder.txt_status_batal.setVisibility(View.VISIBLE);
             }
 
-            holder.txt_status.setText(pendaftaranModel.getKeterangan());
-            holder.txt_status_batal.setText(pendaftaranModel.getKeterangan());
+            holder.txt_status.setText(pendaftaranModel.getStatusPendaftaran());
+            holder.txt_status_batal.setText(pendaftaranModel.getStatusPendaftaran());
 
             holder.tvTime.setText(iv.ChangeFormatDateString(pendaftaranModel.getTanggal(), FormatItem.formatTimestamp, FormatItem.formatDateTimeDisplay));
 

@@ -451,6 +451,28 @@ public class UbahLokasiMerchantActivity extends AppCompatActivity implements
                     Log.i(TAG, "Drag End: " +  "location : " + ll);
                 }
             });
+
+            mGoogleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+                @Override
+                public void onMapClick(LatLng latLng) {
+
+                    String lat_string = "Latitude : " + latLng.latitude;
+                    String long_string = "Longitude : " + latLng.longitude;
+
+                    lat = latLng.latitude;
+                    lng = latLng.longitude;
+
+                    mGoogleMap.clear();
+                    options = new MarkerOptions()
+                            .position(latLng)
+                            .draggable(true)
+                            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
+                    mGoogleMap.addMarker(options);
+
+                    tvLatitude.setText(lat_string);
+                    tvLongitude.setText(long_string);
+                }
+            });
         }
     }
 
