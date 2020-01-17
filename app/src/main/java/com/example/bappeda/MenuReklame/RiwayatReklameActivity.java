@@ -284,7 +284,7 @@ public class RiwayatReklameActivity extends AppCompatActivity {
         JSONObject body = new JSONObject();
         try {
             body.put("id_user", idUser);
-            body.put("keyword", "");
+            body.put("keyword", keyword);
             body.put("tgl_awal",start_date);
             body.put("tgl_akhir",end_date);
             body.put("start", String.valueOf(start));
