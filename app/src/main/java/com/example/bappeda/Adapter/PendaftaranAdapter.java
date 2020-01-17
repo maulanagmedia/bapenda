@@ -13,7 +13,9 @@ import android.widget.TextView;
 import com.example.bappeda.MenuPendaftaran.PreviewActivity;
 import com.example.bappeda.Model.MerchantModel;
 import com.example.bappeda.R;
+import com.example.bappeda.Utils.FormatItem;
 import com.example.bappeda.Utils.ImageLoader;
+import com.example.bappeda.Utils.ItemValidation;
 import com.example.bappeda.Utils.URL;
 
 import java.util.List;
@@ -21,6 +23,7 @@ import java.util.List;
 public class PendaftaranAdapter extends ArrayAdapter<MerchantModel> {
 
     private Context mContext;
+    private ItemValidation iv = new ItemValidation();
 
     public PendaftaranAdapter(Context context, int resource, List<MerchantModel> objects) {
         super(context, resource, objects);
@@ -30,7 +33,7 @@ public class PendaftaranAdapter extends ArrayAdapter<MerchantModel> {
     class Viewholder{
         View layout_parent;
         ImageView img_merchant;
-        TextView txt_merchant, txt_alamat, txt_status, txt_status_batal;
+        TextView txt_merchant, txt_alamat, txt_status, txt_status_batal, tvTime;
     }
 
     @Override
@@ -51,6 +54,7 @@ public class PendaftaranAdapter extends ArrayAdapter<MerchantModel> {
             holder.txt_status = convertView.findViewById(R.id.txt_status);
             holder.txt_status_batal = convertView.findViewById(R.id.txt_status_batal);
             holder.img_merchant = convertView.findViewById(R.id.img_merchant);
+            holder.tvTime  = (TextView) convertView.findViewById(R.id.tv_time);
             convertView.setTag(holder);
         } else
             holder = (Viewholder) convertView.getTag();
@@ -74,6 +78,8 @@ public class PendaftaranAdapter extends ArrayAdapter<MerchantModel> {
 
             holder.txt_status.setText(pendaftaranModel.getKeterangan());
             holder.txt_status_batal.setText(pendaftaranModel.getKeterangan());
+
+            holder.tvTime.setText(iv.ChangeFormatDateString(pendaftaranModel.getTanggal(), FormatItem.formatTimestamp, FormatItem.formatDateTimeDisplay));
 
             holder.layout_parent.setOnClickListener(new View.OnClickListener() {
                 @Override

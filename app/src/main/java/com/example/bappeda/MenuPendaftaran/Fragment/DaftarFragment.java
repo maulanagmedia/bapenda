@@ -165,6 +165,7 @@ public class DaftarFragment extends Fragment {
                             }
                             pendaftaranModel.setImages(listImages);
                             pendaftaranModel.setKeterangan(dataObject.getString("keterangan"));
+                            pendaftaranModel.setTanggal(dataObject.getString("tanggal_putusan"));
                             pendaftaranModels.add(pendaftaranModel);
                         }
 
