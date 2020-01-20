@@ -88,9 +88,8 @@ public class RiwayatMonitoringMerchantActivity extends AppCompatActivity {
             }
         });
 
-        tanggalFormat(); //format tanggal hari ini
-        DayFormat(); //format hari ini (ex: senin, selasa, dll)
-
+       /* tanggalFormat(); //format tanggal hari ini
+        DayFormat(); //format hari ini (ex: senin, selasa, dll)*/
         keyword = "";
         LayoutInflater li = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         footerList = li.inflate(R.layout.footer_list, null);
@@ -121,8 +120,10 @@ public class RiwayatMonitoringMerchantActivity extends AppCompatActivity {
 
             }
         });
-
+        tanggalAwalFormat();
+        tanggalAkhirFormat();
         DateCalendar();
+        tanggal_awal.setText(start_date);
 
         listmerchant.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -145,7 +146,7 @@ public class RiwayatMonitoringMerchantActivity extends AppCompatActivity {
         });
     }
 
-    private void tanggalFormat(){
+  /*  private void tanggalFormat(){
         String myFormat = "yyyy-MM-dd";
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
         Date myDate = new Date();
@@ -159,7 +160,7 @@ public class RiwayatMonitoringMerchantActivity extends AppCompatActivity {
         Date myDate = new Date();
         String dayName = sdf.format(myDate);
         hari.setText(dayName);
-    }
+    }*/
 
     private void loadData() {
 
@@ -307,7 +308,7 @@ public class RiwayatMonitoringMerchantActivity extends AppCompatActivity {
     }
 
     private void tanggalAwalFormat(){
-        String myFormat = "yyyy-MM-01";
+        String myFormat = "yyyy-MM-dd";
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
         Date myDate = new Date();
         String dateName = sdf.format(myDate);

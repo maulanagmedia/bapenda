@@ -61,7 +61,8 @@ public class RiwayatSurveyActivity extends AppCompatActivity {
     private ApiVolley apiVolley;
 
     //Filter
-    private String start_date = "";
+//    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+    private String start_date ="";
     private String end_date = "";
 
     @Override
@@ -124,6 +125,7 @@ public class RiwayatSurveyActivity extends AppCompatActivity {
         tanggalAwalFormat();
         tanggalAkhirFormat();
         DateCalendar();
+        tanggal_awal.setText(start_date);
 
         listsurvey.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -328,7 +330,7 @@ public class RiwayatSurveyActivity extends AppCompatActivity {
     }
 
     private void tanggalAwalFormat(){
-        String myFormat = "yyyy-MM-01";
+        String myFormat = "yyyy-MM-dd";
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
         Date myDate = new Date();
         String dateName = sdf.format(myDate);

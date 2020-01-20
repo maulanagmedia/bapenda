@@ -32,6 +32,8 @@ import com.example.bappeda.Model.MerchantModel;
 import com.example.bappeda.R;
 import com.example.bappeda.Utils.ApiVolley;
 import com.example.bappeda.Utils.AppLoadingScreen;
+import com.example.bappeda.Utils.FormatItem;
+import com.example.bappeda.Utils.ItemValidation;
 import com.example.bappeda.Utils.Preferences;
 import com.example.bappeda.Utils.URL;
 import com.google.gson.Gson;
@@ -52,6 +54,7 @@ public class RiwayatReklameActivity extends AppCompatActivity {
     private Calendar Mycalendar;
     private String start_date = "";
     private String end_date = "";
+    private ItemValidation iv = new ItemValidation();
 
     private ListView listmerchant;
     private TextView hari, tanggal;
@@ -92,12 +95,15 @@ public class RiwayatReklameActivity extends AppCompatActivity {
             }
         });
 
-        tanggalFormat(); //format tanggal hari ini
-        DayFormat(); //format hari ini (ex: senin, selasa, dll)
+        /*tanggalFormat(); //format tanggal hari ini
+        DayFormat(); //format hari ini (ex: senin, selasa, dll)*/
 
         keyword = "";
         LayoutInflater li = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         footerList = li.inflate(R.layout.footer_list, null);
+
+        start_date = iv.getCurrentDate(FormatItem.formatDate);
+        end_date = iv.getCurrentDate(FormatItem.formatDate);
 
         adapter = new RiwayatReklameAdapter(RiwayatReklameActivity.this, R.layout.activity_list_view_survey, merchantModels);
         listmerchant.setAdapter(adapter);
@@ -140,6 +146,7 @@ public class RiwayatReklameActivity extends AppCompatActivity {
         tanggalAwalFormat();
         tanggalAkhirFormat();
         DateCalendar();
+        tanggal_awal.setText(start_date);
         listmerchant.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -241,7 +248,7 @@ public class RiwayatReklameActivity extends AppCompatActivity {
     }
 
     private void tanggalAwalFormat(){
-        String myFormat = "yyyy-MM-01";
+        String myFormat = "yyyy-MM-dd";
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
         Date myDate = new Date();
         String dateName = sdf.format(myDate);
@@ -259,7 +266,7 @@ public class RiwayatReklameActivity extends AppCompatActivity {
     }
 
 
-    private void tanggalFormat(){
+  /*  private void tanggalFormat(){
         String myFormat = "yyyy-MM-dd";
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
         Date myDate = new Date();
@@ -273,7 +280,7 @@ public class RiwayatReklameActivity extends AppCompatActivity {
         Date myDate = new Date();
         String dayName = sdf.format(myDate);
         hari.setText(dayName);
-    }
+    }*/
 
     private void loadData() {
 
