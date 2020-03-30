@@ -170,10 +170,13 @@ public class MonitoringMerchantActivity extends AppCompatActivity {
             }
         }
 
+        Log.d(">>>>>",String.valueOf(body));
+
         apiVolley = new ApiVolley(MonitoringMerchantActivity.this, body, "POST", URL.URL_MONITORING_MERCHANT,
                 new ApiVolley.VolleyCallback() {
             @Override
             public void onSuccess(String result) {
+                Log.d(">>>>>>",result);
 
                 AppLoadingScreen.getInstance().stopLoading();
                 isLoading = false;
@@ -197,8 +200,21 @@ public class MonitoringMerchantActivity extends AppCompatActivity {
                             merchantModel.setId(dataObject.getString("id_monitor"));
                             merchantModel.setNamamerchant(dataObject.getString("nama"));
                             merchantModel.setAlamat(dataObject.getString("alamat"));
-                            merchantModel.setLongitude(dataObject.getDouble("longitude"));
-                            merchantModel.setLatitude(dataObject.getDouble("latitude"));
+
+                            String longitude ="";
+                            if(dataObject.getString("longitude").equals("")){
+                                longitude = String.valueOf(0);
+                            }else{
+                                longitude = dataObject.getString("longitude");
+                            }
+                            String latitude ="";
+                            if(dataObject.getString("latitude").equals("")){
+                                latitude = "0";
+                            }else{
+                                latitude = dataObject.getString("latitude");
+                            }
+                            merchantModel.setLongitude(Double.parseDouble(longitude));
+                            merchantModel.setLatitude(Double.parseDouble(latitude));
                             CategoryModel categoryModel = new CategoryModel();
                             categoryModel.setIdKategori(dataObject.getString("id_kategori"));
                             merchantModel.setKategori(categoryModel);
