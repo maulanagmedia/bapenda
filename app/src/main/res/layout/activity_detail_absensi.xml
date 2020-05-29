@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.bappeda.MenuAbsensi.DetailAbsensi">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:weightSum="1">
+
+        <com.camerakit.CameraKitView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.7"
+            android:adjustViewBounds="true"
+            android:keepScreenOn="true"
+            android:id="@+id/ckv_camera"
+            app:camera_flash="auto"
+            app:camera_imageJpegQuality="100"
+            app:camera_facing="front"
+            app:camera_permissions="camera"/>
+
+        <com.google.android.gms.maps.MapView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.3"
+            android:id="@+id/mv_absen"
+            />
+    </LinearLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintGuide_percent=".7"
+            android:orientation="horizontal"
+            android:id="@+id/g_1"
+            />
+
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:src="@drawable/absenlapangan"
+            android:background="@drawable/bg_checkin"
+            android:padding="16dp"
+            android:id="@+id/iv_absens"
+            app:layout_constraintBottom_toTopOf="@id/g_1"
+            app:layout_constraintTop_toBottomOf="@id/g_1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@mipmap/ic_refresh"
+            android:layout_marginTop="@dimen/padding_big"
+            android:layout_marginLeft="@dimen/padding_big"
+            app:layout_constraintTop_toBottomOf="@id/g_1"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:id="@+id/iv_refresh"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center">
+
+    </LinearLayout>
+
+</RelativeLayout>

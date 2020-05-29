@@ -15,8 +15,8 @@ android {
         applicationId 'co.id.gmedia.bapenda'
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 4
-        versionName "2.0"
+        versionCode 6
+        versionName "2.5"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -55,5 +55,9 @@ dependencies {
     // dexter runtime permissions
     implementation 'com.karumi:dexter:6.0.0'
     implementation 'com.sothree.slidinguppanel:library:3.4.0'
+    implementation 'com.camerakit:camerakit:1.0.0-beta3.10'
+    implementation 'com.camerakit:jpegkit:0.1.0'
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.0'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.0.0'
 }
 apply plugin: 'com.google.gms.google-services'

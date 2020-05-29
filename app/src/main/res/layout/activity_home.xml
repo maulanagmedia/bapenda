@@ -338,6 +338,84 @@
 
                         </androidx.cardview.widget.CardView>
 
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/CardAbsensi"
+                            android:layout_width="@dimen/menu_height"
+                            android:layout_height="@dimen/menu_height"
+                            android:visibility="gone"
+                            android:layout_margin="@dimen/padding_small"
+                            app:cardElevation="@dimen/padding_tanggung"
+                            android:elevation="@dimen/padding_tanggung"
+                            app:cardCornerRadius="@dimen/default_corner">
+
+                            <LinearLayout
+                                android:id="@+id/LinearAbsensi"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical"
+                                android:gravity="center"
+                                android:background="@drawable/custom_date"
+                                android:padding="@dimen/padding_big">
+
+                                <ImageView
+                                    android:id="@+id/img_Absensi"
+                                    android:layout_width="50dp"
+                                    android:layout_height="50dp"
+                                    android:src="@drawable/ic_absensi"/>
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Absensi"
+                                    android:fontFamily="@font/cantarell"
+                                    android:layout_marginTop="@dimen/padding_default"
+                                    android:gravity="center"
+                                    android:textColor="@color/black"
+                                    android:textSize="20sp" />
+
+                            </LinearLayout>
+
+                        </androidx.cardview.widget.CardView>
+
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/CardRiwayatAbsensi"
+                            android:layout_width="@dimen/menu_height"
+                            android:layout_height="@dimen/menu_height"
+                            android:visibility="gone"
+                            android:layout_margin="@dimen/padding_small"
+                            app:cardElevation="@dimen/padding_tanggung"
+                            android:elevation="@dimen/padding_tanggung"
+                            app:cardCornerRadius="@dimen/default_corner">
+
+                            <LinearLayout
+                                android:id="@+id/LinearRiwayatAbsensi"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical"
+                                android:gravity="center"
+                                android:background="@drawable/custom_date"
+                                android:padding="@dimen/padding_big">
+
+                                <ImageView
+                                    android:id="@+id/img_Riwayat_Absensi"
+                                    android:layout_width="50dp"
+                                    android:layout_height="50dp"
+                                    android:src="@drawable/ic_riwayatabsensi"/>
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Riwayat Absensi"
+                                    android:fontFamily="@font/cantarell"
+                                    android:layout_marginTop="@dimen/padding_default"
+                                    android:gravity="center"
+                                    android:textColor="@color/black"
+                                    android:textSize="20sp" />
+
+                            </LinearLayout>
+
+                        </androidx.cardview.widget.CardView>
+
                     </com.example.bappeda.CustomView.CustomGridLayout>
 
                 </LinearLayout>

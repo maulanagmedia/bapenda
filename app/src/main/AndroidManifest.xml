@@ -31,10 +31,19 @@
         android:theme="@style/AppTheme.NoActionBar"
         android:usesCleartextTraffic="true"
         tools:replace="android:theme">
-        <activity android:name=".MenuReklame.DetailReklameActivity"
-            android:screenOrientation="portrait"></activity>
-        <activity android:name=".MenuReklame.ReklameActivity"
-            android:screenOrientation="portrait"/>
+        <activity android:name=".MenuAbsensi.RiwayatAbsensi"></activity>
+        <activity
+            android:name=".MenuAbsensi.DetailAbsensi"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".MenuAbsensi.AbsensiActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".MenuReklame.DetailReklameActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".MenuReklame.ReklameActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".MenuHome.DetailNotificationActivity"
             android:screenOrientation="portrait" />

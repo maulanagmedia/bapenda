@@ -24,6 +24,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
 
+import com.example.bappeda.MenuAbsensi.AbsensiActivity;
+import com.example.bappeda.MenuAbsensi.RiwayatAbsensi;
 import com.example.bappeda.MenuAdmin.PenugasanPetugasActivity;
 import com.example.bappeda.MenuMerchants.PilihanMerchantsActivity;
 import com.example.bappeda.MenuMonitoring.MonitoringMerchantActivity;
@@ -54,7 +56,7 @@ import java.util.Set;
 public class HomeActivity extends AppCompatActivity {
 
     private TextView namacustomer;
-    private CardView pendaftaran, survey, monitoring, menu_admin, merchants, reklame;
+    private CardView pendaftaran, survey, monitoring, menu_admin, merchants, reklame, cAbsensi, cRiwayatAbsensi;
     private ImageView profile;
 
     private String name;
@@ -97,6 +99,8 @@ public class HomeActivity extends AppCompatActivity {
         merchants = findViewById(R.id.CardMerchant);
         reklame = findViewById(R.id.CardReklame);
         menuContainer = (LinearLayout) findViewById(R.id.LinearPutih);
+        cAbsensi = (CardView) findViewById(R.id.CardAbsensi);
+        cRiwayatAbsensi = (CardView) findViewById(R.id.CardRiwayatAbsensi);
 
         Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();
@@ -114,9 +118,9 @@ public class HomeActivity extends AppCompatActivity {
         int menuWidth = 0;
         menuWidth = (size.x / 2) - iv.dpToPx(HomeActivity.this, 32  );
 
-        LinearLayout.LayoutParams lpp = (LinearLayout.LayoutParams) menuContainer.getLayoutParams();
+        /*LinearLayout.LayoutParams lpp = (LinearLayout.LayoutParams) menuContainer.getLayoutParams();
         lpp.height = size.y;
-        menuContainer.setLayoutParams(lpp);
+        menuContainer.setLayoutParams(lpp);*/
 
         GridLayout.LayoutParams lp = (GridLayout.LayoutParams) pendaftaran.getLayoutParams();
         lp.width = menuWidth;
@@ -154,6 +158,18 @@ public class HomeActivity extends AppCompatActivity {
         lp5.height = menuWidth;
         lp5.setMargins(lenght, lenght, lenght, lenght);
         reklame.setLayoutParams(lp5);
+
+        GridLayout.LayoutParams lp6 = (GridLayout.LayoutParams) cAbsensi.getLayoutParams();
+        lp6.width = menuWidth;
+        lp6.height = menuWidth;
+        lp6.setMargins(lenght, lenght, lenght, lenght);
+        cAbsensi.setLayoutParams(lp6);
+
+        GridLayout.LayoutParams lp7 = (GridLayout.LayoutParams) cRiwayatAbsensi.getLayoutParams();
+        lp7.width = menuWidth;
+        lp7.height = menuWidth;
+        lp7.setMargins(lenght, lenght, lenght, lenght);
+        cRiwayatAbsensi.setLayoutParams(lp7);
 
         id_level = Preferences.getLevelPref(getBaseContext());
 
@@ -215,6 +231,24 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
+        cAbsensi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(HomeActivity.this, AbsensiActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        cRiwayatAbsensi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(HomeActivity.this, RiwayatAbsensi.class);
+                startActivity(intent);
+            }
+        });
+
         FirebaseInstanceId.getInstance().getInstanceId().addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
             @Override
             public void onComplete(@NonNull Task<InstanceIdResult> task) {
@@ -252,6 +286,8 @@ public class HomeActivity extends AppCompatActivity {
         monitoring.setVisibility(View.GONE);
         merchants.setVisibility(View.GONE);
         reklame.setVisibility(View.GONE);
+        cAbsensi.setVisibility(View.GONE);
+        cRiwayatAbsensi.setVisibility(View.GONE);
 
         for(String menu: listMenu){
 
@@ -273,6 +309,12 @@ public class HomeActivity extends AppCompatActivity {
             }else if (menu.equals("reklame")){
 
                 reklame.setVisibility(View.VISIBLE);
+            }else if (menu.equals("absensi")){
+
+                cAbsensi.setVisibility(View.VISIBLE);
+            }else if (menu.equals("riwayatabsensi")){
+
+                cRiwayatAbsensi.setVisibility(View.VISIBLE);
             }
         }
     }
@@ -442,37 +484,5 @@ public class HomeActivity extends AppCompatActivity {
                 Log.d("fcm_log", result);
             }
         });
-    }
-
-    private void forPetugas(){
-        survey.setVisibility(View.VISIBLE);
-        survey.setVisibility(View.VISIBLE);
-        monitoring.setVisibility(View.VISIBLE);
-        menu_admin.setVisibility(View.GONE);
-        merchants.setVisibility(View.VISIBLE);
-    }
-
-    private void forSupervisor(){
-        survey.setVisibility(View.VISIBLE);
-        survey.setVisibility(View.VISIBLE);
-        monitoring.setVisibility(View.VISIBLE);
-        menu_admin.setVisibility(View.GONE);
-        merchants.setVisibility(View.VISIBLE);
-    }
-
-    private void forKasubbag(){
-        survey.setVisibility(View.VISIBLE);
-        survey.setVisibility(View.VISIBLE);
-        monitoring.setVisibility(View.VISIBLE);
-        menu_admin.setVisibility(View.VISIBLE);
-        merchants.setVisibility(View.VISIBLE);
-    }
-
-    private void forAdmin(){
-        survey.setVisibility(View.VISIBLE);
-        survey.setVisibility(View.VISIBLE);
-        monitoring.setVisibility(View.VISIBLE);
-        menu_admin.setVisibility(View.VISIBLE);
-        merchants.setVisibility(View.VISIBLE);
     }
 }

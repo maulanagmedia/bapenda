@@ -23,9 +23,11 @@
 
     <color name="merah">#CA0020</color>
     <color name="redSoft">#F85757</color>
+    <color name="color_selected">#BEA0A0</color>
 
     <color name="grey">#A6A0A0</color>
     <color name="grey1">#CECECE</color>
+    <color name="grey2">#DFDFDF</color>
     <color name="light_grey">#F1F1F1</color>
     <color name="LightGrey">#F5F5F5</color>
 

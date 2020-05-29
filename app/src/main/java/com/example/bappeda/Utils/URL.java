@@ -47,7 +47,8 @@ public class URL {
     public static final String getKetReklame = BASE_URL + "merchant/ms_ket_reklame";
     public static final String getSimpanReklame = BASE_URL + "merchant/monitor_reklame/";
     public static final String getRiwayatReklame = BASE_URL + "merchant/riwayat_reklame/";
-
+    public static final String takeAbsen = BASE_URL + "authentication/absens/";
+    public static final String getRiwayatAbsensi = BASE_URL + "authentication/riwayat_absens/";
 
     //Form
     public static final String URL_FORM = "http://gmedia.bz/bapenda/Form/form_kategori";

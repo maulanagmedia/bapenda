@@ -103,6 +103,7 @@ public class ApiVolley {
                 params.put("Content-Type", "application/json");
                 params.put("Client-Service", "monitoring-bapeda");
                 params.put("Auth-Key", "gmedia");
+                params.put("id", Preferences.getId(context));
                 params.put("user", "");
                 params.put("pass", "");
                 return params;

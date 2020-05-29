@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.bappeda.MenuAbsensi.AbsensiActivity"
+    >
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        app:titleTextColor="@color/white"
+        android:minHeight="?attr/actionBarSize"
+        android:layout_alignParentTop="true"
+        app:popupTheme="@style/AppTheme.NoActionBar.TitleTextStyle">
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_below="@id/toolbar"
+        >
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/c_masuk"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/padding_big"
+            android:layout_marginStart="@dimen/padding_big"
+            android:layout_marginEnd="@dimen/padding_big"
+            app:cardCornerRadius="@dimen/padding_dexa">
+
+            <LinearLayout
+                android:id="@+id/ll_masuk"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:background="@color/blueBright"
+                android:padding="20dp">
+
+                <ImageView
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:src="@drawable/absenlapangan"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Absen Masuk"
+                    android:layout_marginStart="10dp"
+                    android:layout_gravity="center_vertical"
+                    android:textSize="@dimen/text_big"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:textColor="#FFFFFF" />
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/c_pulang"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/padding_big"
+            android:layout_marginStart="@dimen/padding_big"
+            android:layout_marginEnd="@dimen/padding_big"
+            app:cardCornerRadius="@dimen/padding_dexa">
+
+            <LinearLayout
+                android:id="@+id/ll_pulang"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:background="@color/redSoft"
+                android:padding="20dp">
+
+                <ImageView
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:src="@drawable/sampai_tujuan"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Absen Pulang"
+                    android:layout_marginStart="10dp"
+                    android:layout_gravity="center_vertical"
+                    android:textSize="@dimen/text_big"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:textColor="#FFFFFF" />
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+    </LinearLayout>
+
+</RelativeLayout>
