@@ -15,7 +15,7 @@ android {
         applicationId 'co.id.gmedia.bapenda'
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 6
+        versionCode 9
         versionName "2.5"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
